@@ -42,7 +42,7 @@ double  sysSVMTime=0, usrSVMTime=0,realSVMTime=0;
 
 /***************************************************************/
 
-extern int verbose;
+extern int verbose_svmtool;
 int NUM_UNK_POS=0;
 
 
@@ -119,11 +119,11 @@ void tagger::taggerLoadModels(models_t *model, int taggerNumModel)
 
   //Cargamos la lista de "features" para palabras conocidas
   sprintf(name,"%s.A%d",taggerModelName,taggerNumModel);
-  if (verbose)  fprintf(stderr,"\nLoading FEATURES FOR KNOWN WORDS from < %s >\n",name);
+  if (verbose_svmtool)  fprintf(stderr,"\nLoading FEATURES FOR KNOWN WORDS from < %s >\n",name);
   createFeatureList(name,&model->featureList);
   //Cargamos la lista de "features" para palabras desconocidas
   sprintf(name,"%s.A%d.UNK",taggerModelName,taggerNumModel);
-  if (verbose)  fprintf(stderr,"\nLoading FEATURES FOR UNKNOWN WORDS from < %s >\n",name);
+  if (verbose_svmtool)  fprintf(stderr,"\nLoading FEATURES FOR UNKNOWN WORDS from < %s >\n",name);
   createFeatureList(name,&model->featureListUnk);
 
   if (strcmp(flow,"LRL")==0)
@@ -131,14 +131,14 @@ void tagger::taggerLoadModels(models_t *model, int taggerNumModel)
       strcpy(flow1,"LR");	strcpy(flow2,"RL");
 
       sprintf(name,"%s (Right-to-Left)",flow1);
-      if (verbose) fprintf(stderr,"\nREADING MODELS < direction =  %s >\n",name);
+      if (verbose_svmtool) fprintf(stderr,"\nREADING MODELS < direction =  %s >\n",name);
   
       sprintf(name,"%s.M%d.%s.MRG",taggerModelName,taggerNumModel,flow2);
-      if (verbose) fprintf(stderr,"-. Loading MERGED MODEL FOR KNOWN WORDS from < %s >\n",name);
+      if (verbose_svmtool) fprintf(stderr,"-. Loading MERGED MODEL FOR KNOWN WORDS from < %s >\n",name);
       model->wr2 = new weightRepository(name,taggerKFilter);
 
       sprintf(name,"%s.UNK.M%d.%s.MRG",taggerModelName,taggerNumModel,flow2);
-      if (verbose) fprintf(stderr,"-. Loading MERGED MODEL FOR UNKKNOWN WORDS from < %s >\n\n",name);
+      if (verbose_svmtool) fprintf(stderr,"-. Loading MERGED MODEL FOR UNKKNOWN WORDS from < %s >\n\n",name);
       model->wrUnk2 = new weightRepository(name,taggerUFilter);
     }
   else strcpy(flow1,flow);
@@ -146,14 +146,14 @@ void tagger::taggerLoadModels(models_t *model, int taggerNumModel)
   if (strcmp(flow1,"RL")==0) sprintf(name,"%s (Right-to-Left)",flow1);
   else sprintf(name,"%s (Left-to-Right)",flow1);
 
-  if (verbose) fprintf(stderr,"\nREADING MODELS < direction =  %s >\n",name);
+  if (verbose_svmtool) fprintf(stderr,"\nREADING MODELS < direction =  %s >\n",name);
 
   sprintf(name,"%s.M%d.%s.MRG",taggerModelName,taggerNumModel,flow1);
-  if (verbose) fprintf(stderr,"-. Loading MERGED MODEL FOR KNOWN WORDS from < %s >\n",name);
+  if (verbose_svmtool) fprintf(stderr,"-. Loading MERGED MODEL FOR KNOWN WORDS from < %s >\n",name);
   model->wr = new weightRepository(name,taggerKFilter);
 
   sprintf(name,"%s.UNK.M%d.%s.MRG",taggerModelName,taggerNumModel,flow1);
-  if (verbose) fprintf(stderr,"-. Loading MERGED MODEL FOR UNKNOWN WORDS from < %s >\n",name);
+  if (verbose_svmtool) fprintf(stderr,"-. Loading MERGED MODEL FOR UNKNOWN WORDS from < %s >\n",name);
   model->wrUnk = new weightRepository(name,taggerUFilter);
 
 }
@@ -170,17 +170,17 @@ void tagger::taggerLoadModelsForTagging()
   sprintf(name,"%s.DICT",taggerModelName);
   if (strcmp(taggerBackupDict,"")!=0)
     {
-      if (verbose) fprintf(stderr,"Loading DICTIONARY from < %s > with BACKUP DICTIONARY from < %s >\n",name,taggerBackupDict);
+      if (verbose_svmtool) fprintf(stderr,"Loading DICTIONARY from < %s > with BACKUP DICTIONARY from < %s >\n",name,taggerBackupDict);
       d  = new dictionary(name,taggerBackupDict);
     }
   else
     {
-      if (verbose) fprintf(stderr,"Loading DICTIONARY from < %s >\n",name);
+      if (verbose_svmtool) fprintf(stderr,"Loading DICTIONARY from < %s >\n",name);
       d  = new dictionary(name);
     }
 
   sprintf(name,"%s.UNKP",taggerModelName);
-  if (verbose) fprintf(stderr,"Loading UNKNOWN WORDS POS from < %s >\n",name);
+  if (verbose_svmtool) fprintf(stderr,"Loading UNKNOWN WORDS POS from < %s >\n",name);
   weightUnk = taggerCreateWeightUnkArray(name);
 
   if ( taggerStrategy == STRA_2P_RELABELING //modstrat 1 
@@ -446,7 +446,7 @@ void tagger::taggerRun()
   end = times(&tbuff2);
 
 
-  if (verbose)
+  if (verbose_svmtool)
     { taggerShowVerbose(contSentences,1);
 
     fprintf(stderr,"* -------------------------------------------------------------------\n");    
@@ -488,7 +488,7 @@ void tagger::taggerDoNormal(int *numWords, int *numSentences)
 
   while ((ret>=0))
     {
-      if (verbose) taggerShowVerbose(contSentences,0);
+      if (verbose_svmtool) taggerShowVerbose(contSentences,0);
 
       if ((strcmp(flow,"LRL")==0) || (strcmp(flow,"LR")==0))
 	contWordsLR = contWordsLR+taggerRightSense();
@@ -512,7 +512,7 @@ void tagger::taggerDoSpecialForUnknown(int *numWords, int *numSentences)
 
   while ((ret>=0))
     {
-      if (verbose) taggerShowVerbose(contSentences,0);
+      if (verbose_svmtool) taggerShowVerbose(contSentences,0);
 
       if ((strcmp(flow,"LRL")==0) || (strcmp(flow,"LR")==0))
 	contWordsLR = contWordsLR+taggerRightSenseSpecialForUnknown();
@@ -538,7 +538,7 @@ void tagger::taggerDoNTimes(int *numWords, int *numSentences,int laps)
   while ((ret>=0))
     {
 
-      if (verbose) taggerShowVerbose(contSentences,0);
+      if (verbose_svmtool) taggerShowVerbose(contSentences,0);
 
       for (int pasadas=0;pasadas<laps;pasadas++)
 	{

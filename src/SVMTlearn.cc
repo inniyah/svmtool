@@ -29,7 +29,7 @@
 #include "er.h"
 #include "common.h"
 
-int verbose = FALSE;
+extern int verbose_svmtool;
 
 void printHelp()
 {
@@ -49,7 +49,7 @@ int options(int argc,char *argv[])
     {
       if (strcmp(argv[i],"-v")!=0 || strcmp(argv[i],"-V")!=0)
 	{ 
-	  verbose = TRUE;	  
+	  verbose_svmtool = TRUE;
 	  return 1;
 	}
       else return -1;
@@ -60,6 +60,8 @@ int options(int argc,char *argv[])
 
 int main(int argc, char *argv[])
 {
+  verbose_svmtool = FALSE;
+  
   erCompRegExp();
 
   int ret = options(argc,argv);

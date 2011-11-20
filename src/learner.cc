@@ -33,7 +33,7 @@
 
 /**************************************************************/
 
-extern int verbose;
+extern int verbose_svmtool;
 double time_svmlight = 0;
 
 /**************************************************************/
@@ -302,7 +302,7 @@ void learner::read_config_file(const char *config_file)
     }
   fclose (tmp);
 
-  if (verbose==TRUE)
+  if (verbose_svmtool==TRUE)
     {
 	fprintf(stderr,"\n* ===================== SVMTlearn configuration ==========================");
 	fprintf(stderr,"\n* config file   = [ %s ]\n* trainset      = [ %s ]\n* model name    = [ %s ]",config_file,TRAINSET,NAME);
@@ -342,10 +342,10 @@ learner::~learner()
  strcpy(str,"");
  if (REMOVE_FILES==TRUE)
  {
-   removeFiles(NAME,RM_TEMP_FILES,0,0,verbose);
+   removeFiles(NAME,RM_TEMP_FILES,0,0,verbose_svmtool);
  }
 
- if ( verbose == TRUE ) fprintf(stderr,"\n\nTERMINATION ... ");
+ if ( verbose_svmtool == TRUE ) fprintf(stderr,"\n\nTERMINATION ... ");
 
  if (TRAINSET!=NULL) delete TRAINSET;
  if (SVMDIR!=NULL) delete SVMDIR;
@@ -353,7 +353,7 @@ learner::~learner()
  if (BLEX!=NULL) delete BLEX;
  if (R!=NULL) delete R;
 
- if ( verbose == TRUE ) fprintf(stderr,"[DONE]\n\n");
+ if ( verbose_svmtool == TRUE ) fprintf(stderr,"[DONE]\n\n");
 }
 
 /***************************************************************/
@@ -363,7 +363,7 @@ void learner::learnerCreatePOSFile(char *modelName, int is_ambp, hash_t *h)
   char name[300];
   if (is_ambp==TRUE)
     {
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.AMBP",modelName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.AMBP",modelName);
       sprintf(name,"%s.AMBP",modelName);
       FILE *f = openFile (name,"w");
       hash_print(h,f);
@@ -371,7 +371,7 @@ void learner::learnerCreatePOSFile(char *modelName, int is_ambp, hash_t *h)
     }
   else
     {
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.UNKP",modelName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.UNKP",modelName);
       sprintf(name,"%s.UNKP",modelName);
       FILE *f = openFile (name,"w");
       hash_print(h,f);
@@ -389,52 +389,52 @@ void learner::learnerCreateDefaultFile(const char *modelName, const char *str)
 
   if (strcmp(str,"A0")==0)
   {
-      if ( verbose == TRUE )  fprintf(stderr,"\nStoring %s.A0",modelName); fprintf(f,"%s",A0);
+      if ( verbose_svmtool == TRUE )  fprintf(stderr,"\nStoring %s.A0",modelName); fprintf(f,"%s",A0);
       sprintf (name,"%s.%s.UNK",modelName,str);
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A0.UNK",modelName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A0.UNK",modelName);
       FILE *funk = openFile(name, "w");
       fprintf(funk,"%s",A0UNK);
       fclose(funk);
   }
   else if (strcmp(str,"A1")==0)
   {
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A1",modelName); fprintf(f,"%s",A1);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A1",modelName); fprintf(f,"%s",A1);
       sprintf (name,"%s.%s.UNK",modelName,str);
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A1.UNK",modelName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A1.UNK",modelName);
       FILE *funk = openFile(name, "w");
       fprintf(funk,"%s",A1UNK);
       fclose(funk);
   }
   else if (strcmp(str,"A2")==0)
   {
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A2",modelName); fprintf(f,"%s",A2);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A2",modelName); fprintf(f,"%s",A2);
       sprintf (name,"%s.%s.UNK",modelName,str);
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A2.UNK",modelName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A2.UNK",modelName);
       FILE *funk = openFile(name, "w");
       fprintf(funk,"%s",A2UNK);
       fclose(funk);
   }
   else if (strcmp(str,"A3")==0)
   {
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A3",modelName); fprintf(f,"%s",A3);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A3",modelName); fprintf(f,"%s",A3);
       sprintf (name,"%s.%s.UNK",modelName,str);
-      if ( verbose == TRUE )  fprintf(stderr,"\nStoring %s.A3.UNK",modelName);
+      if ( verbose_svmtool == TRUE )  fprintf(stderr,"\nStoring %s.A3.UNK",modelName);
       FILE *funk = openFile(name, "w");
       fprintf(funk,"%s",A3UNK);
       fclose(funk);
   }
   else if (strcmp(str,"A4")==0)
   {
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A4",modelName); fprintf(f,"%s",A4);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A4",modelName); fprintf(f,"%s",A4);
       sprintf (name,"%s.%s.UNK",modelName,str);
-      if ( verbose == TRUE ) fprintf(stderr,"\nStoring %s.A4.UNK",modelName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring %s.A4.UNK",modelName);
       FILE *funk = openFile(name, "w");
       fprintf(funk,"%s",A4UNK);
       fclose(funk);
   }
   else if (strcmp(str,"WIN")==0)
     {
-      if ( verbose == TRUE )  fprintf(stderr,"\nStoring %s.WIN",modelName);
+      if ( verbose_svmtool == TRUE )  fprintf(stderr,"\nStoring %s.WIN",modelName);
       fprintf(f,"%d\n%d\n",WINDOW_SIZE,CORE_POSITION);
     }
   fclose(f);
@@ -530,7 +530,7 @@ void learner::learnerCount(char* name, int *nWords, int *nSentences)
 
 void learner::learnerPrintMessage(int numModel, int K_or_U, int LR_or_RL, int is_fex)
 {
-  if (verbose==TRUE)
+  if (verbose_svmtool==TRUE)
     {
       fprintf(stderr,"\n\n* ========================================================================");
       if (is_fex==FALSE) fprintf(stderr,"\n* TRAINING MODEL %d ",numModel);
@@ -736,7 +736,7 @@ void learner::learnerDressNakedSetTrain(dictionary *d,mapping *m,FILE *f, char* 
 	      if (K_or_U==KNOWN) learnerPushSample(wrd,numModel,direction,K_or_U,pos,samplePos,features,d,nNeg,nPos);
 	      else learnerPushSampleUnk(wrd,numModel,direction,K_or_U,pos,samplePos,features,d,nNeg,nPos);
 	      
-	      if ( verbose  == TRUE) showProcessDone(cont , 1000, FALSE,"samples");
+	      if ( verbose_svmtool  == TRUE) showProcessDone(cont , 1000, FALSE,"samples");
 	      
 	      delete features;
 	    }
@@ -788,7 +788,7 @@ void learner::learnerDoLearn(FILE *f,int numModel,int LR_or_RL,int K_or_U,dictio
 
   learnerPrintMessage(numModel,K_or_U,LR_or_RL,FALSE);
 
-  if ( verbose == TRUE )
+  if ( verbose_svmtool == TRUE )
     {
       fprintf(stderr,"\nBuilding MAPPING for MODEL %d [ ",numModel);
       if (K_or_U==KNOWN) fprintf(stderr," KNOWN WORDS - ");
@@ -816,7 +816,7 @@ void learner::learnerDoLearn(FILE *f,int numModel,int LR_or_RL,int K_or_U,dictio
   //Para cada elemento de la lista de etiquetas
   for (int ret=1; ret>=0; ret=lPosToTrain->next())
   {
-      if ( verbose == TRUE ) fprintf(stderr,"\n-----------------------------------------------------------");
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\n-----------------------------------------------------------");
 
       //Obtenemos la etiqueta morfosintáctica
       pInfo = (infoDict *)lPosToTrain->getIndex();
@@ -828,21 +828,21 @@ void learner::learnerDoLearn(FILE *f,int numModel,int LR_or_RL,int K_or_U,dictio
       generateFileName(NAME,pInfo->txt,numModel,LR_or_RL,K_or_U,"SVM",svmFileName);
 
       //Seleccionamos los ejemplos para el entrenamiento para la POS que estamos viendo
-      if ( verbose == TRUE ) fprintf(stderr,"\nPreparing training set for [ %s ] ..",pInfo->txt);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nPreparing training set for [ %s ] ..",pInfo->txt);
 	      learnerDressNakedSetTrain(d,m,f,pInfo->txt,numModel,LR_or_RL, K_or_U,&nPositive,&nNegative);
 
       //Realizamos el entrenamiento llamando a SVM-light
-      if ( verbose == TRUE ) fprintf(stderr,"\nTraining [ %s ] with %d samples: [+] = %d samples ; [-] = %d samples\n",pInfo->txt,nPositive+nNegative,nPositive,nNegative);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nTraining [ %s ] with %d samples: [+] = %d samples ; [-] = %d samples\n",pInfo->txt,nPositive+nNegative,nPositive,nNegative);
        learnerExecSVMlight(SVMDIR,options,posFileName,svmFileName);
 
       //Se insertan los valores obtenidos del entrenamiento en el depósito de pesos
       //y el el hashing de sesgos
-      if ( verbose == TRUE ) fprintf(stderr,"\nAdding elements to MERGED MODEL from [ %s ]",posFileName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nAdding elements to MERGED MODEL from [ %s ]",posFileName);
       wr = learnerBuiltWeightRepository(wr,m,pInfo->txt,svmFileName);
-      if ( verbose == TRUE ) fprintf(stderr," [DONE]");
-      if ( verbose == TRUE ) fprintf(stderr,"\nAdding biases from [ %s ]",posFileName);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr," [DONE]");
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nAdding biases from [ %s ]",posFileName);
       b =  learnerBuiltBias(b,pInfo->txt,svmFileName);
-      if ( verbose == TRUE ) fprintf(stderr," [DONE]");
+      if ( verbose_svmtool == TRUE ) fprintf(stderr," [DONE]");
 
       if (REMOVE_FILES == TRUE)
 	{
@@ -855,16 +855,16 @@ void learner::learnerDoLearn(FILE *f,int numModel,int LR_or_RL,int K_or_U,dictio
   }
   lPosToTrain->setFirst();
 
-  if ( verbose == TRUE ) fprintf(stderr,"\n-----------------------------------------------------------");
+  if ( verbose_svmtool == TRUE ) fprintf(stderr,"\n-----------------------------------------------------------");
   char fileName[100];
   generateFileName(NAME,"",numModel,LR_or_RL,K_or_U,"MRG",fileName);
-  if ( verbose == TRUE ) fprintf(stderr,"\nStoring MERGED MODEL [ %s ]",fileName);
+  if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring MERGED MODEL [ %s ]",fileName);
   //Modificación 180705: Filtrado de pesos
   if ( K_or_U == KNOWN ) wr->wrWrite(fileName, KFILTER); //ADD 180705
   else wr->wrWrite(fileName, UFILTER); //ADD 180705
   //Escribir deposito de pesos en disco
   //wr->wrWrite(fileName); //DEL 180705
-  if ( verbose == TRUE ) fprintf(stderr," [DONE]");
+  if ( verbose_svmtool == TRUE ) fprintf(stderr," [DONE]");
 
   FILE *fwr = openFile(fileName,"a+");
   fprintf (fwr,"BIASES ");
@@ -872,12 +872,12 @@ void learner::learnerDoLearn(FILE *f,int numModel,int LR_or_RL,int K_or_U,dictio
   fclose(fwr);
 
   generateFileName(NAME,"",numModel,LR_or_RL,K_or_U,"B",fileName);
-  if ( verbose == TRUE ) fprintf(stderr,"\nStoring BIASES [ %s ]",fileName);
+  if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nStoring BIASES [ %s ]",fileName);
   FILE *fb =openFile(fileName,"w");
   wr->wrWriteHash(b,fb,'\n');  //Escribir biases en fichero de sesgos
   fclose(fb);
 
-  if ( verbose == TRUE ) fprintf(stderr," [DONE]");
+  if ( verbose_svmtool == TRUE ) fprintf(stderr," [DONE]");
 
   delete m;
   delete wr;
@@ -931,7 +931,7 @@ void learner::learnerTrainModel(char *trainingFileName, dictionary *dKnown,int n
 
   int chunkSize =  (numWords/numChunks) + 1;
 
-  if (verbose == TRUE)
+  if (verbose_svmtool == TRUE)
     {
       fprintf(stderr,"\n* X = %f :: CHUNKSIZE = %d :: CHUNKS = %d",X,chunkSize,numChunks);
       fprintf(stderr,"\n* ========================================================================");
@@ -947,7 +947,7 @@ void learner::learnerTrainModel(char *trainingFileName, dictionary *dKnown,int n
 
       int is_end_of_chunk = FALSE;
       int is_end_of_sentence = FALSE;
-      if ( verbose == TRUE ) fprintf(stderr,"\nChunk %d [ %d ] ",i+1,i*chunkSize);
+      if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nChunk %d [ %d ] ",i+1,i*chunkSize);
 
       //Creamos  el diccionario para entrenar palabras desconocidas
       dictionary *dUnknown = new dictionary(trainingFileName,i*chunkSize, (i+1)*chunkSize - 1 );
@@ -966,7 +966,7 @@ void learner::learnerTrainModel(char *trainingFileName, dictionary *dKnown,int n
 	{  d_for_known = dUnknown; }
       else { d_for_known = dKnown; }
 
-      if ( verbose ==  TRUE ) fprintf(stderr,"\nExtracting features : ");
+      if ( verbose_svmtool ==  TRUE ) fprintf(stderr,"\nExtracting features : ");
 
       nWordsLR = chunkSize;
       nWordsRL = chunkSize;
@@ -1004,7 +1004,7 @@ void learner::learnerTrainModel(char *trainingFileName, dictionary *dKnown,int n
 
 	  contSentences++;
 
-	  if ( verbose  == TRUE) showProcess(contSentences,0);
+	  if ( verbose_svmtool  == TRUE) showProcess(contSentences,0);
 	  //Si es fin de frase recargamos la ventana
 	  if ( is_end_of_sentence == TRUE )
 	    {
@@ -1018,7 +1018,7 @@ void learner::learnerTrainModel(char *trainingFileName, dictionary *dKnown,int n
 	      is_end_of_chunk = TRUE;
 	    }
 	}
-      if ( verbose  == TRUE) showProcess(contSentences,1);
+      if ( verbose_svmtool  == TRUE) showProcess(contSentences,1);
       delete dUnknown;
 
       //Si es necesario borramos los ficheros temporales
@@ -1307,7 +1307,7 @@ void learner::learnerRun(char *train)
   //obtener tamaño del corpus
   learnerCount(TRAINSET,&iWrd,&iSent);
 
-  if ( verbose == TRUE )
+  if ( verbose_svmtool == TRUE )
     {
       fprintf(stderr,"\n* trainset # words        = [ %d ]",iWrd);
       fprintf(stderr,"\n* trainset # sentences    = [ %d ]",iSent);
@@ -1354,8 +1354,8 @@ void learner::learnerRun(char *train)
       int *direction = (int *) pop(&DO);
       
 	//Eliminamos los ficheros anteriores
-      removeFiles(NAME, RM_MODEL_FILES,*numModel, *direction, verbose);
-      removeFiles(NAME, RM_TEMP_FILES ,*numModel, *direction, verbose);
+      removeFiles(NAME, RM_MODEL_FILES,*numModel, *direction, verbose_svmtool);
+      removeFiles(NAME, RM_TEMP_FILES ,*numModel, *direction, verbose_svmtool);
 
       sprintf(name,"A%d",*numModel);
       learnerCreateDefaultFile(NAME,name);
@@ -1370,7 +1370,7 @@ void learner::learnerRun(char *train)
   delete d;
 
   end = times(&tbuff2);
-  if ( verbose == TRUE )
+  if ( verbose_svmtool == TRUE )
     {
       fprintf(stderr,"\n\n* ========================================================================\n");
       showTime ("* SVM-light Time",  time_svmlight, time_svmlight, 0);
@@ -1643,9 +1643,9 @@ int learner::learnerExecSVMlight(char *svmdir, char *options, char *posFile, cha
   strcpy(command,"");
   sprintf(command,"%s/svm_learn -v 0  %s %s %s",svmdir,options,posFile,outFile);  
   
-  if ( verbose == TRUE ) fprintf(stderr,"Executing Joachims svm_light [ with options: %s ]  ",options);
+  if ( verbose_svmtool == TRUE ) fprintf(stderr,"Executing Joachims svm_light [ with options: %s ]  ",options);
   system(command);
-  if ( verbose == TRUE ) fprintf(stderr," [DONE]");
+  if ( verbose_svmtool == TRUE ) fprintf(stderr," [DONE]");
 
   finish = time(0);
 

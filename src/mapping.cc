@@ -25,7 +25,7 @@
 
 /**************************************************/
 
-extern int  verbose;
+extern int verbose_svmtool;
 
 /**************************************************/
 
@@ -231,7 +231,7 @@ int mapping::mappingRepair(int max_mapping_size, int count_cut_off)
   hash_node_t **old_bucket, *old_hash, *tmp;
   int old_size, h, i;
 
-  if ( verbose == TRUE)
+  if ( verbose_svmtool == TRUE)
     fprintf(stderr,"\n\tReducing Mapping (%d) --> size (%d)",count_cut_off,this->mappingNumElements());
 
   old_bucket=tptr->bucket;
@@ -260,7 +260,7 @@ int mapping::mappingRepair(int max_mapping_size, int count_cut_off)
     } /* for */
   }/* if */
 
-  if ( verbose == TRUE)
+  if ( verbose_svmtool == TRUE)
     fprintf(stderr," - deleted (%d) = Final size (%d)",numdel,this->mappingNumElements());
 
   int number=0;
@@ -301,13 +301,13 @@ void mapping::mappingBuilt(FILE *f,int max_mapping_size, int count_cut_off)
 	  this->mappingAddByKey(str);
 	  contador++;
 	}
-        if ( verbose == TRUE ) showProcessDone(contador,300,FALSE,"features");
+        if ( verbose_svmtool == TRUE ) showProcessDone(contador,300,FALSE,"features");
     }
-  if ( verbose == TRUE ) showProcessDone(contador,300,TRUE,"features");
+  if ( verbose_svmtool == TRUE ) showProcessDone(contador,300,TRUE,"features");
 
   if (this->mappingNumElements()>max_mapping_size)
   {
-    if ( verbose == TRUE ) fprintf(stderr,"REDUCING MAPPING: ");
+    if ( verbose_svmtool == TRUE ) fprintf(stderr,"REDUCING MAPPING: ");
     int numdel = this->mappingRepair(max_mapping_size,count_cut_off);
   }
 }

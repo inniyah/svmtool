@@ -27,7 +27,7 @@
 #include "er.h"
 
 
-extern int verbose;
+extern int verbose_svmtool;
 
 /**************************************************/
 
@@ -183,13 +183,13 @@ void dictionary::dictCreate(FILE *f,int limitInf,int limitSup)
   char wrd[200],pos[10];
   int no_chunk = FALSE;
 
-  if ( verbose == TRUE ) fprintf(stderr,"\nCreating Dictionary");
+  if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nCreating Dictionary");
 
   if (limitInf == 0 && limitSup == 0) no_chunk = TRUE;
 
   while (retP>=0 && retW>=0)
     {
-      if ( verbose  == TRUE) showProcessDone(contWordsAdded, 1000, FALSE,"");
+      if ( verbose_svmtool  == TRUE) showProcessDone(contWordsAdded, 1000, FALSE,"");
       retW = readString(f, wrd);
       char *real  = new char [strlen(wrd)+1];
       strcpy(real,wrd);
@@ -251,14 +251,14 @@ void dictionary::dictCreate(FILE *f,int limitInf,int limitSup)
 	delete real; 	  
     }
 
-   if ( verbose == TRUE ) fprintf(stderr,"[ %d words ]",cont);
+   if ( verbose_svmtool == TRUE ) fprintf(stderr,"[ %d words ]",cont);
 }
 
 /**************************************************/
 
 void dictionary::dictRepairFromFile(char *fileName)
 {
-  if ( verbose == TRUE ) fprintf(stderr,"\nReparing Dictionary with file < %s >",fileName);
+  if ( verbose_svmtool == TRUE ) fprintf(stderr,"\nReparing Dictionary with file < %s >",fileName);
   FILE *f = openFile(fileName,"r");
 
   char wrd[250],pos[10];

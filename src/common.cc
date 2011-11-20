@@ -22,6 +22,8 @@
 #include <unistd.h>
 #include "common.h"
 
+int verbose_svmtool = FALSE;
+
 /**************************************************/
 
 /*

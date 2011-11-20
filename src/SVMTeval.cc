@@ -23,7 +23,7 @@
 #include "common.h"
 #include "dict.h"
 
-int verbose = TRUE;
+extern int verbose_svmtool;
 
 /******************************************************************/
 
@@ -367,6 +367,8 @@ int main(int argc, char *argv[])
 {
 	int i = 0;
 	int report_type;
+
+	verbose_svmtool = TRUE;
 
 	if (argc<4)
 	{

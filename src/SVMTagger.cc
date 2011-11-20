@@ -37,7 +37,7 @@
 #define ERRORK  "\nERROR: Value incorrect in -K option.\n"
 #define ERRORU  "\nERROR: Value incorrect in -U option.\n"
 
-int verbose = 0;
+extern int verbose_svmtool;
 
 void printHelp()
 {
@@ -140,6 +140,8 @@ int main(int argc, char *argv[])
 {
 	int ret=0;
 	
+	verbose_svmtool = FALSE;
+	
 	erCompRegExp();
 
 	if ((argc<=1) || ((ret=options(argc,argv))<0))
@@ -177,7 +179,7 @@ int main(int argc, char *argv[])
 		}
 	  else if (strcmp(argv[i],"-s")==0 || strcmp(argv[i],"-S")==0)
 		{ t.taggerPutFlow(argv[i+1]); i++;}
-	  else if (strcmp(argv[i],"-v")==0 || strcmp(argv[i],"-V")==0) verbose = 1;
+	  else if (strcmp(argv[i],"-v")==0 || strcmp(argv[i],"-V")==0) verbose_svmtool = TRUE;
 	  else if (strcmp(argv[i],"-l")==0 || strcmp(argv[i],"-L")==0)
 		{ t.taggerPutWinLength(atoi(argv[i+1])); i++;}
 	  else if (strcmp(argv[i],"-i")==0 || strcmp(argv[i],"-I")==0)
@@ -186,7 +188,7 @@ int main(int argc, char *argv[])
 		{ t.taggerPutBackupDictionary(argv[i+1]); i++;}
 	}
 
-	if (verbose) fprintf(stderr,"\nSVMTool++ v 1.1.2 -- SVMTagger\n\n");
+	if (verbose_svmtool) fprintf(stderr,"\nSVMTool++ v 1.1.2 -- SVMTagger\n\n");
 
 	t.taggerLoadModelsForTagging();
 
