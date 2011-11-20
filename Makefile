@@ -82,7 +82,7 @@ clean:
 	rm -fv $(FIXED_OBJS)
 	rm -fv $(STATIC_FIXED_OBJS)
 	rm -fv $(PROGRAMS)
-	rm -fv *.so *.so* *.a *~
+	rm -fv *.so *.so* *.a src/*.o *~
 
 DESTDIR=
 
