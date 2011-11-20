@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef COMMON_H
+#ifndef SVMT_COMMON_H
 
 #include <time.h>
 #include <sys/times.h>
@@ -68,5 +68,5 @@ void destroyFeatureList(simpleList *, int);
 void createFeatureList(char *, simpleList *);
 void removeFiles(char *, int ,int , int, int);
 
-#define COMMON_H
+#define SVMT_COMMON_H
 #endif

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef WEIGHT_H
+#ifndef SVMT_WEIGHT_H
 
 typedef struct weight_node_t
 {
@@ -26,27 +26,26 @@ typedef struct weight_node_t
 
 class  weightRepository
 {
-	private:
-		hash_t wr;
+private:
+	hash_t wr;
 
-								 //ADD 180705
-		char *wrGetMergeInput(hash_t *tptr, float filter);
-		//char *wrGetMergeInput(hash_t *tptr); //DEL 180705
-		FILE *openFile(char *name, char mode[]);
-		void wrReadMergeModel(FILE *in,float filter);
-		char wrSaltarBlancs(FILE *in,char c,int jmp);
-		void wrAddPOS(uintptr_t obj, char* pos, long double weight);
-	public:
-		long double wrGetWeight(const char *feature,char *pos);
-		void wrAdd(char *feature, char* pos, long double weight);
-		//void wrWrite(const char *outName); //DEL 180705
-								 //ADD 180705
-		void wrWrite(const char *outName, float filter);
-		void wrWriteHash(hash_t *tptr,FILE *f,char separador);
-		weightRepository(char *fileName,float filter);
-		weightRepository();
-		~weightRepository();
+	//char *wrGetMergeInput(hash_t *tptr); //DEL 180705
+	char *wrGetMergeInput(hash_t *tptr, float filter); //ADD 180705
+	FILE *openFile(char *name, char mode[]);
+	void wrReadMergeModel(FILE *in,float filter);
+	char wrSaltarBlancs(FILE *in,char c,int jmp);
+	void wrAddPOS(uintptr_t obj, char* pos, long double weight);
+
+public:
+	long double wrGetWeight(const char *feature,char *pos);
+	void wrAdd(char *feature, char* pos, long double weight);
+	//void wrWrite(const char *outName); //DEL 180705
+	void wrWrite(const char *outName, float filter); //ADD 180705
+	void wrWriteHash(hash_t *tptr,FILE *f,char separador);
+	weightRepository(char *fileName,float filter);
+	weightRepository();
+	~weightRepository();
 };
 
-#define WEIGHT_H
+#define SVMT_WEIGHT_H
 #endif

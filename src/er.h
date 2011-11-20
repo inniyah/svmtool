@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef ER_H
+#ifndef SVMT_ER_H
 
 #include <sys/types.h>
 #include <regex.h>
@@ -32,12 +32,12 @@
 
 extern regex_t  erCard,erCardPunct,erCardSeps,erCardSuffix;
 extern regex_t  erMultiWord,erContainNum,erStartCap,erStartLower,erStartNumber,
-erAllUp,erAllLow,erContainCap,erContainCaps,erContainPeriod,erContainComma;
+                erAllUp,erAllLow,erContainCap,erContainCaps,erContainPeriod,erContainComma;
 
 void erCompRegExp();
 void erFreeRegExp();
-int erLookRegExp2(void *er,char * str);
+int erLookRegExp2(void *er, char * str);
 int erLookRegExp(char *m);
 
-#define ER_H
+#define SVMT_ER_H
 #endif

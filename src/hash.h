@@ -16,49 +16,45 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef SVMT_HASH_H
+
 #include <stdint.h>
 
 #ifdef __cplusplus
-
 extern "C"
 {
-	#endif
+#endif
 
-	typedef struct hash_t
-	{
-								 /* array of hash nodes */
-		struct hash_node_t **bucket;
-		int size;				 /* size of the array */
-		int entries;			 /* number of entries in table */
-		int downshift;			 /* shift cound, used in hash function */
-		int mask;				 /* used to select bits for hashing */
-	} hash_t;
+typedef struct hash_t
+{
+	struct hash_node_t **bucket;   /* array of hash nodes */
+	int size;                      /* size of the array */
+	int entries;                   /* number of entries in table */
+	int downshift;                 /* shift cound, used in hash function */
+	int mask;                      /* used to select bits for hashing */
+} hash_t;
 
-	typedef struct hash_node_t
-	{
-		uintptr_t data;			 /* data in hash node */
-		const char * key;		 /* key for hash lookup */
-		struct hash_node_t *next;/* next node in hash chain */
-	} hash_node_t;
+typedef struct hash_node_t
+{
+	uintptr_t data;                /* data in hash node */
+	const char * key;              /* key for hash lookup */
+	struct hash_node_t *next;      /* next node in hash chain */
+} hash_node_t;
 
-	#define HASH_FAIL -1
+#define HASH_FAIL -1
 
-	void hash_init(hash_t *, int);
+void hash_init(hash_t *, int);
+uintptr_t hash_lookup (const hash_t *, const char *);
+uintptr_t hash_insert (hash_t *, const char *, uintptr_t);
+uintptr_t hash_delete (hash_t *, const char *);
+void hash_destroy(hash_t *);
+char *hash_stats (hash_t *);
+void hash_print(hash_t *,FILE *f);
+void rebuild_table(hash_t *);
 
-	uintptr_t hash_lookup (const hash_t *, const char *);
-
-	uintptr_t hash_insert (hash_t *, const char *, uintptr_t);
-
-	uintptr_t hash_delete (hash_t *, const char *);
-
-	void hash_destroy(hash_t *);
-
-	char *hash_stats (hash_t *);
-
-	void hash_print(hash_t *,FILE *f);
-
-	void rebuild_table(hash_t *);
-
-	#ifdef __cplusplus
+#ifdef __cplusplus
 }
+#endif
+
+#define SVMT_HASH_H
 #endif

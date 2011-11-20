@@ -16,27 +16,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MAPPING_H
+#ifndef SVMT_MAPPING_H
 
 class  mapping
 {
-	private:
-		hash_t *mapByKey;
-		hash_t *mapByNumber;
-		int mapping_counter;
-	public:
-		void  mappingWrite(char *,int);
-		int   mappingAddByKey(const char *key);
-		int   mappingAddNumber(const char *key);
-		int   mappingGetNumberByFeature(const char *key);
-		char *mappingGetFeatureByNumber(const char *key);
-		int   mappingRepair(int maxFeat, int times);
-		int   mappingNumElements();
-		void  mappingBuilt(FILE *f,int mac_mapping_size, int count_cut_off);
+private:
+	hash_t *mapByKey;
+	hash_t *mapByNumber;
+	int mapping_counter;
+public:
+	void  mappingWrite(char *,int);
+	int   mappingAddByKey(const char *key);
+	int   mappingAddNumber(const char *key);
+	int   mappingGetNumberByFeature(const char *key);
+	char *mappingGetFeatureByNumber(const char *key);
+	int   mappingRepair(int maxFeat, int times);
+	int   mappingNumElements();
+	void  mappingBuilt(FILE *f,int mac_mapping_size, int count_cut_off);
 
-		mapping();
-		~mapping();
+	mapping();
+	~mapping();
 };
 
-#define MAPPING_H
+#define SVMT_MAPPING_H
 #endif

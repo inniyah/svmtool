@@ -18,7 +18,7 @@
 
 #include <stdint.h>
 
-#ifndef DICT_H
+#ifndef SVMT_DICT_H
 
 #define TAMTXT 100
 
@@ -75,5 +75,5 @@ class  dictionary
 		void dictWrite(char *outName);
 };
 
-#define DICT_H
+#define SVMT_DICT_H
 #endif

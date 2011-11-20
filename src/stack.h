@@ -16,26 +16,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef STACK_H
+#ifndef SVMT_STACK_H
 
-#define STACKSIZE   100
+#define STACKSIZE 100
 
 typedef enum {FALSE = 0, TRUE = 1}
 boolean;
 
 typedef void *element_type;
-
-/*
-class stack_t
-{
- public:
-	int top;
-	element_type items[STACKSIZE];
-
-	stack_t();
-	~stack_t();
-};
-*/
 
 struct stack_t
 {
@@ -49,5 +37,5 @@ element_type pop(struct stack_t *ps);
 void push(struct stack_t *ps, element_type x);
 element_type stack_top(struct stack_t *ps);
 
-#define STACK_h
+#define SVMT_STACK_h
 #endif

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef SIMPLELIST_H
+#ifndef SVMT_LIST_H
 
 struct listNode
 {
@@ -29,30 +29,30 @@ struct listNode
 class simpleList
 {
 
-	private:
-		//List Control
-		listNode *first;
-		listNode *last;
-		listNode *index;
-		int numObj;
+private:
+	//List Control
+	listNode *first;
+	listNode *last;
+	listNode *index;
+	int numObj;
 
-	public:
-		~simpleList();
-		simpleList();
-		void deleteList();
-		int next();
-		int previous();
-		void setFirst();
-		void *get(int position);
-		void *getIndex();
-		void *getFirst();
-		void *getLast();
-		int show();
-		int add(void *object);
-		int delIndex();
-		int isEmpty();
-		int numElements();
+public:
+	~simpleList();
+	simpleList();
+	void deleteList();
+	int next();
+	int previous();
+	void setFirst();
+	void *get(int position);
+	void *getIndex();
+	void *getFirst();
+	void *getLast();
+	int show();
+	int add(void *object);
+	int delIndex();
+	int isEmpty();
+	int numElements();
 };
 
-#define SIMPLELIST_H
+#define SVMT_LIST_H
 #endif
