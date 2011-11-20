@@ -145,13 +145,13 @@ void weightRepository::wrReadMergeModel(FILE *in,float filter)
 
 	      w->data=atof(value);
 	      if ( absolut(w->data) > absolut(filter) )  
-		hash_insert(obj->hash,w->pos,(int) w);
+		hash_insert(obj->hash,w->pos,(uintptr_t) w);
 	      else delete w;
 	    }
 
 	  c = wrSaltarBlancs(in,c,1);
 
-	  hash_insert(&wr,obj->key, (int) obj);
+	  hash_insert(&wr,obj->key, (uintptr_t) obj);
 	}
       else 
 	{ fgets(garbage,512,in); //while(c=fgetc(in)!='\n');
@@ -163,19 +163,19 @@ void weightRepository::wrReadMergeModel(FILE *in,float filter)
 /***********************************************************/
 
 /*
- * long double weightRepository::wrGetWeight(char *feature,char *pos)
+ * long double weightRepository::wrGetWeight(const char *feature,char *pos)
  * Parámetros:
  *	char *feature: Atributo
  *	char *pos: Etiqueta morfosintáctica
  * Lee el peso para el atributo y la etiqueta recibidos como parámetro.
  */
-long double weightRepository::wrGetWeight(char *feature,char *pos)
+long double weightRepository::wrGetWeight(const char *feature,char *pos)
 {
-  int h = hash_lookup(&wr,feature);
+  uintptr_t h = hash_lookup(&wr,feature);
   if (h!=HASH_FAIL)
     {
       weight_struct_t *obj = (weight_struct_t *)h;
-      int w = hash_lookup(obj->hash,pos);
+      uintptr_t w = hash_lookup(obj->hash,pos);
 
       if (w!=HASH_FAIL)
 	{ weight_node_t *ret = (weight_node_t *)w;
@@ -260,7 +260,7 @@ weightRepository::~weightRepository()
 /*******************************************************/
 
 /*
- * void wrAddPOS(int obj, char* pos, long double weight)
+ * void wrAddPOS(uintptr_t obj, char* pos, long double weight)
  * Parámetros:
  * 	int obj: Apuntador al objeto que contiene el atributo
  *	char *pos: Etiqueta a insertar:
@@ -269,10 +269,10 @@ weightRepository::~weightRepository()
  * por obj. Si la etiqueta ya existe se incrementa el peso con weight. Si 
  * no existe se añade.
  */
-void weightRepository::wrAddPOS(int obj, char* pos, long double weight)
+void weightRepository::wrAddPOS(uintptr_t obj, char* pos, long double weight)
 {
   weight_struct_t *wst = (weight_struct_t *)obj;
-  int x = hash_lookup( wst->hash, pos);
+  uintptr_t x = hash_lookup( wst->hash, pos);
 
   if (x==HASH_FAIL)
     {
@@ -280,7 +280,7 @@ void weightRepository::wrAddPOS(int obj, char* pos, long double weight)
       weight_node_t *w = new weight_node_t;
       strcpy(w->pos,pos);
       w->data=weight;
-      hash_insert( wst->hash,w->pos,(int) w);
+      hash_insert( wst->hash,w->pos,(uintptr_t) w);
     }
   else
     { //Si POS ya esta, incrementamos el peso
@@ -303,7 +303,7 @@ void weightRepository::wrAdd(char *feature, char* pos, long double weight)
 {
   weight_struct_t *obj = (weight_struct_t *)hash_lookup(&wr,feature);
 
-  if ( (int) obj == HASH_FAIL)
+  if ( (uintptr_t) obj == HASH_FAIL)
     {
       // Creamos nueva entrada en WeightRepository
       obj = new weight_struct_t;
@@ -311,24 +311,24 @@ void weightRepository::wrAdd(char *feature, char* pos, long double weight)
       obj->hash  = new hash_t;
       hash_init(obj->hash,10);
       //Añadimos el peso y la etiqueta
-      wrAddPOS((int)obj,pos,weight);
-      hash_insert(&wr,obj->key, (int) obj);
+      wrAddPOS((uintptr_t)obj,pos,weight);
+      hash_insert(&wr,obj->key, (uintptr_t) obj);
     }
   else
   	//Añadimos el peso y la etiqueta
-  	wrAddPOS((int)obj,pos,weight);
+  	wrAddPOS((uintptr_t)obj,pos,weight);
 }
 
 /*******************************************************/
 
 /*
- * wrWrite(char *outName)
+ * wrWrite(const char *outName)
  * Escribe el depósito de pesos  en el fichero con nombre outName.
  *
  * Modificación 180705: 
  *     Añadimos el parámetro "float filter", se utiliza para filtrar pesos
  */
-void weightRepository::wrWrite(char *outName, float filter)
+void weightRepository::wrWrite(const char *outName, float filter)
 {
   weight_struct_t *wst;
   FILE *f;

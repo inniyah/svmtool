@@ -211,7 +211,7 @@ void dictionary::dictCreate(FILE *f,int limitInf,int limitSup)
 
 	  if ( no_chunk == TRUE || is_valid_for_limit_inf || is_valid_for_limit_sup )
 	    {      
-	      if ((int)(aux=(dataDict *)hash_lookup(&d,wrd)) == HASH_FAIL)
+	      if ((uintptr_t)(aux=(dataDict *)hash_lookup(&d,wrd)) == HASH_FAIL)
 		{
 		  aux= new dataDict;
 		  strcpy(aux->wrd,wrd);
@@ -221,7 +221,7 @@ void dictionary::dictCreate(FILE *f,int limitInf,int limitSup)
 		  strcpy(data->txt,pos);
 		  data->num=1;
 		  aux->maybe.add(data);
-		  hash_insert(&d,aux->wrd,(int) aux);
+		  hash_insert(&d,aux->wrd,(uintptr_t) aux);
 		  cont++;
 		}
 	      else dictIncInfo(aux,pos);         
@@ -230,7 +230,7 @@ void dictionary::dictCreate(FILE *f,int limitInf,int limitSup)
 	      if (strcmp(wrd,"@CARD")==0 || strcmp(wrd,"@CARDPUNCT")==0
 		  || strcmp(wrd,"@CARDSEPS")==0 ||  strcmp(wrd,"@CARDSUFFIX")==0) 
 		{
-		  if ((int)(aux2=(dataDict *)hash_lookup(&d,real)) == HASH_FAIL)
+		  if ((uintptr_t)(aux2=(dataDict *)hash_lookup(&d,real)) == HASH_FAIL)
 		  {
 		    aux2 = new dataDict;
 		    strcpy(aux2->wrd,real);
@@ -240,7 +240,7 @@ void dictionary::dictCreate(FILE *f,int limitInf,int limitSup)
 		    strcpy(data->txt,pos);
 		    data->num = 1;
 		    aux2->maybe.add(data);
-		    hash_insert(&d,aux2->wrd,(int) aux2);
+		    hash_insert(&d,aux2->wrd,(uintptr_t) aux2);
 		    cont++;		    
 		  }
 		  else dictIncInfo(aux2,pos);
@@ -307,7 +307,7 @@ void dictionary::dictRepairFromFile(char *fileName)
 	 }
 
 	delete (dataDict *) hash_delete (&d,wrd); 
-	hash_insert(&d,aux->wrd,(int) aux);
+	hash_insert(&d,aux->wrd,(uintptr_t) aux);
       }
    }
    fclose(f);
@@ -407,7 +407,7 @@ void dictionary::dictAddBackup(char *name)
     {
       data = readData(f);
       i = readInt(f);
-      int w = hash_lookup(&d,wrd);	
+      uintptr_t w = hash_lookup(&d,wrd);
       if (w==HASH_FAIL)
       {
 	 aux = new dataDict;
@@ -443,7 +443,7 @@ void dictionary::dictAddBackup(char *name)
 	  else delete data;
 	  i--;
 	}
-       if (w==HASH_FAIL) hash_insert(&d,aux->wrd,(int) aux);     
+       if (w==HASH_FAIL) hash_insert(&d,aux->wrd,(uintptr_t) aux);
  
     } //End while not eof
    fclose(f);
@@ -482,7 +482,7 @@ void dictionary::dictLoad(FILE *in)
 
 	      i--;
 	    }
-	  hash_insert(&d,aux->wrd,(int) aux);
+	  hash_insert(&d,aux->wrd,(uintptr_t) aux);
 	}
       else delete aux;
     }
@@ -497,7 +497,7 @@ int dictionary::getElement(char *key)
 
 /**************************************************/
 
-char *dictionary::getElementWord(int ptr)
+char *dictionary::getElementWord(uintptr_t ptr)
 {
   dataDict *aux = (dataDict *) ptr;
   return aux->wrd;
@@ -505,7 +505,7 @@ char *dictionary::getElementWord(int ptr)
 
 /**************************************************/
 
-int dictionary::getElementNumWord(int ptr)
+int dictionary::getElementNumWord(uintptr_t ptr)
 {
   dataDict *aux = (dataDict *) ptr;
   return aux->numWrd;
@@ -513,7 +513,7 @@ int dictionary::getElementNumWord(int ptr)
 
 /**************************************************/
 
-int dictionary::getElementNumMaybe(int ptr)
+int dictionary::getElementNumMaybe(uintptr_t ptr)
 {
   dataDict *aux = (dataDict *) ptr;
   return aux->numMaybe;
@@ -521,7 +521,7 @@ int dictionary::getElementNumMaybe(int ptr)
 
 /**************************************************/
 
-simpleList *dictionary::getElementMaybe(int ptr)
+simpleList *dictionary::getElementMaybe(uintptr_t ptr)
 {
   dataDict *aux = (dataDict *) ptr;
   return &aux->maybe;
@@ -653,8 +653,8 @@ hash_t *dictionary::dictFindAmbP(int *numPOS)
 		data = (infoDict *) aux->maybe.getIndex();
 		infoDict * tmp = new infoDict;
 		strcpy(tmp->txt,data->txt);
-		tmp->num = data->num;		
-		hash_insert(ambp,tmp->txt,(int) tmp);
+		tmp->num = data->num;
+		hash_insert(ambp,tmp->txt,(uintptr_t) tmp);
 
 		*numPOS++;
 		ret=aux->maybe.next();
@@ -704,8 +704,8 @@ hash_t *dictionary::dictFindUnkP(int *numPOS)
 		data = (infoDict *) aux->maybe.getIndex();
 		infoDict * tmp = new infoDict;
 		strcpy(tmp->txt,data->txt);
-		tmp->num = data->num;		
-		hash_insert(unkp,tmp->txt,(int) tmp);
+		tmp->num = data->num;
+		hash_insert(unkp,tmp->txt,(uintptr_t) tmp);
 		*numPOS++;
 		ret=aux->maybe.next();
 		}

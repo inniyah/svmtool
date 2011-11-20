@@ -39,7 +39,7 @@ private:
 	int  obtainAtrInt(FILE *channel,int *endAtr);
 	void learnerCreateFeatureList(char *name, simpleList *featureList);
 	simpleList *learnerTransformHashInList(hash_t *tptr);
-	void learnerCreateDefaultFile(char *modelName, char *str);
+	void learnerCreateDefaultFile(const char *modelName, const char *str);
 	void learnerCreatePOSFile(char *modelName, int is_ambp, hash_t *h);
 	void learnerCount(char *name, int *sentences, int *words);
 	int learnerExecSVMlight(char *svmdir, char *options, char *posFile, char *outFile);
@@ -54,7 +54,7 @@ private:
 	void learnerDestroyBias(hash_t *h);
    	int learnerIsPossiblePOS(char *wrd, char *pos, int Known_or_Unknown);
   	simpleList *learnerGetPotser(char *wrd, int Known_or_Unknown, dictionary *d);
-  	void learner::learnerTraining(FILE *f,char *modelName, int numModel,int LR_or_RL,int K_or_U,dictionary *d,simpleList *lpos);
+  	void learnerTraining(FILE *f,char *modelName, int numModel,int LR_or_RL,int K_or_U,dictionary *d,simpleList *lpos);
    	void learnerPrintMessage(int numModel, int K_or_U, int LR_or_RL,int is_fex);
   	int  learnerNumChunks(char *trainingFileName,float percentage,int nSentences);
   	int learnerIsInsideList(simpleList *l, char *key);
@@ -65,7 +65,7 @@ private:
   	char *learnerCreateFeatureString(FILE *f,mapping *m);
 
   	char *read_feature_list_from_config_file(FILE *f, char *first_feature);
-  	void read_config_file(char *config_file);
+  	void read_config_file(const char *config_file);
 
 public:
 	learner(char *modelName);

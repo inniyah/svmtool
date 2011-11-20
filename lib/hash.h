@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 
 extern "C" {
@@ -32,7 +34,7 @@ extern "C" {
 
 
 	typedef struct hash_node_t {
-		int data;                           /* data in hash node */
+		uintptr_t data;                     /* data in hash node */
 		const char * key;                   /* key for hash lookup */
 		struct hash_node_t *next;           /* next node in hash chain */
 	} hash_node_t;
@@ -41,11 +43,11 @@ extern "C" {
 
 	void hash_init(hash_t *, int);
 
-	int hash_lookup (const hash_t *, const char *);
+	uintptr_t hash_lookup (const hash_t *, const char *);
 
-	int hash_insert (hash_t *, const char *, int);
+	uintptr_t hash_insert (hash_t *, const char *, uintptr_t);
 
-	int hash_delete (hash_t *, const char *);
+	uintptr_t hash_delete (hash_t *, const char *);
 
 	void hash_destroy(hash_t *);
 

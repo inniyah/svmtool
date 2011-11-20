@@ -48,13 +48,12 @@ struct nodo_feature_list
 };
 
 
-FILE *openFile(char *name, char mode[]);
-void generateFileName(char *name, char *added, int numModel, int direction, int what, char * type, char *out);
+FILE *openFile(const char *name, const char mode[]);
+void generateFileName(const char *name, const char *added, int numModel, int direction, int what, const char * type, char *out);
 
-void showProcessDone(int num,int freq, int isEnd, char *what);
+void showProcessDone(int num,int freq, int isEnd, const char *what);
 void showProcess(int num, int isEnd);
-//void showTime(char *what, clock_t start,clock_t end, struct tms tbuff1,struct tms tbuff2);
-void showTime(char *what, double real, double utime,double stime);
+void showTime(const char *what, double real, double utime,double stime);
 
 int goToWord(FILE *f, int offset);
 

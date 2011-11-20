@@ -67,32 +67,32 @@ char *AP = NULL;
 /**************************************************************/
 
 //ambiguous-right [default]
-char *A0 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\n";
-char *A0UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\na(2)\na(3)\na(4)\nz(2)\nz(3)\nz(4)\nca(1)\ncz(1)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
+const char *A0 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\n";
+const char *A0UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\na(2)\na(3)\na(4)\nz(2)\nz(3)\nz(4)\nca(1)\ncz(1)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
 
 /**************************************************************/
 
 //unambiguous-right
-char *A1 =  "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(1)\np(2)\np(-2,-1)\np(-1,0)\np(-1,1)\np(0,1)\np(1,2)\np(-2,-1,0)\np(-2,-1,1)\np(-1,0,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\n";
-char *A1UNK =  "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(1)\np(2)\np(-2,-1)\np(-1,0)\np(-1,1)\np(0,1)\np(1,2)\np(-2,-1,0)\np(-2,-1,1)\np(-1,0,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
+const char *A1 =  "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(1)\np(2)\np(-2,-1)\np(-1,0)\np(-1,1)\np(0,1)\np(1,2)\np(-2,-1,0)\np(-2,-1,1)\np(-1,0,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\n";
+const char *A1UNK =  "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(1)\np(2)\np(-2,-1)\np(-1,0)\np(-1,1)\np(0,1)\np(1,2)\np(-2,-1,0)\np(-2,-1,1)\np(-1,0,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
 
 /**************************************************************/
 
 //no-right
-char *A2 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\nk(0)\nm(0)\n";
-char *A2UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\nk(0)\nm(0)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
+const char *A2 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\nk(0)\nm(0)\n";
+const char *A2UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\nk(0)\nm(0)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
 
 /**************************************************************/
 
 //unsupervised-learning
-char *A3 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2))\np(-2))\np(-1))\np(-2,-1))\np(-1,1))\np(1,2))\np(-2,-1,1))\np(-1,1,2))\nk(-2))\nk(-1))\nk(1))\nk(2)\n)\nm(-2))\nm(-1))\nm(1))\nm(2)\n";
-char *A3UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2))\np(-2))\np(-1))\np(-2,-1))\np(-1,1))\np(1,2))\np(-2,-1,1))\np(-1,1,2))\nk(-2))\nk(-1))\nk(1))\nk(2)\n)\nm(-2))\nm(-1))\nm(1))\nm(2)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
+const char *A3 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2))\np(-2))\np(-1))\np(-2,-1))\np(-1,1))\np(1,2))\np(-2,-1,1))\np(-1,1,2))\nk(-2))\nk(-1))\nk(1))\nk(2)\n)\nm(-2))\nm(-1))\nm(1))\nm(2)\n";
+const char *A3UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2))\np(-2))\np(-1))\np(-2,-1))\np(-1,1))\np(1,2))\np(-2,-1,1))\np(-1,1,2))\nk(-2))\nk(-1))\nk(1))\nk(2)\n)\nm(-2))\nm(-1))\nm(1))\nm(2)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
 
 /**************************************************************/
 
 //ambiguous-right ++ unknown words on training
-char *A4 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\n";
-char *A4UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
+const char *A4 = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\n";
+const char *A4UNK = "w(-2)\nw(-1)\nw(0)\nw(1)\nw(2)\nw(-2,-1)\nw(-1,0)\nw(0,1)\nw(-1,1)\nw(1,2)\nw(-2,-1,0)\nw(-2,-1,1)\nw(-1,0,1)\nw(-1,1,2)\nw(0,1,2)\np(-2)\np(-1)\np(-2,-1)\np(-1,1)\np(1,2)\np(-2,-1,1)\np(-1,1,2)\nk(0)\nk(1)\nk(2)\nm(0)\nm(1)\nm(2)\na(1)\na(2)\na(3)\na(4)\nz(1)\nz(2)\nz(3)\nz(4)\nL\nSA\nAA\nSN\nCA\nCAA\nCP\nCC\nCN\nMW\n";
 
 /**************************************************************/
 
@@ -122,7 +122,7 @@ char *learner::read_feature_list_from_config_file(FILE *f, char *first_feature)
 
 /**************************************************************/
 
-void learner::read_config_file(char *config_file)
+void learner::read_config_file(const char *config_file)
 {
   int ret1=1,ret2=1,ret3=1;
   char str1[500],str2[500],str3[500];
@@ -252,7 +252,7 @@ void learner::read_config_file(char *config_file)
 
 		  infoDict * etiq = new infoDict;
 		  strcpy(etiq->txt,str2);
-		  hash_insert(learnerAMBP_H,etiq->txt,(int) etiq);
+		  hash_insert(learnerAMBP_H,etiq->txt,(uintptr_t) etiq);
 
 		  if (ret2>0)
 		  {
@@ -267,7 +267,7 @@ void learner::read_config_file(char *config_file)
 
 			etiq = new infoDict;
 			strcpy(etiq->txt,str3);
-			hash_insert(learnerAMBP_H,etiq->txt,(int) etiq);
+			hash_insert(learnerAMBP_H,etiq->txt,(uintptr_t) etiq);
 		      } //EndFor
 		  } //End if(ret2>0)
 		}
@@ -279,7 +279,7 @@ void learner::read_config_file(char *config_file)
 
 		  infoDict * etiq = new infoDict;
 		  strcpy(etiq->txt,str2);
-		  hash_insert(learnerUNKP_H,etiq->txt,(int) etiq);
+		  hash_insert(learnerUNKP_H,etiq->txt,(uintptr_t) etiq);
 		  if (ret2>0)
 		    {
 		      memset(str2,0,strlen(str2));
@@ -293,7 +293,7 @@ void learner::read_config_file(char *config_file)
 
 			  etiq = new infoDict;
 			  strcpy(etiq->txt,str3);
-			  hash_insert(learnerUNKP_H,etiq->txt,(int) etiq);
+			  hash_insert(learnerUNKP_H,etiq->txt,(uintptr_t) etiq);
 			} //Endfor
 		    } //End if(ret2>0)
       		}
@@ -381,7 +381,7 @@ void learner::learnerCreatePOSFile(char *modelName, int is_ambp, hash_t *h)
 
 /***************************************************************/
 
-void learner::learnerCreateDefaultFile(char *modelName, char *str)
+void learner::learnerCreateDefaultFile(const char *modelName, const char *str)
 {
   char name[500];
   sprintf (name,"%s.%s",modelName,str);
@@ -1207,7 +1207,7 @@ weightRepository *learner::learnerBuiltWeightRepository(weightRepository *wr,map
 		{
 		  key = m->mappingGetFeatureByNumber(str);
 		  ret = readTo(f,' ','\n',str);
-		  if ((int)key != HASH_FAIL) wr->wrAdd(key,pos,ld);
+		  if ((uintptr_t)key != HASH_FAIL) wr->wrAdd(key,pos,ld);
 		}
  	    }
 
@@ -1285,7 +1285,7 @@ hash_t *learner::learnerBuiltBias(hash_t *h,char *pos,char *fileName)
   strcpy(w->pos,pos);
   w->data = (long double)0;
   w->data = atof (bias);
-  hash_insert(h,w->pos,(int)w);
+  hash_insert(h,w->pos,(uintptr_t)w);
 
   fclose(f);
   return h;
@@ -1706,7 +1706,7 @@ int learner::learnerNumChunks(char *trainingFileName,float percentage,int nSente
 	  nwords++;
 	  char *w = new char[strlen(wrd)+1];
 	  strcpy(w,wrd);
-	  if ((int)hash_insert(&h1,w,(int) w)==HASH_FAIL) ndwords++;
+	  if ((uintptr_t)hash_insert(&h1,w,(uintptr_t) w)==HASH_FAIL) ndwords++;
 	  if (ret>0) readTo(f,'\n','\n',wrd);
 	}
     }
@@ -1725,7 +1725,7 @@ int learner::learnerNumChunks(char *trainingFileName,float percentage,int nSente
 	  nwords2++;
 	  char *w = new char[strlen(wrd)+1];
 	  strcpy(w,wrd);
-	  if (hash_insert(&h2,w,(int) w)==HASH_FAIL) ndwords2++;
+	  if (hash_insert(&h2,w,(uintptr_t) w)==HASH_FAIL) ndwords2++;
 	  if (ret>0) readTo(f,'\n','\n',wrd);
 	}
     }

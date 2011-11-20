@@ -125,7 +125,7 @@ void hash_init(hash_t *tptr, int buckets)
  *  tptr: Pointer to the hash table
  *  key: The key to lookup
  */
-int hash_lookup(const hash_t *tptr, const char *key)
+uintptr_t hash_lookup(const hash_t *tptr, const char *key)
 {
 	int h;
 	hash_node_t *node;
@@ -151,9 +151,9 @@ int hash_lookup(const hash_t *tptr, const char *key)
  *  key: The key to insert into the hash table
  *  data: A pointer to the data to insert into the hash table
  */
-int hash_insert(hash_t *tptr, const char *key, int data)
+uintptr_t hash_insert(hash_t *tptr, const char *key, uintptr_t data)
 {
-	int tmp;
+	uintptr_t tmp;
 	hash_node_t *node;
 	int h;
 
@@ -185,10 +185,10 @@ int hash_insert(hash_t *tptr, const char *key, int data)
  *  tptr: A pointer to the hash table
  *  key: The key to remove from the hash table
  */
-int hash_delete(hash_t *tptr, const char *key)
+uintptr_t hash_delete(hash_t *tptr, const char *key)
 {
 	hash_node_t *node, *last;
-	int data;
+	uintptr_t data;
 	int h;
 
 	/* find the node to remove */

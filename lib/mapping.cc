@@ -130,7 +130,7 @@ int mapping::mappingAddByKey(const char *key)
 
  	mapping_node_t *tmp = (mapping_node_t *) hash_lookup(mapByKey,key);
 
- 	if ((int)tmp == HASH_FAIL)
+ 	if ((uintptr_t)tmp == HASH_FAIL)
 	{
 		tmp = new mapping_node_t;
 		strcpy(strTmp,"");
@@ -141,8 +141,8 @@ int mapping::mappingAddByKey(const char *key)
 		strcpy(tmp->number,strTmp);
 		mapping_counter++; //endbynum
 		tmp->num=1;
-		hash_insert(mapByKey, tmp->feature, (int) tmp);
-		hash_insert(mapByNumber, tmp->number, (int) tmp); //add by num
+		hash_insert(mapByKey, tmp->feature, (uintptr_t) tmp);
+		hash_insert(mapByNumber, tmp->number, (uintptr_t) tmp); //add by num
 	}
 	else tmp->num++;
 	return atoi(tmp->number);
@@ -162,14 +162,14 @@ int mapping::mappingAddNumber(const char *key)
 	int  ret = -1;
  	mapping_node_t *tmp = (mapping_node_t *) hash_lookup(mapByKey,key);
 
- 	if ((int)tmp != HASH_FAIL)
+ 	if ((uintptr_t)tmp != HASH_FAIL)
 	{
 	    	strcpy(strTmp,"");
 	  	sprintf(strTmp,"%d",mapping_counter);
 		tmp->number = new char[strlen(strTmp)+1];		
 		strcpy(tmp->number,strTmp);
 		mapping_counter++;
-	  	hash_insert(mapByNumber, tmp->number, (int) tmp);
+	  	hash_insert(mapByNumber, tmp->number, (uintptr_t) tmp);
 		ret = atoi(tmp->number);
 	}
 	
@@ -185,7 +185,7 @@ int mapping::mappingAddNumber(const char *key)
 int mapping::mappingGetNumberByFeature(const char *key)
 {
 	mapping_node_t *tmp = (mapping_node_t *)hash_lookup(mapByKey,key);
-	if ( ((int) tmp) == HASH_FAIL) return HASH_FAIL;
+	if ( ((uintptr_t) tmp) == HASH_FAIL) return HASH_FAIL;
 	return atoi(tmp->number);
 }
 
@@ -199,7 +199,7 @@ int mapping::mappingGetNumberByFeature(const char *key)
 char *mapping::mappingGetFeatureByNumber(const char *key)
 {
 	mapping_node_t *tmp = (mapping_node_t *) hash_lookup(mapByNumber,key);
-	if ( ((int) tmp) == HASH_FAIL) return (char *) HASH_FAIL;
+	if ( ((uintptr_t) tmp) == HASH_FAIL) return (char *) HASH_FAIL;
 	return tmp->feature;
 }
 

@@ -33,12 +33,12 @@ class  weightRepository
 	FILE *openFile(char *name, char mode[]);
 	void wrReadMergeModel(FILE *in,float filter);
 	char wrSaltarBlancs(FILE *in,char c,int jmp);
-	void wrAddPOS(int obj, char* pos, long double weight);
+	void wrAddPOS(uintptr_t obj, char* pos, long double weight);
  public:
-	long double wrGetWeight(char *feature,char *pos);
+	long double wrGetWeight(const char *feature,char *pos);
 	void wrAdd(char *feature, char* pos, long double weight);
-	//void wrWrite(char *outName); //DEL 180705
-        void wrWrite(char *outName, float filter); //ADD 180705
+	//void wrWrite(const char *outName); //DEL 180705
+        void wrWrite(const char *outName, float filter); //ADD 180705
 	void wrWriteHash(hash_t *tptr,FILE *f,char separador);
 	weightRepository(char *fileName,float filter);
 	weightRepository();

@@ -85,7 +85,7 @@ hash_t *tagger::taggerCreateBiasHash(char *name)
 	    }
 	  w->data = (long double)0;
 	  w->data = atof (weight);
-	  hash_insert(bias,w->pos,(int)w);
+	  hash_insert(bias,w->pos,(uintptr_t)w);
 	} //end if
       else while(c=fgetc(f)!='\n');
     }

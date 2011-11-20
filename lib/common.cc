@@ -25,13 +25,13 @@
 /**************************************************/
 
 /*
- * FILE *openFile(char *name, char mode[])
+ * FILE *openFile(const char *name, const char mode[])
  * Abre un fichero con el nombre <name> y en el modo <mode> 
  * (r lectura, w escritura, a actualización ...).
  * Devuelve el puntero al fichero
  * En caso de no poder abrir un fichero, termina la ejecucion
  */
-FILE *openFile(char *name, char mode[])
+FILE *openFile(const char *name, const char mode[])
 {
     FILE *f;
     if ((f = fopen(name, mode))== NULL)
@@ -44,9 +44,9 @@ FILE *openFile(char *name, char mode[])
 
 /**************************************************/
 
-void generateFileName(char *name, char *added,int numModel, int direction, int what, char *type, char *out)
+void generateFileName(const char *name, const char *added,int numModel, int direction, int what, const char *type, char *out)
 {
-	strcpy(out,name);	
+	strcpy(out,name);
 	if (strcmp(added,"")!=0 && added!=NULL)
 	  { 
 	    sprintf(out,"%s.",out);
@@ -79,7 +79,7 @@ void showProcess(int num,int isEnd)
 
 /**************************************************/
 
-void showProcessDone(int num,int freq, int isEnd, char *what)
+void showProcessDone(int num,int freq, int isEnd, const char *what)
 {
   if (isEnd) { fprintf(stderr,".%d %s [DONE]\n",num,what); return; }
   else if (num%freq==0) fprintf(stderr,".");
@@ -193,7 +193,7 @@ void qsort(int a[], int lo, int hi) {
 
 /**************************************************/
 
-void showTime(char *what, double real, double utime, double stime)
+void showTime(const char *what, double real, double utime, double stime)
 { 
   char message[200]="";
   sprintf(message,"%s: [ Real Time = %5.3lf secs.( %5.3lf usr + %5.3lf sys = %5.3lf CPU Time) ]\n",what,real,utime,stime,utime+stime);

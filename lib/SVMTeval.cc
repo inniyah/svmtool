@@ -76,7 +76,7 @@ private:
 	int numAmbLevel;
 	int numAmbClass;
 
-	void printHashStats(hash_t *tptr, int put_eol, char *column_name);
+	void printHashStats(hash_t *tptr, int put_eol, const char *column_name);
 	void printKnownVsUnknown(int knownAmb, int knownUnamb, int unknown,int unkHits, int knownHitsAmb,int knownHitsUnamb);
 	void printTaggingSumary(int known,int unknown,int ambiguous,int well,int wellMFT);
 	void printOverallAccuracy(int total, int well, int wellMFT, float pAmb);
@@ -94,7 +94,7 @@ public:
 
 /******************************************************************/
 
-void eval::printHashStats(hash_t *tptr, int put_eol, char *column_name)
+void eval::printHashStats(hash_t *tptr, int put_eol, const char *column_name)
 {
 	fprintf(stderr,"%s\tHITS\t\tTRIALS\t\tACCURACY\t\tMFT-ACCURACY\n",column_name);
 	fprintf(stderr,"* ------------------------------------------------------------------------- \n");
@@ -196,7 +196,7 @@ void eval::printStatsByPOS(hash_t *h)
 
 void eval::addStatsToHash(hash_t *h,char *key,int is_hit, int is_mft)
 {
-	int p = hash_lookup(h,key);
+	uintptr_t p = hash_lookup(h,key);
 	if (p!=HASH_FAIL)
 	{
 		stat_t *s = (stat_t *)p;
@@ -216,7 +216,7 @@ void eval::addStatsToHash(hash_t *h,char *key,int is_hit, int is_mft)
 		s->mft=0;
 		if (is_hit==TRUE) s->hits++;
 		if (is_mft==TRUE) s->mft++;
-		hash_insert(h,s->key,(int) s);
+		hash_insert(h,s->key,(uintptr_t) s);
 	}
 }
 

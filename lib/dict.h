@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <stdint.h>
+
 #ifndef DICT_H
 
 #define TAMTXT 100
@@ -49,10 +51,10 @@ private:
 public:
         void dictAddBackup(char *name);
         int getElement(char *key);
-        char *getElementWord(int ptr);
-        int getElementNumWord(int ptr);
-        int getElementNumMaybe(int ptr);
-        simpleList *getElementMaybe(int ptr);
+        char *getElementWord(uintptr_t ptr);
+        int getElementNumWord(uintptr_t ptr);
+        int getElementNumMaybe(uintptr_t ptr);
+        simpleList *getElementMaybe(uintptr_t ptr);
 	char *getMFT(int w);
 	char *getAmbiguityClass(int w);
 
