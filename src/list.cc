@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -25,213 +25,225 @@
 /****************************************************************************/
 void simpleList::deleteList()
 {
-  int cont = numObj;
+	int cont = numObj;
 
-  if (first==NULL) return;
-  listNode *aux=first;
+	if (first==NULL) return;
+	listNode *aux=first;
 
-  while (first->next!=NULL && cont >= 1)
-    {
-      aux  = first;
-      first = first->next;
-      cont = cont - 1;
-      delete aux;
-    }
+	while (first->next!=NULL && cont >= 1)
+	{
+		aux  = first;
+		first = first->next;
+		cont = cont - 1;
+		delete aux;
+	}
 
-  delete last;
-  numObj = 0;
-  first = NULL;
-  last = NULL;
-  index = NULL;
+	delete last;
+	numObj = 0;
+	first = NULL;
+	last = NULL;
+	index = NULL;
 }
+
 
 /****************************************************************************/
 
 simpleList::~simpleList()
 {
-  deleteList();
+	deleteList();
 }
+
 
 /****************************************************************************/
 
 simpleList::simpleList()
 {
-  numObj = 0;
-  first = NULL;
-  last = NULL;
-  index = NULL;
+	numObj = 0;
+	first = NULL;
+	last = NULL;
+	index = NULL;
 }
+
 
 /****************************************************************************/
 
 /*Move Interest Point to next element */
 int simpleList::next()
 {
-  if  ((index == NULL) || (index->next == NULL)) return -1;
-  index = index->next;
-  return 0;
+	if  ((index == NULL) || (index->next == NULL)) return -1;
+	index = index->next;
+	return 0;
 }
+
 
 /****************************************************************************/
 
 /* Move Interest Point to previous element */
 int simpleList::previous()
 {
-  if ((index==NULL) || (index->previous==NULL)) return -1;
-  index = index->previous;
-  return 0;
+	if ((index==NULL) || (index->previous==NULL)) return -1;
+	index = index->previous;
+	return 0;
 }
+
 
 /****************************************************************************/
 
 /* Get Interest Point */
 void *simpleList::getIndex()
 {
-  if ( index == NULL ) return NULL;
-  else return index->data;
+	if ( index == NULL ) return NULL;
+	else return index->data;
 }
+
 
 /****************************************************************************/
 
 /* Get Interest Point */
 void *simpleList::getFirst()
 {
-  return first->data;
+	return first->data;
 }
+
 
 /****************************************************************************/
 
 void *simpleList::getLast()
 {
-  return last->data;
+	return last->data;
 }
+
 
 /****************************************************************************/
 
 void simpleList::setFirst()
 {
-  index = first;
+	index = first;
 }
+
 
 /****************************************************************************/
 
 void *simpleList::get(int position)
 {
-  listNode *aux;
-  int i;
+	listNode *aux;
+	int i;
 
-  if (numObj == 0 || position >= numObj)
-    return NULL;
+	if (numObj == 0 || position >= numObj)
+		return NULL;
 
-  aux = first;
+	aux = first;
 
-  for(i=0; i<position; i++)
-    {
-      if(aux->next != NULL) aux = aux->next;
-      else return NULL;
-    }
-  return aux->data;
+	for(i=0; i<position; i++)
+	{
+		if(aux->next != NULL) aux = aux->next;
+		else return NULL;
+	}
+	return aux->data;
 }
+
 
 /****************************************************************************/
 
 /* Show list elements */
 int simpleList::show()
 {
-  if (first==NULL) return 0;
+	if (first==NULL) return 0;
 
-  listNode *actual=first;
+	listNode *actual=first;
 
-  while (actual->next!=NULL)
-    {
-      actual=actual->next;
+	while (actual->next!=NULL)
+	{
+		actual=actual->next;
 
-    }
-  return 0;
+	}
+	return 0;
 }
+
 
 /****************************************************************************/
 
 int simpleList::add(void *object)
 {
-  listNode *aux = new listNode;
+	listNode *aux = new listNode;
 
-  if(numObj == 0)
-    {
-      aux->previous=NULL;
-      first = aux;
-      last = aux;
-      index = aux;
-    }
-  else
-    {
-      aux->previous = last;
-      last->next = aux;
-      last = aux;
-    }
-  
-  aux->ord = numObj;
-  aux->data = object;
-  aux->next=NULL;
-  numObj++;
-  return numObj;
+	if(numObj == 0)
+	{
+		aux->previous=NULL;
+		first = aux;
+		last = aux;
+		index = aux;
+	}
+	else
+	{
+		aux->previous = last;
+		last->next = aux;
+		last = aux;
+	}
+
+	aux->ord = numObj;
+	aux->data = object;
+	aux->next=NULL;
+	numObj++;
+	return numObj;
 }
+
 
 /****************************************************************************/
 
 int simpleList::delIndex()
 {
-  listNode *aux = index;
+	listNode *aux = index;
 
-  if(numObj == 0) return -1;
+	if(numObj == 0) return -1;
 
-  if (index==last && index==first)
-    {
-      first = aux->next;
-      aux->previous = NULL;
-      index = first;
-      last = aux->previous;
-      last->next = NULL;
-      index = last;
-    }
-  else if (index==first)
-    {
+	if (index==last && index==first)
+	{
+		first = aux->next;
+		aux->previous = NULL;
+		index = first;
+		last = aux->previous;
+		last->next = NULL;
+		index = last;
+	}
+	else if (index==first)
+	{
 
-      first = aux->next;
-      first->previous = NULL;
-      index = first;
-    }
-  else if (index==last)
-    {
-      last = aux->previous;
-      last->next = NULL;
-      index = last;
-    }
-  else
-    {
-      aux->previous->next = aux->next;
-      aux->next->previous = aux->previous;
-    }
+		first = aux->next;
+		first->previous = NULL;
+		index = first;
+	}
+	else if (index==last)
+	{
+		last = aux->previous;
+		last->next = NULL;
+		index = last;
+	}
+	else
+	{
+		aux->previous->next = aux->next;
+		aux->next->previous = aux->previous;
+	}
 
-  numObj--;
-  delete aux;
-  return numObj;
+	numObj--;
+	delete aux;
+	return numObj;
 }
+
 
 /****************************************************************************/
 
 int simpleList::isEmpty()
 {
-  if (numObj == 0 || first == NULL) return TRUE;
-  else return FALSE;
-    
+	if (numObj == 0 || first == NULL) return TRUE;
+	else return FALSE;
+
 }
+
 
 /****************************************************************************/
 
 int simpleList::numElements()
 {
-  return numObj;
+	return numObj;
 }
-
-

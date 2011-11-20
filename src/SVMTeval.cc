@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -28,12 +28,13 @@ extern int verbose_svmtool;
 /******************************************************************/
 
 /* 
- * Esta estructura contiene el número de aciertos (hits),
- * intentos (trials) y aciertos en caso de etiquetar con la 
- * etiqueta más frecuente (mft) para las palabras de una 
- * clase determinada (key) de palabras. 
+ * Esta estructura contiene el nmero de aciertos (hits),
+ * intentos (trials) y aciertos en caso de etiquetar con la
+ * etiqueta ms frecuente (mft) para las palabras de una
+ * clase determinada (key) de palabras.
  */
-struct stat_t{
+struct stat_t
+{
 	char key[100];
 	int hits;
 	int trials;
@@ -58,38 +59,39 @@ void printHelp()
 	fprintf(stderr,"Example : SVMTeval WSJTP WSJTP.IN WSJTP.OUT\n\n");
 }
 
+
 /************************************************************************/
 
 class eval
 {
-private:
-	char sModel[500];
-	char sGold[500];
-	char sPred[500];
-	FILE *gold;
-	FILE *pred;
-	dictionary *d;
-	hash_t stat_Amb_Level;
-	hash_t stat_Class_Amb;
-	hash_t stat_POS;
-	int report_type;
-	int numAmbLevel;
-	int numAmbClass;
+	private:
+		char sModel[500];
+		char sGold[500];
+		char sPred[500];
+		FILE *gold;
+		FILE *pred;
+		dictionary *d;
+		hash_t stat_Amb_Level;
+		hash_t stat_Class_Amb;
+		hash_t stat_POS;
+		int report_type;
+		int numAmbLevel;
+		int numAmbClass;
 
-	void printHashStats(hash_t *tptr, int put_eol, const char *column_name);
-	void printKnownVsUnknown(int knownAmb, int knownUnamb, int unknown,int unkHits, int knownHitsAmb,int knownHitsUnamb);
-	void printTaggingSumary(int known,int unknown,int ambiguous,int well,int wellMFT);
-	void printOverallAccuracy(int total, int well, int wellMFT, float pAmb);
-	void printStatsByLevel(hash_t *h);
-	void printStatsByAmbiguityClass(hash_t *h);
-	void printStatsByPOS(hash_t *h);
-	void addStatsToHash(hash_t *h,char *key,int is_hit, int is_mft);
-	void makeReport(dictionary *d,FILE *gold, FILE *pred);
-  
-public:
-	eval(char *model, char *goldName, char *predName);
-	void evalPutReportType(int report);
-	void evalRun();
+		void printHashStats(hash_t *tptr, int put_eol, const char *column_name);
+		void printKnownVsUnknown(int knownAmb, int knownUnamb, int unknown,int unkHits, int knownHitsAmb,int knownHitsUnamb);
+		void printTaggingSumary(int known,int unknown,int ambiguous,int well,int wellMFT);
+		void printOverallAccuracy(int total, int well, int wellMFT, float pAmb);
+		void printStatsByLevel(hash_t *h);
+		void printStatsByAmbiguityClass(hash_t *h);
+		void printStatsByPOS(hash_t *h);
+		void addStatsToHash(hash_t *h,char *key,int is_hit, int is_mft);
+		void makeReport(dictionary *d,FILE *gold, FILE *pred);
+
+	public:
+		eval(char *model, char *goldName, char *predName);
+		void evalPutReportType(int report);
+		void evalRun();
 };
 
 /******************************************************************/
@@ -118,13 +120,14 @@ void eval::printHashStats(hash_t *tptr, int put_eol, const char *column_name)
 
 }
 
+
 /******************************************************************/
 
 void eval::printKnownVsUnknown(int knownAmb, int knownUnamb, int unknown,int unkHits, int knownHitsAmb,int knownHitsUnamb)
 {
 	int knownHits = knownHitsAmb + knownHitsUnamb;
 	int known = knownAmb + knownUnamb;
-	
+
 	fprintf(stderr,"* ================= KNOWN vs UNKNOWN WORDS ================================\n");
 	fprintf(stderr,"\tHITS\t\tTRIALS\t\tACCURACY\n");
 	fprintf(stderr,"* -------------------------------------------------------------------------\n");
@@ -139,6 +142,7 @@ void eval::printKnownVsUnknown(int knownAmb, int knownUnamb, int unknown,int unk
 	fprintf(stderr,"* =========================================================================\n");
 }
 
+
 /******************************************************************/
 
 void eval::printTaggingSumary(int known,int unknown,int ambiguous,int well,int wellMFT)
@@ -150,6 +154,7 @@ void eval::printTaggingSumary(int known,int unknown,int ambiguous,int well,int w
 	fprintf(stderr,"#AMBIGUOUS\t = %d\t/\t%d\t--> (%.4f %)\n",ambiguous,known+unknown,100*((float)ambiguous/(known+unknown)));
 	fprintf(stderr,"#MFT baseline\t = %d\t/\t%d\t--> (%.4f %)\n",wellMFT,known+unknown,100*((float)wellMFT/(known+unknown)));
 }
+
 
 /******************************************************************/
 
@@ -164,6 +169,7 @@ void eval::printOverallAccuracy(int total, int well, int wellMFT, float pAmb)
 	fprintf(stderr,"* =========================================================================\n");
 }
 
+
 /******************************************************************/
 
 void eval::printStatsByLevel(hash_t *h)
@@ -173,6 +179,7 @@ void eval::printStatsByLevel(hash_t *h)
 	fprintf(stderr,"* =========================================================================\n");
 	printHashStats(h,FALSE,"LEVEL");
 }
+
 
 /******************************************************************/
 
@@ -184,6 +191,7 @@ void eval::printStatsByAmbiguityClass(hash_t *h)
 	printHashStats(h,TRUE,"CLASS");
 }
 
+
 /******************************************************************/
 
 void eval::printStatsByPOS(hash_t *h)
@@ -191,6 +199,7 @@ void eval::printStatsByPOS(hash_t *h)
 	fprintf(stderr,"* =================== ACCURACY PER PART-OF_SPEECH =========================\n");
 	printHashStats(h,FALSE,"POS");
 }
+
 
 /******************************************************************/
 
@@ -220,6 +229,7 @@ void eval::addStatsToHash(hash_t *h,char *key,int is_hit, int is_mft)
 	}
 }
 
+
 /******************************************************************/
 
 void eval::makeReport(dictionary *d,FILE *gold, FILE *pred)
@@ -236,37 +246,39 @@ void eval::makeReport(dictionary *d,FILE *gold, FILE *pred)
 	{
 		is_mft=FALSE;
 		is_hit=FALSE;
-		
+
 		char gold_line[250] = "\n";
 		char pred_line[250] = "\n";
-	
+
 		while ( !feof(gold) && ( strcmp(gold_line,"\n") == 0 || ( gold_line[0]=='#' && gold_line[1]=='#') ) )
-		  fgets(gold_line,250,gold);
+			fgets(gold_line,250,gold);
 		while ( !feof(pred) && ( strcmp(pred_line,"\n") == 0 || ( pred_line[0]=='#' && pred_line[1]=='#') ) )
-		  fgets(pred_line,250,pred);
+			fgets(pred_line,250,pred);
 
 		ret1 = sscanf (gold_line,"%s %s",wrd1,pos1);
 		ret2 = sscanf (pred_line,"%s %s",wrd2,pos2);
-	
+
 		if ( ret1 >= 0 && ret2 >= 0 )
 		{
 			int w = d->getElement(wrd1);
 			int numMaybe;
-			if (w!=HASH_FAIL) //Si es conocida
+			if (w!=HASH_FAIL)	 //Si es conocida
 			{
 				known++;
 				numMaybe = d->getElementNumMaybe(w);
-				
-				if (numMaybe>1) 
-				    ambiguous++; //Si es ambigua
-				else unambiguous++; //Si no es ambigua
+
+				if (numMaybe>1)
+					ambiguous++; //Si es ambigua
+								 //Si no es ambigua
+				else unambiguous++;
 
 				contAmbiguities += numMaybe;
 
 				mft = d->getMFT(w);
 				if (strcmp(mft,pos1)==0)
-				{  is_mft = TRUE;
-				   wellMFT++;
+				{
+					is_mft = TRUE;
+					wellMFT++;
 				}
 				delete mft;
 			}
@@ -274,33 +286,36 @@ void eval::makeReport(dictionary *d,FILE *gold, FILE *pred)
 
 			if (strcmp(wrd1,wrd2)==0 && strcmp(pos1,pos2)==0)
 			{
-			 well++;
-			 is_hit=TRUE; //Es acierto
-			 if (w==HASH_FAIL) unkHits++; //Acierto para desconocidas
-			 else if (numMaybe>1) 
-			 	knownHitsAmb++; //Acierto para conocidas ambiguas
-			 else knownHitsUnamb++; //Acierto para conocidas no ambiguas
+				well++;
+				is_hit=TRUE;	 //Es acierto
+								 //Acierto para desconocidas
+				if (w==HASH_FAIL) unkHits++;
+				else if (numMaybe>1)
+								 //Acierto para conocidas ambiguas
+						knownHitsAmb++;
+								 //Acierto para conocidas no ambiguas
+				else knownHitsUnamb++;
 			}
 
 			if (report_type==3 || report_type==0)
 			{
-			  //Acumulamos por nivel de ambigüedad
-			  char level[4];
-			  if (w!=HASH_FAIL) sprintf(level,"%d",numMaybe);
-			  else sprintf(level,"UNKOWN");
-			  addStatsToHash(&stat_Amb_Level,level,is_hit,is_mft);
+				//Acumulamos por nivel de ambigedad
+				char level[4];
+				if (w!=HASH_FAIL) sprintf(level,"%d",numMaybe);
+				else sprintf(level,"UNKOWN");
+				addStatsToHash(&stat_Amb_Level,level,is_hit,is_mft);
 			}
 			if (report_type==4 || report_type==0)
 			{
-		 	  //Acumulamos por clase de ambigüedad
-			  char *ambClass = d->getAmbiguityClass(w);
-			  addStatsToHash(&stat_Class_Amb,ambClass,is_hit,is_mft);
-			  delete ambClass;
+				//Acumulamos por clase de ambigedad
+				char *ambClass = d->getAmbiguityClass(w);
+				addStatsToHash(&stat_Class_Amb,ambClass,is_hit,is_mft);
+				delete ambClass;
 			}
 			if (report_type==5 || report_type==0)
 			{
-			  //Acumulamos por etiqueta
-			  addStatsToHash(&stat_POS,pos2,is_hit,is_mft);
+				//Acumulamos por etiqueta
+				addStatsToHash(&stat_POS,pos2,is_hit,is_mft);
 			}
 
 			showProcessDone(totalWords,2000,FALSE,"words");
@@ -310,15 +325,15 @@ void eval::makeReport(dictionary *d,FILE *gold, FILE *pred)
 
 	}
 
-  showProcessDone(totalWords,2000,TRUE,"words");
-  printTaggingSumary(known,unknown,ambiguous,well,wellMFT);
-  if (report_type==2 || report_type==0)	printKnownVsUnknown(ambiguous, unambiguous, unknown,unkHits,knownHitsAmb,knownHitsUnamb);
-  if (report_type==3 || report_type==0) printStatsByLevel(&stat_Amb_Level);
-  if (report_type==4 || report_type==0) printStatsByAmbiguityClass(&stat_Class_Amb);
-  if (report_type==5 || report_type==0) printStatsByPOS(&stat_POS);
+	showProcessDone(totalWords,2000,TRUE,"words");
+	printTaggingSumary(known,unknown,ambiguous,well,wellMFT);
+	if (report_type==2 || report_type==0) printKnownVsUnknown(ambiguous, unambiguous, unknown,unkHits,knownHitsAmb,knownHitsUnamb);
+	if (report_type==3 || report_type==0) printStatsByLevel(&stat_Amb_Level);
+	if (report_type==4 || report_type==0) printStatsByAmbiguityClass(&stat_Class_Amb);
+	if (report_type==5 || report_type==0) printStatsByPOS(&stat_POS);
 
-  float porcentageAmbiguedad = (float)contAmbiguities/ (float) known;
-  printOverallAccuracy(unknown+known,well,wellMFT,porcentageAmbiguedad);
+	float porcentageAmbiguedad = (float)contAmbiguities/ (float) known;
+	printOverallAccuracy(unknown+known,well,wellMFT,porcentageAmbiguedad);
 }
 
 
@@ -333,10 +348,10 @@ eval::eval(char *model, char *goldName, char *predName)
 	hash_init(&stat_Amb_Level,10);
 	hash_init(&stat_Class_Amb,100);
 	hash_init(&stat_POS,100);
-	
+
 	strcpy(sModel, model);
 	strcpy(sGold, goldName);
-	strcpy(sPred, predName);		
+	strcpy(sPred, predName);
 }
 
 
@@ -344,6 +359,7 @@ void eval::evalPutReportType(int report)
 {
 	report_type = report;
 }
+
 
 void eval::evalRun()
 {
@@ -358,9 +374,11 @@ void eval::evalRun()
 	d  = new dictionary(name);
 
 	makeReport(d,gold,pred);
-	
+
 	delete d;
 }
+
+
 /************************************************************************/
 
 int main(int argc, char *argv[])

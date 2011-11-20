@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -20,30 +20,30 @@
 #include "er.h"
 
 /*****************************************************************
-* Regular expressions
-*****************************************************************/
+ * Regular expressions
+ *****************************************************************/
 
 regex_t  erCard,erCardPunct,erCardSeps,erCardSuffix;
 regex_t  erMultiWord,erContainNum,erStartCap,erStartLower,erStartNumber,
-         erAllUp,erAllLow,erContainCap,erContainCaps,erContainPeriod,erContainComma;
+erAllUp,erAllLow,erContainCap,erContainCaps,erContainPeriod,erContainComma;
 
 /**************************************************/
 
-#define ER_STARTCAP	"^[A-Z«—¡…Õ”⁄¿»Ã“ŸƒÀœ÷‹].*$"
-#define ER_STARTLOWER	"^[a-zÁÒ·ÈÌÛ˙‡ËÏÚ˘‰ÎÔˆ¸].*$"
-#define ER_STARTNUMBER	"^[0-9].*$"
-#define ER_ALLUP	"^[A-Z«—¡…Õ”⁄¿»Ã“ŸƒÀœ÷‹]+$"
-#define ER_ALLLOW	"^[a-zÁÒ·ÈÌÛ˙‡ËÏÚ˘‰ÎÔˆ¸]+$"
-#define ER_CONTAINCAP	"^.+[A-Z«—¡…Õ”⁄¿»Ã“ŸƒÀœ÷‹].*$"
-#define ER_CONTAINCAPS	"^.*[A-Z«—¡…Õ”⁄¿»Ã“ŸƒÀœ÷‹].*[A-Z«—¡…Õ”⁄¿»Ã“ŸƒÀœ÷‹].*$"
+#define ER_STARTCAP "^[A-Z\307\321\301\311\315\323\332\300\310\314\322\331\304\313\317\326\334].*$"
+#define ER_STARTLOWER   "^[a-z\347\361\341\351\355\363\372\340\350\354\362\371\344\353\357\366\374].*$"
+#define ER_STARTNUMBER  "^[0-9].*$"
+#define ER_ALLUP    "^[A-Z\307\321\301\311\315\323\332\300\310\314\322\331\304\313\317\326\334]+$"
+#define ER_ALLLOW   "^[a-z\347\361\341\351\355\363\372\340\350\354\362\371\344\353\357\366\374]+$"
+#define ER_CONTAINCAP   "^.+[A-Z\307\321\301\311\315\323\332\300\310\314\322\331\304\313\317\326\334].*$"
+#define ER_CONTAINCAPS  "^.*[A-Z\307\321\301\311\315\323\332\300\310\314\322\331\304\313\317\326\334].*[A-Z\307\321\301\311\315\323\332\300\310\314\322\331\304\313\317\326\334].*$"
 #define ER_CONTAINPERIOD "^.*[.].*$"
 #define ER_CONTAINCOMMA "^.*[,].*$"
-#define ER_CONTAINNUM	"^.*[0-9].*$"
-#define ER_MULTIWORD	"^.*[-].*$"
-#define ER_CARD		"^[0-9]+$"
-#define ER_CARDPUNCT	"^[0-9]+[,!?:.]+$"
-#define ER_CARDSEPS	"^[0-9]+[-,:\\/.][0-9,:\\/.-]+$"
-#define ER_CARDSUFFIX	"^[0-9]+[^0-9]+.*$"
+#define ER_CONTAINNUM   "^.*[0-9].*$"
+#define ER_MULTIWORD    "^.*[-].*$"
+#define ER_CARD     "^[0-9]+$"
+#define ER_CARDPUNCT    "^[0-9]+[,!?:.]+$"
+#define ER_CARDSEPS "^[0-9]+[-,:\\/.][0-9,:\\/.-]+$"
+#define ER_CARDSUFFIX   "^[0-9]+[^0-9]+.*$"
 
 /**************************************************/
 
@@ -67,6 +67,7 @@ void erCompRegExp()
 	regcomp (&erMultiWord,ER_MULTIWORD,REG_EXTENDED);
 }
 
+
 /**************************************************/
 
 void erFreeRegExp()
@@ -89,6 +90,7 @@ void erFreeRegExp()
 	regfree(&erMultiWord);
 }
 
+
 /**************************************************/
 
 /*
@@ -103,6 +105,7 @@ int erLookRegExp2(void *er,char * str)
 
 	return 0;
 }
+
 
 /**************************************************/
 

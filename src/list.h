@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -18,40 +18,40 @@
 
 #ifndef SIMPLELIST_H
 
-struct listNode{
-        int ord;
-        void *data;
-        listNode *next;
-        listNode *previous;
+struct listNode
+{
+	int ord;
+	void *data;
+	listNode *next;
+	listNode *previous;
 };
-
 
 class simpleList
 {
 
-private:
-        //List Control
-        listNode *first;
-        listNode *last;
-        listNode *index;
-        int numObj;
+	private:
+		//List Control
+		listNode *first;
+		listNode *last;
+		listNode *index;
+		int numObj;
 
-public:
-	~simpleList();
-	simpleList();
-	void deleteList();
-        int next();
-        int previous();
-        void setFirst();
-        void *get(int position);
-        void *getIndex();
-        void *getFirst();
-        void *getLast();
-	int show();
-        int add(void *object);
-	int delIndex();
-	int isEmpty();
-	int numElements();
+	public:
+		~simpleList();
+		simpleList();
+		void deleteList();
+		int next();
+		int previous();
+		void setFirst();
+		void *get(int position);
+		void *getIndex();
+		void *getFirst();
+		void *getLast();
+		int show();
+		int add(void *object);
+		int delIndex();
+		int isEmpty();
+		int numElements();
 };
 
 #define SIMPLELIST_H

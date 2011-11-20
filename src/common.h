@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -23,13 +23,13 @@
 #include "list.h"
 
 #define CLOCKS_PER_SECOND  sysconf(_SC_CLK_TCK)
-#define TRUE	1
-#define FALSE	0
-#define	KNOWN	11
-#define	UNKNOWN	22
-#define LEFT_TO_RIGHT		1
-#define RIGHT_TO_LEFT		2
-#define LR_AND_RL		3
+#define TRUE    1
+#define FALSE   0
+#define KNOWN   11
+#define UNKNOWN 22
+#define LEFT_TO_RIGHT       1
+#define RIGHT_TO_LEFT       2
+#define LR_AND_RL       3
 
 #define TAM_MARK  10
 #define TAM_POS   10
@@ -41,12 +41,11 @@
 
 struct nodo_feature_list
 {
-  char mark[TAM_MARK];
-  int  n;
-  char *feature;
-  simpleList l;
+	char mark[TAM_MARK];
+	int  n;
+	char *feature;
+	simpleList l;
 };
-
 
 FILE *openFile(const char *name, const char mode[]);
 void generateFileName(const char *name, const char *added, int numModel, int direction, int what, const char * type, char *out);

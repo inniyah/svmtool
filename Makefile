@@ -76,13 +76,24 @@ $(LIBRARY).a: $(STATIC_OBJS)
 %.static.o: %.c
 	gcc -o $@ -c $+ $(STATIC_CFLAGS)
 
+S: $(SOURCES:.cc=.S) src/SVMTeval.S src/SVMTlearn.S src/SVMTagger.S
+
+%.S: %.cpp
+	g++ -Wall -O0 -o $@ -S $+ $(EXTRA_CFLAGS)
+
+%.S: %.cc
+	g++ -Wall -O0 -o $@ -S $+ $(EXTRA_CFLAGS)
+
+%.S: %.c
+	gcc -Wall -O0 -o $@ -S $+ $(EXTRA_CFLAGS)
+
 clean:
 	rm -fv $(SHARED_OBJS)
 	rm -fv $(STATIC_OBJS)
 	rm -fv $(FIXED_OBJS)
 	rm -fv $(STATIC_FIXED_OBJS)
 	rm -fv $(PROGRAMS)
-	rm -fv *.so *.so* *.a src/*.o *~
+	rm -fv *.so *.so* *.a src/*.o src/*.S *~
 
 DESTDIR=
 

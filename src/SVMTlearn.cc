@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -33,47 +33,48 @@ extern int verbose_svmtool;
 
 void printHelp()
 {
-        fprintf(stderr,"\n\nSVMTool++ v 1.1.2 - SVMTLearner\n\n");
+	fprintf(stderr,"\n\nSVMTool++ v 1.1.2 - SVMTLearner\n\n");
 	fprintf(stderr,"\nUsage : SVMTlearn [options] <model> <config-file>");
 	fprintf(stderr,"\noptions:\n");
 	fprintf(stderr,"\n\t-V or -v:\tverbose");
-	fprintf(stderr,"\n\nExample: SVMTlearn -V config.svmt\n\n");	
+	fprintf(stderr,"\n\nExample: SVMTlearn -V config.svmt\n\n");
 }
+
 
 int options(int argc,char *argv[])
 {
 
-  if ( argc < 2 ) return -1;
+	if ( argc < 2 ) return -1;
 
-  for (int i=1;i<argc-1;i++)
-    {
-      if (strcmp(argv[i],"-v")!=0 || strcmp(argv[i],"-V")!=0)
-	{ 
-	  verbose_svmtool = TRUE;
-	  return 1;
+	for (int i=1;i<argc-1;i++)
+	{
+		if (strcmp(argv[i],"-v")!=0 || strcmp(argv[i],"-V")!=0)
+		{
+			verbose_svmtool = TRUE;
+			return 1;
+		}
+		else return -1;
 	}
-      else return -1;
-    }
 
-  return 0;
+	return 0;
 }
+
 
 int main(int argc, char *argv[])
 {
-  verbose_svmtool = FALSE;
-  
-  erCompRegExp();
+	verbose_svmtool = FALSE;
 
-  int ret = options(argc,argv);
-  if ( ret < 0 )
-    {    
-      printHelp();
-      return -1;
-    }
+	erCompRegExp();
 
-  learner L;
-  L.learnerRun(argv[argc-1]);
-  erFreeRegExp();
-  return 0;
+	int ret = options(argc,argv);
+	if ( ret < 0 )
+	{
+		printHelp();
+		return -1;
+	}
+
+	learner L;
+	L.learnerRun(argv[argc-1]);
+	erFreeRegExp();
+	return 0;
 }
-

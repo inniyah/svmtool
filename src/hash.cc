@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -46,6 +46,7 @@ static int hash(const hash_t *tptr, const char *key)
 	return hashvalue;
 }
 
+
 /**************************************************/
 
 /*
@@ -74,14 +75,15 @@ void rebuild_table(hash_t *tptr)
 			tmp->next=tptr->bucket[h];
 			tptr->bucket[h]=tmp;
 			tptr->entries++;
-		} /* while */
-	} /* for */
+		}						 /* while */
+	}							 /* for */
 
 	/* free memory used by old table */
 	free(old_bucket);
 
 	return;
 }
+
 
 /**************************************************/
 
@@ -108,13 +110,14 @@ void hash_init(hash_t *tptr, int buckets)
 		tptr->size<<=1;
 		tptr->mask=(tptr->mask<<1)+1;
 		tptr->downshift--;
-	} /* while */
+	}							 /* while */
 
 	/* allocate memory for table */
 	tptr->bucket=(hash_node_t **) calloc(tptr->size, sizeof(hash_node_t *));
 
 	return;
 }
+
 
 /**************************************************/
 
@@ -141,6 +144,7 @@ uintptr_t hash_lookup(const hash_t *tptr, const char *key)
 	return(node ? node->data : HASH_FAIL);
 }
 
+
 /**************************************************/
 
 /*
@@ -162,7 +166,7 @@ uintptr_t hash_insert(hash_t *tptr, const char *key, uintptr_t data)
 
 	/* expand the table if needed */
 	while (tptr->entries>=HASH_LIMIT*tptr->size)
-	rebuild_table(tptr);
+		rebuild_table(tptr);
 
 	/* insert the new entry */
 	h=hash(tptr, key);
@@ -175,6 +179,7 @@ uintptr_t hash_insert(hash_t *tptr, const char *key, uintptr_t data)
 
 	return HASH_FAIL;
 }
+
 
 /**************************************************/
 
@@ -209,7 +214,7 @@ uintptr_t hash_delete(hash_t *tptr, const char *key)
 		for (last=tptr->bucket[h]; last && last->next; last=last->next)
 		{
 			if (last->next==node)
-			break;
+				break;
 		}
 		last->next=node->next;
 	}
@@ -220,6 +225,7 @@ uintptr_t hash_delete(hash_t *tptr, const char *key)
 
 	return(data);
 }
+
 
 /**************************************************/
 
@@ -250,6 +256,7 @@ void hash_destroy(hash_t *tptr)
 	}
 }
 
+
 /**************************************************/
 
 /*
@@ -267,10 +274,11 @@ static float alos(hash_t *tptr)
 	{
 		for (node=tptr->bucket[i], j=0; node!=NULL; node=node->next, j++);
 		if (j) alos+=((j*(j+1))>>1);
-	} /* for */
+	}							 /* for */
 
 	return(tptr->entries ? alos/tptr->entries : 0);
 }
+
 
 /**************************************************/
 
@@ -287,6 +295,7 @@ char * hash_stats(hash_t *tptr)
 
 	return(buf);
 }
+
 
 /**************************************************/
 
@@ -310,5 +319,3 @@ void hash_print(hash_t *tptr,FILE *f)
 		}
 	}
 }
-
-
