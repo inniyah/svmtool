@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -16,64 +16,67 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <stdint.h>
+#ifndef DICT_H
 
-#ifndef SVMT_DICT_H
+#include "list.h"
+#include "hash.h"
+#include <set>
+#include <string>
 
 #define TAMTXT 100
 
-struct dataDict
-{
-	char wrd[TAMTXT];
-	int  numWrd;
-	int  numMaybe;
-	simpleList maybe;
-};
-
 struct infoDict
 {
-	char txt[TAMTXT];
-	int  num;
+  std::string pos;
+  int  num;
+};
+
+struct dataDict
+{
+  std::string wrd;
+  int  numWrd;
+  int  numMaybe;
+  simpleList<infoDict*> maybe;
 };
 
 class  dictionary
 {
-	private:
-		hash_t d;
-		//FILE *in;
+  public:
+    dictionary(const std::string& name, const std::string& backup);
+    dictionary(const std::string& name);
+    dictionary(const std::string& name,int limInf, int limSup);
+    ~dictionary();
+    
+    void dictAddBackup(const std::string& name);
+    void addBackupEntry(const std::string& token, const std::set<std::string>& tags);
+    
+    dataDict* getElement(const std::string& key);
+    std::string& getElementWord(dataDict*  ptr);
+    int getElementNumWord(dataDict*  ptr);
+    int getElementNumMaybe(dataDict*  ptr);
+    simpleList<infoDict*>& getElementMaybe(dataDict*  ptr);
+    infoDict* getMFT(dataDict* w);
+    std::string getAmbiguityClass(dataDict*  w);
+    
+    hash_t<infoDict*>* dictFindAmbP(int *numPOS);
+    hash_t<infoDict*>* dictFindUnkP(int *numPOS);
+    void dictRepairFromFile(const std::string& fileName);
+    void dictRepairHeuristic(float dratio);
+    
+    void dictCleanListInfoDict(simpleList< infoDict* >* l, int num);
+    
+    void dictWrite(const std::string& outName);
 
-		// FILE *openFile(char *name, char mode[]);
-		void dictLoad(FILE *in);
-		void dictCreate(FILE *f,int offset, int limit);
-		void dictIncInfo(dataDict *elem, char *pos);
+private:
+  void dictLoad(FILE *in);
+  void dictCreate(FILE *f,int offset, int limit);
+  void dictIncInfo(dataDict *elem, const std::string& pos);
+  
+  int readInt(FILE *in);
+  infoDict *readData(FILE *in);
 
-		int readInt(FILE *in);
-		infoDict *readData(FILE *in);
-
-	public:
-		void dictAddBackup(char *name);
-		int getElement(char *key);
-		char *getElementWord(uintptr_t ptr);
-		int getElementNumWord(uintptr_t ptr);
-		int getElementNumMaybe(uintptr_t ptr);
-		simpleList *getElementMaybe(uintptr_t ptr);
-		char *getMFT(int w);
-		char *getAmbiguityClass(int w);
-
-		hash_t *dictFindAmbP(int *numPOS);
-		hash_t *dictFindUnkP(int *numPOS);
-		void dictRepairFromFile(char *fileName);
-		void dictRepairHeuristic(float dratio);
-
-		void dictCleanListInfoDict(simpleList * l, int num);
-
-		dictionary(char *name, char *backup);
-		dictionary(char *name);
-		dictionary(char *name,int limInf, int limSup);
-		~dictionary();
-
-		void dictWrite(char *outName);
+  hash_t<dataDict*> d;
 };
 
-#define SVMT_DICT_H
+#define DICT_H
 #endif

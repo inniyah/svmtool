@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004 Jesus Gimenez, Lluis Marquez and Senen Moya
+ * Author: Quentin Pradet
+ * Copyright (C) 2011 CEA LIST
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,28 +17,38 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef STRAT_H
+#ifndef NODO_H
+#define NODO_H
 
-//Strategy 0 .- one-pass        (default)
-#define STRA_1P_DEFAULT 0 
+#include "weight.h"
+#include <stack>
 
-//Strategy 1 .- two-passes [revisiting results and relabeling]
-#define STRA_2P_RELABELING 1 
+struct nodo{
+  nodo() :
+    ord(0),
+    weight(0),
+    weightOld(0),
+    next(NULL),
+    previous(NULL) {}
+  ~nodo() { 
+    while(!stackScores.empty()) {
+      delete stackScores.top();
+      stackScores.pop();
+    }
+  
+  }
+  int ord; // word id
+  std::string wrd; // word (or constant like @CARD if cardinal)
+  std::string realWrd; // real word
+  std::string comment;
+  // to be filled by taggerSumWeight
+  std::string pos, posOld;
+  std::string strScores;
+  long double weight, weightOld;
+  std::stack<weight_node_t*> stackScores;
+  // neighbors in the sentence
+  nodo *next;
+  nodo *previous;
+};
 
-//Strategy 2 .- one-pass   [robust against unknown words]
-#define STRA_1P_ROBUST_UNK 2 
-
-//Strategy 3 .- one-pass   [unsupervised learning models]
-#define STRA_1P_UNSUPERVISED 3 
-
-//Strategy 4 .- one-pass   [very robust against unknown words]
-#define STRA_1P_VERY_ROBUST_UNK 4 
-
-//Strategy 5 .- one-pass   [sentence-level likelihood]
-#define STRA_1P_SENTENCE_LEVEL 5 
-
-//Strategy 6 .- one-pass   [robust sentence-level likelihood]
-#define STRA_1P_ROBUST_SENTENCE_LEVEL 6 
-
-#define STRAT_H
 #endif

@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -23,17 +23,16 @@
 /****************************************************************************/
 
 /*
- * empty -- Indica si la pila est vaca o no
+ * empty -- Indica si la pila est  vac¡a o no
  * Parametros:
  *	*ps: puntero a la pila
  * Devuelve:
- *	TRUE si est vaca FALSE si no lo est
+ *	TRUE si est  vac¡a FALSE si no lo est 
  */
 boolean empty(struct stack_t *ps)
 {
 	return((boolean)(ps->top == -1));
 }
-
 
 /****************************************************************************/
 
@@ -47,22 +46,20 @@ void init_stack(struct stack_t *ps)
 	ps->top = -1;
 }
 
-
 /****************************************************************************/
 
 /*
- * pop -- Extrae el elemento del top de la pila si no est vaca
+ * pop -- Extrae el elemento del top de la pila si no est  vac¡a
  * Parametros:
  *	*ps: puntero a la pila
  * Devuelve:
- *	El elemento del top de la pila si no est vaca
+ *	El elemento del top de la pila si no est  vac¡a
  */
 element_type pop(struct stack_t *ps)
 {
-	if (empty(ps))  return NULL;
+	if (empty(ps)) 	return NULL;
 	return(ps->items[ps->top--]);
 }
-
 
 /****************************************************************************/
 
@@ -74,8 +71,7 @@ element_type pop(struct stack_t *ps)
  */
 void push(struct stack_t *ps, element_type x)
 {
-	if (ps->top == STACKSIZE -1)
-	{
+	if (ps->top == STACKSIZE -1) {
 		fprintf(stderr,"Error: Stack Overflow. %d %d\n",ps->top,STACKSIZE-1);
 		exit(1);
 	}
@@ -83,12 +79,11 @@ void push(struct stack_t *ps, element_type x)
 		ps->items[++(ps->top)] = x;
 }
 
-
 /****************************************************************************/
 
 /*
  * stack_top -- Devuelve sin quitarlo de la pila el elemento que esta en el
- * top de la misma, si no est vacia
+ * top de la misma, si no est  vacia
  * Parametros:
  *	*ps: puntero a la pila
  * Devuelve:
@@ -97,10 +92,9 @@ void push(struct stack_t *ps, element_type x)
  */
 element_type stack_top(struct stack_t *ps)
 {
-	if (empty(ps))  return NULL;
+	if (empty(ps)) 	return NULL;
 	return(ps->items[ps->top]);
 }
-
 
 /****************************************************************************/
 

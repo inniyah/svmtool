@@ -1,3 +1,4 @@
+// kate: replace-tabs on; indent-width 2; indent-mode cstyle; encoding latin15;
 /*
  * Copyright (C) 2004 Jesus Gimenez, Lluis Marquez and Senen Moya
  *
@@ -5,7 +6,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -19,203 +20,175 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
+#include <sstream>
+#include <cmath>
 #include "hash.h"
 #include "weight.h"
-
-float absolut(float f)
-{
-	if (f < 0) return (-1)*f;
-	else return f;
-}
 
 
 /***********************************************************/
 
 /*
- * El objeto WeightRepository es el encargado de contener los pesos
- * para cada pareja POS-feature. Un depsito de pesos est formado por
+ * El objeto WeightRepository es el encargado de contener los pesos 
+ * para cada pareja POS-feature. Un depósito de pesos está formado por
  * un hash de objetos weight_struct_t, conteniendo los atributos (key).
  * Cada uno de estos hash es poseedor de un nuevo hash con todas las POS
  * para las cuales se ha encontrado el atributo y su respectivo peso.
  * (weight_node_t).
- */
+*/
 
 /***********************************************************/
 
-//Definicin de ewight_struct_t
+//Definición de weight_struct_t
 class weight_struct_t
 {
-	public:
-		char key[150];
-		hash_t *hash;
+public:
+  std::string key;
+  hash_t<weight_node_t*> *hash;
 
-		//El destructot de este objeto eliminar el contenido del hash
-		~weight_struct_t()
-		{
-			weight_node_t *aux;
-
-			hash_t *tptr = this->hash;
-			hash_node_t **old_bucket, *old_hash, *tmp;
-			int old_size;
-
-			old_bucket=tptr->bucket;
-			old_size=tptr->size;
-
-			//Recorremos todas las entradas de la tabla de hash
-			//Eliminando todos no objetos que encontremos
-			for (int i=0; i<old_size; i++)
-			{
-				old_hash=old_bucket[i];
-				while(old_hash)
-				{
-					tmp=old_hash;
-					old_hash=old_hash->next;
-
-					aux = (weight_node_t *) tmp->data;
-
-					delete aux;
-					aux = NULL;
-				}				 /* while */
-			}					 /* for */
-
-			hash_destroy(hash);
-		}
+  // free inner memory and then free the hash.
+  ~weight_struct_t()
+  {
+    hash->hash_destroy();
+  }
 };
+
+
 
 /***********************************************************/
 
 char weightRepository::wrSaltarBlancs(FILE *in, char c,int jmp)
 {
-	while ((c==':') || (c==' ') || (c=='\n' && jmp==1)) c=fgetc(in);
-	return c;
+  while ((c==':') || (c==' ') || (c=='\n' && jmp==1)) c=fgetc(in);
+  return c;
 }
-
 
 /***********************************************************/
 
 /*
  * void weightRepository::wrReadMergeModel(FILE *in,float filter)
- * Parmetros:
- * 	FILE *in : apuntador al fichero que ha de leer
- *	float filter: Valor para filtrar los pesos que se lean
- * Este mtodo carga un depsito de pesos de un fichero (f), filltrando
- * los pesos que esten por debajo del lmite marcado (filter)
+ * Parámetros:
+ *  FILE *in : apuntador al fichero que ha de leer
+ *  float filter: Valor para filtrar los pesos que se lean
+ * Este método carga un depósito de pesos de un fichero (f), filltrando
+ * los pesos que esten por debajo del límite marcado (filter)
  */
 void weightRepository::wrReadMergeModel(FILE *in,float filter)
 {
-	char c=fgetc(in),key[200],value[100],*endptr;
-	weight_struct_t *obj;
-	char garbage[512];
+  char c=fgetc(in);
 
-	strcpy(key,"");
-	strcpy(value,"");
-	while  (!feof(in))
-	{
-		//c = fgetc(in);
-		if (c!='#')
-		{
-			obj = new weight_struct_t;
-			strcpy(obj->key,"");
+  while  (!feof(in))
+  {
+    //c = fgetc(in);
+    if (c!='#')
+    {
+      weight_struct_t *obj = new weight_struct_t;
+      obj->key = "";
 
-			while (c!=' ')
-			{
-				sprintf(obj->key,"%s%c",obj->key,c);
-				c=fgetc(in);
-			}
+      while (c!=' ')
+      {
+        obj->key.push_back(c);;
+        c=fgetc(in);
+      }
 
-			obj->hash  = new hash_t;
-			hash_init(obj->hash,10);
+      obj->hash  = new hash_t<weight_node_t*>();
+      obj->hash->hash_init(10);
 
-			while ((c!='\n') && (!feof(in)))
-			{
-				weight_node_t *w = new weight_node_t;
+      while ((c!='\n') && (!feof(in)))
+      {
+        std::string pos;
 
-				c = wrSaltarBlancs(in,c,0);
-				strcpy(w->pos,""); strcpy(value,"");
-				while ((c!=':') && (!feof(in)))
-				{
-					sprintf(w->pos,"%s%c",w->pos,c);
-					c=fgetc(in);
-				}
+        c = wrSaltarBlancs(in,c,0);
+        while ((c!=':') && (!feof(in)))
+        {
+//       std::cerr << "Adding '" << c << "' to '" << w->pos << "'" << std::endl;
+          pos.push_back(c);;
+          c=fgetc(in);
+        }
 
-				c = wrSaltarBlancs(in,c,0);
+        c = wrSaltarBlancs(in,c,0);
 
-				while ((c!=' ') && (c!='\n') && (!feof(in)) )
-				{
-					sprintf(value,"%s%c",value,c);
-					c=fgetc(in);
-				}
+        std::string value;
+        while ((c!=' ') && (c!='\n') && (!feof(in)) )
+        {
+          value.push_back(c);;
+          c=fgetc(in);
+        }
+        
+        long double data;
+        std::istringstream iss(value);
+        iss >> data;
+        weight_node_t* node = new weight_node_t();
+        node->data = data;
+        node->pos = pos;
+//         std::cerr << "weightRepository::wrReadMergeModel " << obj->key << " " << pos << " " << data << " " << (long)data << std::endl;
+        if ( fabsf(data) > fabsf(filter) )
+          obj->hash->hash_insert(pos,node);
+        else delete node;
+      }
 
-				w->data=atof(value);
-				if ( absolut(w->data) > absolut(filter) )
-					hash_insert(obj->hash,w->pos,(uintptr_t) w);
-				else delete w;
-			}
+      c = wrSaltarBlancs(in,c,1);
 
-			c = wrSaltarBlancs(in,c,1);
-
-			hash_insert(&wr,obj->key, (uintptr_t) obj);
-		}
-		else
-		{						 //while(c=fgetc(in)!='\n');
-			fgets(garbage,512,in);
-			c = fgetc(in);
-		}
-	}
+      wr.hash_insert(obj->key, obj);
+    }
+    else
+    {
+      char garbage[512];
+      fgets(garbage,512,in); //while(c=fgetc(in)!='\n');
+      c = fgetc(in);
+    }
+  }
 }
-
 
 /***********************************************************/
 
 /*
- * long double weightRepository::wrGetWeight(const char *feature,char *pos)
- * Parmetros:
- *	char *feature: Atributo
- *	char *pos: Etiqueta morfosintctica
- * Lee el peso para el atributo y la etiqueta recibidos como parmetro.
+ * long double weightRepository::wrGetWeight(std::string feature,std::string pos)
+ * Parámetros:
+ *  std::string feature: Atributo
+ *  std::string pos: Etiqueta morfosintáctica
+ * Lee el peso para el atributo y la etiqueta recibidos como parámetro.
  */
-long double weightRepository::wrGetWeight(const char *feature,char *pos)
+long double weightRepository::wrGetWeight(const std::string& feature,const std::string& pos)
 {
-	uintptr_t h = hash_lookup(&wr,feature);
-	if (h!=HASH_FAIL)
-	{
-		weight_struct_t *obj = (weight_struct_t *)h;
-		uintptr_t w = hash_lookup(obj->hash,pos);
+  weight_struct_t *obj = wr.hash_lookup(feature);
+  if ((long)obj!=HASH_FAIL)
+  {
+    weight_node_t *ret = obj->hash->hash_lookup(pos);
 
-		if (w!=HASH_FAIL)
-		{
-			weight_node_t *ret = (weight_node_t *)w;
-			return ret->data;
-		}
-	}
-	return 0;
+    if ((long)ret!=HASH_FAIL && ret != 0)
+    {
+      return ret->data;
+    }
+  }
+  return 0;
 }
-
 
 /***********************************************************/
 
 /*
- * weightRepository(char *fileName,float filter)
- * Parmetros:
- * 	char *fileName : Nombre del fichero
- *	float filter: Valor para filtrar los pesos que se lean
- * Constructor que carga el deposito de pesos del fichero llamado
- * fileName , filltrando los pesos que esten por debajo del lmite
+ * weightRepository(std::string fileName,float filter)
+ * Parámetros:
+ *  std::string fileName : Nombre del fichero
+ *  float filter: Valor para filtrar los pesos que se lean
+ * Constructor que carga el depóosito de pesos del fichero llamado
+ * fileName , filltrando los pesos que esten por debajo del límite
  * marcado (filter)
  */
-weightRepository::weightRepository(char *fileName,float filter)
+weightRepository::weightRepository(const std::string& fileName,float filter)
 {
-	FILE *in;
-	if ((in = fopen(fileName, "rt"))== NULL)
-	{
-		fprintf(stderr, "Error opening weightRepository: %s. It's going to work without it.\n",fileName);
-		exit(0);
-	}
-	hash_init(&wr,10000);
-	wrReadMergeModel(in,filter);
-	fclose(in);
+//   std::cerr << "weightRepository::weightRepository " << fileName << std::endl;
+  FILE *in;
+  if ((in = fopen(fileName.c_str(), "rt"))== NULL)
+    {
+      fprintf(stderr, "Error opening weightRepository: %s. It's going to work without it.\n",fileName.c_str());
+      exit(0);
+    }
+  wr.hash_init(10000);
+  wrReadMergeModel(in,filter);
+  fclose(in);
 }
-
 
 /***********************************************************/
 
@@ -225,9 +198,8 @@ weightRepository::weightRepository(char *fileName,float filter)
  */
 weightRepository::weightRepository()
 {
-	hash_init(&wr,10000);
+  wr.hash_init(10000);
 }
-
 
 /***********************************************************/
 
@@ -237,191 +209,132 @@ weightRepository::weightRepository()
  */
 weightRepository::~weightRepository()
 {
-
-	weight_struct_t *aux;
-
-	hash_t *tptr = &wr;
-	hash_node_t **old_bucket, *old_hash, *tmp;
-	int old_size;
-
-	old_bucket=tptr->bucket;
-	old_size=tptr->size;
-	//Recorre las listas de sinnimos de la tabla de hash
-	//eliminando los datos
-	for (int i=0; i<old_size; i++)
-	{
-		old_hash=old_bucket[i];
-		while(old_hash)
-		{
-			tmp=old_hash;
-			old_hash=old_hash->next;
-
-			aux = (weight_struct_t *) tmp->data;
-
-			delete aux;
-			aux = NULL;
-		}						 /* while */
-	}							 /* for */
-
-	hash_destroy(&wr);
+  wr.hash_destroy();
 }
-
 
 /*******************************************************/
 
 /*
- * void wrAddPOS(uintptr_t obj, char* pos, long double weight)
- * Parmetros:
- * 	int obj: Apuntador al objeto que contiene el atributo
- *	char *pos: Etiqueta a insertar:
- *	long double weight: Peso a asignar a la etiqueta
+ * void wrAddPOS(int obj, std::string pos, long double weight)
+ * Parámetros:
+ *  int obj: Apuntador al objeto que contiene el atributo
+ *  std::string pos: Etiqueta a insertar:
+ *  long double weight: Peso a asignar a la etiqueta
  * Insertamos un nuevo peso para la etiqueta pos, en el atributo indicado
- * por obj. Si la etiqueta ya existe se incrementa el peso con weight. Si
- * no existe se aade.
+ * por obj. Si la etiqueta ya existe se incrementa el peso con weight. Si 
+ * no existe se añade.
  */
-void weightRepository::wrAddPOS(uintptr_t obj, char* pos, long double weight)
+void weightRepository::wrAddPOS(long unsigned int obj, const std::string& pos, long double weight)
 {
-	weight_struct_t *wst = (weight_struct_t *)obj;
-	uintptr_t x = hash_lookup( wst->hash, pos);
+  weight_struct_t *wst = (weight_struct_t *)obj;
+  weight_node_t *wnt = wst->hash->hash_lookup(pos);
 
-	if (x==HASH_FAIL)
-	{
-		//Insertamos Nueva POS
-		weight_node_t *w = new weight_node_t;
-		strcpy(w->pos,pos);
-		w->data=weight;
-		hash_insert( wst->hash,w->pos,(uintptr_t) w);
-	}
-	else
-	{							 //Si POS ya esta, incrementamos el peso
-		weight_node_t *wnt = (weight_node_t *)x;
-		wnt->data = wnt->data + weight;
-	}
+  if ((long)wnt==HASH_FAIL)
+    {
+      //Insertamos Nueva POS
+      weight_node_t *w = new weight_node_t;
+      w->pos = pos;
+      w->data=weight;
+      wst->hash->hash_insert(w->pos,w);
+    }
+  else
+    { //Si POS ya esta, incrementamos el peso
+      wnt->data = wnt->data + weight;
+    }
 }
-
 
 /*******************************************************/
 
 /*
- * void wrAdd(char *feature, char* pos, long double weight)
- * Parmetros:
- * 	char *feature: Atributo a insertar
- *	char *pos: Etiqueta a insertar
- *	long double weight: Peso a asignar a la etiqueta
+ * void wrAdd(std::string feature, std::string pos, long double weight)
+ * Parámetros:
+ *  std::string feature: Atributo a insertar
+ *  std::string pos: Etiqueta a insertar
+ *  long double weight: Peso a asignar a la etiqueta
  * Insertamos un nuevo peso para para el atributo feature y la etiqueta pos.
  */
-void weightRepository::wrAdd(char *feature, char* pos, long double weight)
+void weightRepository::wrAdd(const std::string& feature, const std::string& pos, long double weight)
 {
-	weight_struct_t *obj = (weight_struct_t *)hash_lookup(&wr,feature);
+  weight_struct_t *obj = wr.hash_lookup(feature);
 
-	if ( (uintptr_t) obj == HASH_FAIL)
-	{
-		// Creamos nueva entrada en WeightRepository
-		obj = new weight_struct_t;
-		strcpy(obj->key,feature);
-		obj->hash  = new hash_t;
-		hash_init(obj->hash,10);
-		//Aadimos el peso y la etiqueta
-		wrAddPOS((uintptr_t)obj,pos,weight);
-		hash_insert(&wr,obj->key, (uintptr_t) obj);
-	}
-	else
-		//Aadimos el peso y la etiqueta
-		wrAddPOS((uintptr_t)obj,pos,weight);
+  if ( (long) obj == HASH_FAIL)
+    {
+      // Creamos nueva entrada en WeightRepository
+      obj = new weight_struct_t;
+      obj->key = feature;
+      obj->hash  = new hash_t<weight_node_t*>;
+      obj->hash->hash_init(10);
+      //Añadimos el peso y la etiqueta
+      wrAddPOS((unsigned long)obj,pos,weight);
+      wr.hash_insert(obj->key, obj);
+    }
+  else
+    //Añadimos el peso y la etiqueta
+    wrAddPOS((unsigned long)obj,pos,weight);
 }
-
 
 /*******************************************************/
 
 /*
- * wrWrite(const char *outName)
- * Escribe el depsito de pesos  en el fichero con nombre outName.
+ * wrWrite(std::string outName)
+ * Escribe el depósito de pesos  en el fichero con nombre outName.
  *
- * Modificacin 180705:
- *     Aadimos el parmetro "float filter", se utiliza para filtrar pesos
+ * Modificación 180705:
+ *     Añadimos el parámetro "float filter", se utiliza para filtrar pesos
  */
-void weightRepository::wrWrite(const char *outName, float filter)
+void weightRepository::wrWrite(const std::string& outName, float filter)
 {
-	weight_struct_t *wst;
-	FILE *f;
+  FILE *f;
 
-	if ((f = fopen(outName, "w"))== NULL)
-	{
-		fprintf(stderr, "Error opening file: %s\n",outName);
-		exit(0);
-	}
+  if ((f = fopen(outName.c_str(), "w"))== NULL)
+    {
+      fprintf(stderr, "Error opening file: %s\n",outName.c_str());
+      exit(0);
+    }
 
-	hash_t *tptr = &wr;
+  //Recorremos el hash objeto a objeto
+  for (hash_t<weight_struct_t*>::iterator it  = wr.begin(); it != wr.end(); it++)
+  {
+    weight_struct_t *wst = (weight_struct_t *) ((*it).second);
 
-	hash_node_t *node, *last;
-	int i;
+    //Modificación 180705: añadimos filtrado de pesos
+    //std::string mrg = wrGetMergeInput(wst->hash); //DEL 180705
+    std::string mrg = wrGetMergeInput(wst->hash,filter); //ADD 180705
 
-	//Recorremos el hash objeto a objeto
-	for (i=0; i<tptr->size; i++)
-	{
-		node = tptr->bucket[i];
-		while (node != NULL)
-		{
-			last = node;
-			node = node->next;
-			wst = (weight_struct_t *) last->data;
-
-			//Modificacin 180705: aadimos filtrado de pesos
-			//char *mrg = wrGetMergeInput(wst->hash); //DEL 180705
-								 //ADD 180705
-			char *mrg = wrGetMergeInput(wst->hash,filter);
-
-			if (strcmp(mrg,"")!=0) fprintf(f,"%s%s\n",wst->key,mrg);
-			delete mrg;
-		}						 //while
-	}							 //for
-	fclose (f);
+    if (!mrg.empty()) fprintf(f,"%s%s\n",wst->key.c_str(),mrg.c_str());
+  }//for
+  fclose (f);
 }
-
 
 /*******************************************************/
 /* 
- * char *wrGetMergeInput(hash_t *tptr)
+ * std::string wrGetMergeInput(hash_t *tptr)
  * Devuelve una cadena de caracteres con todas las parejas
  * POS/PESO contenidas en el hash (tptr) de un atributo.
  *
- * Modificacin 180705:
- *        Aadimos parmetro "float filter" para filtrado de pesos
+ * Modificación 180705:
+ *        Añadimos parámetro "float filter" para filtrado de pesos
  */
-char *weightRepository::wrGetMergeInput(hash_t *tptr, float filter)
+std::string weightRepository::wrGetMergeInput(hash_t<weight_node_t*> *tptr, float filter)
 {
-	char *out = new char[3000];
-	weight_node_t *wnt;
-	hash_node_t **old_bucket, *old_hash, *tmp;
-	int old_size, h, i;
+  std::ostringstream out;
 
-	old_bucket=tptr->bucket;
-	old_size=tptr->size;
-	strcpy (out,"");
+  for (hash_t<weight_struct_t*>::iterator it  = wr.begin(); it != wr.end(); it++)
+  {
+    weight_node_t *wnt = (weight_node_t *) ((*it).second);
 
-	for (i=0; i<old_size; i++)
-	{
-		old_hash=old_bucket[i];
-		while(old_hash)
-		{
-			tmp=old_hash;
-			old_hash=old_hash->next;
-			wnt = (weight_node_t *) tmp->data;
-
-			if ((float)wnt->data!=0)
-			{
-				//Modificacin 180705: Filtrado de pesos
-				//Comprobamos que el peso a insertar en el fichero
-				//cumple con el filtrado de pesos.
-								 //ADD 180705
-				if ( absolut(wnt->data) > absolut(filter) )
-					sprintf(out,"%s %s:%.18E",out,wnt->pos, (float) wnt->data);
-			}
-		}						 //while
-	}							 //for
-	return out;
+    if ((float)wnt->data!=0)
+    {
+      //Modificación 180705: Filtrado de pesos
+      //Comprobamos que el peso a insertar en el fichero
+      //cumple con el filtrado de pesos.
+      if ( fabsf(wnt->data) > fabsf(filter) ) //ADD 180705
+      // %s %s:%.18E
+      out << " " << wnt->pos << ":" <<  (float) wnt->data;
+    }
+  } //for
+  return out.str();
 }
-
 
 /*******************************************************/
 
@@ -430,27 +343,18 @@ char *weightRepository::wrGetMergeInput(hash_t *tptr, float filter)
  * Escribe el contenido de un hash (tptr), en fichero apuntado por f.
  * Entre cada pareja POS/PESO pone el caracter separador.
  */
-void weightRepository::wrWriteHash(hash_t *tptr,FILE *f, char separador)
+void weightRepository::wrWriteHash(hash_t<weight_node_t*> *tptr,FILE *f, char separador)
+
 {
-	weight_node_t *wnt;
-	hash_node_t **old_bucket, *old_hash, *tmp;
-	int old_size, h, i;
-	int cont=0;
+  int cont=0;
 
-	old_bucket=tptr->bucket;
-	old_size=tptr->size;
+  for (hash_t<weight_struct_t*>::iterator it  = wr.begin(); it != wr.end(); it++)
+  {
+    weight_node_t *wnt = (weight_node_t *) ((*it).second);
 
-	for (i=0; i<old_size; i++)
-	{
-		old_hash=old_bucket[i];
-		while(old_hash)
-		{
-			tmp=old_hash;
-			old_hash=old_hash->next;
-			wnt = (weight_node_t *) tmp->data;
-			if (separador == '\n' && cont==0) fprintf(f,"%s %2.10f",wnt->pos,(float)wnt->data);
-			else  fprintf(f,"%c%s:%2.10f",separador,wnt->pos,(float)wnt->data);
-			cont++;
-		}						 /* while */
-	}							 /* for */
+    if (separador == '\n' && cont==0) fprintf(f,"%s %2.10f",wnt->pos.c_str(),(float)wnt->data);
+    else  fprintf(f,"%c%s:%2.10f",separador,wnt->pos.c_str(),(float)wnt->data);
+    cont++;
+  } /* for */
 }
+

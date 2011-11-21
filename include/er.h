@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -16,28 +16,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef SVMT_ER_H
+#ifndef ER_H
 
 #include <sys/types.h>
 #include <regex.h>
+#include <string>
 
 /*****************************************************************
- * Regular expression
- *****************************************************************/
+* Regular expression
+*****************************************************************/
 
-#define CARD        100
-#define CARDPUNCT   101
-#define CARDSEPS    102
-#define CARDSUFFIX  103
+#define CARD		100
+#define CARDPUNCT	101
+#define CARDSEPS	102
+#define CARDSUFFIX	103
 
 extern regex_t  erCard,erCardPunct,erCardSeps,erCardSuffix;
 extern regex_t  erMultiWord,erContainNum,erStartCap,erStartLower,erStartNumber,
                 erAllUp,erAllLow,erContainCap,erContainCaps,erContainPeriod,erContainComma;
 
+
 void erCompRegExp();
 void erFreeRegExp();
-int erLookRegExp2(void *er, char * str);
-int erLookRegExp(char *m);
+int erLookRegExp2(void* er, const std::string& str);
+int erLookRegExp(const std::string& m);
 
-#define SVMT_ER_H
+#define ER_H
 #endif

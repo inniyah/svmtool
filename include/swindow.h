@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -17,108 +17,114 @@
  */
 
 #ifndef SWINDOW_H
+#define SWINDOW_H
 
 #include "common.h"
+#include "dict.h"
+#include "reader.h"
+#include <iostream>
+#include <stack>
+#include <iosfwd>
 
-#define CHAR_NULL   '~'
-#define EMPTY_WORD  "_"
-#define EMPTY_POS   "??"
-#define EMPTY       ""
-#define LEFT_TO_RIGHT       1
-#define RIGHT_TO_LEFT       2
-#define PUT_MAX 0
+#define CHAR_NULL	'~'
+#define EMPTY_WORD	"_"
+#define EMPTY_POS	"??"
+#define EMPTY		""
+#define LEFT_TO_RIGHT		1
+#define RIGHT_TO_LEFT		2
+#define PUT_MAX	0
 #define RESET_VALUES 1
 #define PUT_OLD 2
 
 #define COUNTING_FROM_END   111
 #define COUNTING_FROM_BEGIN 222
 
-struct nodo
-{
-	int ord;
-	char wrd[TAM_WORD];
-	char realWrd[TAM_WORD];
-	char comment[TAM_LINE];
-	char pos[TAM_POS],posOld[TAM_POS];
-	long double weight,weightOld;
-	struct stack_t *stackScores;
-	nodo *next;
-	nodo *previous;
-};
+
+struct weight_node_t;
+struct nodo;
 
 class swindow
 {
-	private:
-		FILE *input;
-		//List Control
-		nodo *first;
-		nodo *last;
-		int numObj;
+ public:
+  std::ostream* m_output;
+  reader m_reader;
+  
+  //List Control
+  nodo *first;
+  nodo *last;
+  int numObj;
 
-		//Window Control
-		nodo *index,*beginWin,*endWin;
-		int  lengthWin,posIndex,posBegin,posEnd;
+  //Window Control
+  nodo *index,*beginWin,*endWin;
+  int  lengthWin,posIndex,posBegin,posEnd;
 
-		void init();
-		int iniList();
+  //User window: this allows users to specify their own windows
+  std::vector<nodo*> user_window;
 
-		int readSentence();
-		int readInput();
-		int readInput_old();
-		int winAdd(char *wrd, char *pos);
+  void init(dictionary* dic /*= 0*/);
+  int iniList(dictionary* dic /*= 0*/);
 
-		int winLookRegExp2(void *er,char *str);
-		void winCompRegExp();
-		void winFreeRegExp();
+  int readSentence(dictionary* dic /*= 0*/);
+  int readInput(dictionary* dic);
+  void winAdd(nodo * node);
 
-	public:
-		int winLookRegExp(char *m);
-		int winMaterializePOSValues(int action);
+  int winLookRegExp2(void *er,const std::string& str);
+  void winCompRegExp();
+  void winFreeRegExp();
 
-		~swindow();
-		swindow(FILE *input);
-		swindow(FILE *input,int number, int position);
-		swindow(FILE *input,int number);
-		int next();
-		int previous();
-		nodo *getIndex();
-		nodo *get(int position,int direction);
-		int show();
+ public:
+  int winLookRegExp(const std::string& m);
+  int winMaterializePOSValues(int action);
 
-		void putLengthWin(int l);
-		void putIndex(int i);
+  ~swindow();
+  swindow(std::istream& input, std::ostream* output, dictionary* dic /*= 0*/);
+  swindow(std::istream& input,int number, int position, std::ostream* output, dictionary* dic /*= 0*/);
+  swindow(std::istream& input,int number, std::ostream* output, dictionary* dic /*= 0*/);
+  swindow(int lengthWin, dictionary *dic);
+  bool next();
+  bool previous();
+  nodo *getIndex();
+  nodo *get(int position,int direction);
+  nodo *get_user(int position);
+  
+  nodo *get_intern(int position);
+  int show(int showScoresFlag, int showComments);
 
-		int sentenceLength();
+  void putLengthWin(int l);
+  void putIndex(int i);
 
-		int winExistUnkWord(int direction, dictionary *d);
+  int sentenceLength();
 
-		void winPushWordFeature(void *ptr,dictionary *d, struct stack_t *pila,int direction);
-		void winPushPosFeature(void *ptr,dictionary *d, struct stack_t *pila,int direction);
-		void winPushAmbiguityFeature(void *ptr,dictionary *d, struct stack_t *pila,int direction);
-		void winPushMFTFeature(void *ptr,dictionary *d, struct stack_t *pila,int direction);
-		void winPushMaybeFeature(void *ptr,dictionary *d, struct stack_t *pila,int direction);
-		void winPushSwnFeature(struct stack_t *pila);
-		void winPushUnknownFeatures(char *str, struct stack_t *pila);
+  void setWindow(const std::vector<nodo*>&);
 
-		void winPushSuffixFeature(char *wrd, struct stack_t *pila,int longitud);
-		void winPushPrefixFeature(char *wrd, struct stack_t *pila,int longitud);
-		//void winPushStartCapFeature(char *wrd, struct stack_t *pila);
-		void winPushAllUpFeature(char *wrd,stack_t *pila);
-		void winPushAllLowFeature(char *wrd,stack_t *pila);
-		void winPushContainCapFeature(char *wrd, stack_t *pila);
-		void winPushContainCapsFeature(char *wrd, stack_t *pila);
-		void winPushContainPeriodFeature(char *wrd, stack_t *pila);
-		void winPushContainCommaFeature(char *wrd, stack_t *pila);
-		void winPushContainNumFeature(char *wrd, stack_t *pila);
-		void winPushMultiwordFeature(char *wrd, stack_t *pila);
-		void winPushLetterFeature(char *, stack_t *, int, int );
-		void winPushLenghtFeature(char *wrd, stack_t *pila);
-		void winPushStartWithCapFeature(char *,stack_t *);
-		void winPushStartWithLowerFeature(char *,stack_t *);
-		void winPushStartWithNumberFeature(char *,stack_t *);
-		int iniGeneric();
-		void deleteList();
+  int winExistUnkWord(int direction, dictionary *d);
+
+  void winPushWordFeature(void* ptr, dictionary* d, stack< string >& pila, int direction);
+  void winPushPosFeature(void *ptr,dictionary *d, std::stack<std::string>& pila,int direction);
+  void winPushAmbiguityFeature(void *ptr,dictionary *d, std::stack<std::string>& pila,int direction);
+  void winPushMFTFeature(void *ptr,dictionary *d, std::stack<std::string>& pila,int direction);
+  void winPushMaybeFeature(void *ptr,dictionary *d, std::stack<std::string>& pila,int direction);
+  void winPushSwnFeature(std::stack<std::string>& pila);
+
+  void winPushSuffixFeature(const std::string& wrd, std::stack<std::string>& pila,int longitud);
+  void winPushPrefixFeature(const std::string& wrd, std::stack<std::string>& pila,int longitud);
+  //void winPushStartCapFeature(const std::string& wrd, struct std::stack *pila);
+  void winPushAllUpFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushAllLowFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushContainCapFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushContainCapsFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushContainPeriodFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushContainCommaFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushContainNumFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushMultiwordFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushLetterFeature(const std::string& wrd, std::stack<std::string>& pila, int where, int position );
+  void winPushLenghtFeature(const std::string& wrd, std::stack<std::string>& pila);
+  void winPushStartWithCapFeature(const std::string& wrd, std::stack<std::string>& pila );
+  void winPushStartWithLowerFeature(const std::string& wrd, std::stack<std::string>& pila );
+  void winPushStartWithNumberFeature(const std::string& wrd, std::stack<std::string>& pila );
+  int iniGeneric(dictionary* dic /*= 0*/);
+  void deleteList();
 };
 
-#define SWINDOW_W
+
 #endif
