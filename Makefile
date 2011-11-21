@@ -3,13 +3,13 @@ PROGRAMS=SVMTeval SVMTlearn SVMTagger
 
 all: $(LIBRARY).a $(LIBRARY).so $(PROGRAMS)
 
-SVMTeval: src/SVMTeval.static.o $(LIBRARY).a $(LIBRARY).so
+SVMTeval: src/bin/SVMTeval.static.o $(LIBRARY).a $(LIBRARY).so
 	g++ $(LDFLAGS) $(EXTRA_LDFLAGS) $< -o $@ -L. -lsvmtool++ $(LIBS)
 
-SVMTlearn: src/SVMTlearn.static.o $(LIBRARY).a $(LIBRARY).so
+SVMTlearn: src/bin/SVMTlearn.static.o $(LIBRARY).a $(LIBRARY).so
 	g++ $(LDFLAGS) $(EXTRA_LDFLAGS) $< -o $@ -L. -lsvmtool++ $(LIBS)
 
-SVMTagger: src/SVMTagger.static.o $(LIBRARY).a $(LIBRARY).so
+SVMTagger: src/bin/SVMTagger.static.o $(LIBRARY).a $(LIBRARY).so
 	g++ $(LDFLAGS) $(EXTRA_LDFLAGS) $< -o $@ -L. -lsvmtool++ $(LIBS)
 
 MAJOR=0
@@ -76,7 +76,7 @@ $(LIBRARY).a: $(STATIC_OBJS)
 %.static.o: %.c
 	gcc -o $@ -c $+ $(STATIC_CFLAGS)
 
-S: $(SOURCES:.cc=.S) src/SVMTeval.S src/SVMTlearn.S src/SVMTagger.S
+S: $(SOURCES:.cc=.S) src/bin/SVMTeval.S src/bin/SVMTlearn.S src/bin/SVMTagger.S
 
 %.S: %.cpp
 	g++ -Wall -O0 -o $@ -S $+ $(EXTRA_CFLAGS)
@@ -93,7 +93,7 @@ clean:
 	rm -fv $(FIXED_OBJS)
 	rm -fv $(STATIC_FIXED_OBJS)
 	rm -fv $(PROGRAMS)
-	rm -fv *.so *.so* *.a src/*.o src/*.S *~
+	rm -fv *.so *.so* *.a src/*.o src/bin/*.o src/*.S src/bin/*.S *~
 
 DESTDIR=
 
