@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
   fprintf(stderr,"\n\t\tapiTaggerInitialize( 0, \"LR\", 7, 3, 0, 0)\n\n");
   apiTaggerInitialize( 0, "LR", 7, 3, 0, 0);
 
-  fprintf(stderr,"3.- Tagging Sentence --> apiTaggerRun(<Tokenized Text>,<Number of words>)\n");
+  fprintf(stderr,"3.- Tagging Sentence --> apiTaggerRun(<Tokenized Text>,<Number of words>)\n");	
   fprintf(stderr,"\n\t\tapiTaggerRun(\"Hello world ! It is a sample program .\",9)\n\n");
   apiResult *ret = apiTaggerRun("Hello world ! It is a sample program .",9);
   
