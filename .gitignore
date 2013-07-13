@@ -1,0 +1,10 @@
+*.so
+*.so*
+*.a
+*.S
+*~
+src/*.o
+src/bin/*.o
+SVMTagger
+SVMTeval
+SVMTlearn
