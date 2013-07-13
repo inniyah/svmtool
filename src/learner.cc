@@ -901,7 +901,7 @@ learnerDressNakedSetTrain(d,m,f,pInfo->pos,numModel,LR_or_RL, K_or_U,&nPositive,
  */
 void learner::learnerTrainModel(const std::string& trainingFileName, dictionary *dKnown,int numModel, int direction, int /*numSent*/,int numWords, int numChunks)
 {
-  FILE *fKnownRL,*fUnknownRL,*fUnknownLR,*fKnownLR;
+  FILE *fKnownRL = NULL,*fUnknownRL = NULL,*fUnknownLR = NULL,*fKnownLR = NULL;
   int contSentences = 0, ret = 1;
   std::ostringstream name;
 
@@ -1478,7 +1478,7 @@ void learner::learnerGetFeatures(nodo* elem, std::stack<std::string>& stk, dicti
     else if (aux->mark == MFTMARK)  sw->winPushMFTFeature((void *)aux,d,stk,direction);
     else
     {
-      int *param;
+      int *param = NULL;
       if (!aux->l.isEmpty())
       {
         param = (int *) aux->l.getIndex();

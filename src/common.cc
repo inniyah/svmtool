@@ -276,7 +276,7 @@ int ordenarStringPorParejas(const char *szIn, char *szOut, int depth, char *szIn
 
 int obtainMark(FILE *channel,std::string& mark)
 {  
-    int ret;
+    int ret = 0; // 0 means readTo found <endLine>
     mark = "";
     while (mark.empty()) ret = readTo(channel,'(','\n',mark);
  

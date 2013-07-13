@@ -15,14 +15,15 @@ SVMTagger: src/bin/SVMTagger.static.o $(LIBRARY).a $(LIBRARY).so
 MAJOR=0
 MINOR=0
 
-SOURCES = $(shell find src -name "*.cc" -maxdepth 1)
+SOURCES = $(shell find src -maxdepth 1 -name "*.cc")
 INCLUDE_DIR = include
 
 SHARED_OBJS = $(SOURCES:.cc=.shared.o)
 STATIC_OBJS = $(SOURCES:.cc=.static.o)
 
+CFLAGS= -O2 -g -std=c++0x -Wall -Wno-unused-parameter -Werror
 EXTRA_CFLAGS=-I$(INCLUDE_DIR)
-STATIC_CFLAGS= -O2 -g -std=c++0x -Wall -Wno-unused-parameter $(EXTRA_CFLAGS)
+STATIC_CFLAGS= $(CFLAGS) $(EXTRA_CFLAGS)
 SHARED_CFLAGS= $(STATIC_CFLAGS) -fPIC
 
 LDFLAGS= -Wl,-z,defs -Wl,--as-needed -Wl,--no-undefined

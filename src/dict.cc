@@ -626,8 +626,6 @@ hash_t<infoDict*> *dictionary::dictFindAmbP(int *numPOS)
 //     hash_node_t *old_hash, *tmp;
 //     int old_size, h, i;
 
-    *numPOS = 0;
-
     aux->maybe.setFirst();
     if (aux->numMaybe>1) //Si tiene mas de un maybe es ambigua
     {
@@ -639,8 +637,6 @@ hash_t<infoDict*> *dictionary::dictFindAmbP(int *numPOS)
         tmp->pos = data->pos;
         tmp->num = data->num;
         ambp->hash_insert(tmp->pos,tmp);
-
-        *numPOS++;
         ret=aux->maybe.next();
       }
       aux->maybe.setFirst();
@@ -663,8 +659,6 @@ hash_t<infoDict*> *dictionary::dictFindUnkP(int *numPOS)
   for (hash_t<dataDict*>::iterator it  = d.begin(); it != d.end(); it++)
   {
     dataDict *aux = (*it).second;
-  
-    *numPOS = 0;
 
     aux->maybe.setFirst();
     if (aux->numWrd==1) //Si solo aparece una vez desconocida
@@ -677,7 +671,6 @@ hash_t<infoDict*> *dictionary::dictFindUnkP(int *numPOS)
         tmp->pos = data->pos;
         tmp->num = data->num;
         unkp->hash_insert(tmp->pos,tmp);
-        *numPOS++;
         ret=aux->maybe.next();
       }
       aux->maybe.setFirst();

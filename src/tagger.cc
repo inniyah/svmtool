@@ -674,7 +674,7 @@ void tagger::taggerGenerateScore(nodo *elem,int direction)
       else if (aux->mark == MFTMARK)  sw->winPushMFTFeature((void *)aux,d,stk,direction);
       else if (is_unk==TRUE)
       {
-        int *param;
+        int *param = NULL;
         if (!aux->l.isEmpty())
         {
           param = *aux->l.getIndex();
