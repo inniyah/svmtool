@@ -12,11 +12,11 @@ test: example
 MAJOR=0
 MINOR=0
 
-SOURCES = $(shell find src -maxdepth 1 -name "*.cc")
+SOURCES = $(shell find src -maxdepth 1 -name "*.cpp")
 INCLUDE_DIR = include
 
-SHARED_OBJS = $(SOURCES:.cc=.shared.o)
-STATIC_OBJS = $(SOURCES:.cc=.static.o)
+SHARED_OBJS = $(SOURCES:.cpp=.shared.o)
+STATIC_OBJS = $(SOURCES:.cpp=.static.o)
 
 CFLAGS= -O2 -g -std=c++0x -Wall -Wno-unused-parameter -Werror
 EXTRA_CFLAGS=-I$(INCLUDE_DIR)
@@ -63,7 +63,7 @@ $(LIBRARY).a: $(STATIC_OBJS)
 %.static.o: %.c
 	gcc -o $@ -c $+ $(STATIC_CFLAGS)
 
-S: $(SOURCES:.cc=.S) src/bin/SVMTeval.S src/bin/SVMTlearn.S src/bin/SVMTagger.S
+S: $(SOURCES:.cpp=.S) src/bin/SVMTeval.S src/bin/SVMTlearn.S src/bin/SVMTagger.S
 
 %.S: %.cpp
 	g++ -Wall -O0 -o $@ -S $+ $(EXTRA_CFLAGS)
