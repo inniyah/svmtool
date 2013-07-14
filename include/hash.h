@@ -43,6 +43,8 @@ namespace __gnu_cxx
 }
 #endif
 
+namespace SVMTool {
+
 struct hash_node_t {
   hash_node_t() : data(0), key(""), next(0) {}
   ~hash_node_t() {}
@@ -222,5 +224,7 @@ void delete_entries(hash_t<T*>& h) {
  * delete_entries() - same as before but don't delete if it's not a pointer
  */
 template<typename T> void delete_entries(hash_t<T>&) { }
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_HASH_H_0F335424_EC7E_11E2_B407_525400DA3F0D

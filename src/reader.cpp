@@ -17,7 +17,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 #include "reader.h"
 #include "nodo.h"
 #include "regexp.h"
@@ -25,6 +24,8 @@
 #include <set>
 #include <sstream>
 #include <iostream>
+
+namespace SVMTool {
 
 int reader::nextNode(nodo **node) {
   std::string word, comment;
@@ -46,8 +47,7 @@ int reader::nextNode(nodo **node) {
 }
 
 
-nodo* reader::buildNode(std::string &word, std::string &comment)
-{
+nodo* reader::buildNode(std::string &word, std::string &comment) {
   nodo *node = new nodo;
 
   // wrd and realWrd
@@ -68,8 +68,7 @@ nodo* reader::buildNode(std::string &word, std::string &comment)
   return node;
 }
 
-int reader::parseWord(std::string& token, std::set<std::string> &tagset, std::string &comment)
-{
+int reader::parseWord(std::string& token, std::set<std::string> &tagset, std::string &comment) {
   if (m_input.eof()) {
     is_good = false;
     return -2;
@@ -127,3 +126,4 @@ std::string reader::line_end(std::istringstream& iss) {
   return result;
 }
 
+} // namespace SVMTool

@@ -21,7 +21,10 @@
 #define SVMTOOL_NODO_H_9CD49D70_EC7D_11E2_8CFC_525400DA3F0D
 
 #include "weight.h"
+
 #include <stack>
+
+namespace SVMTool {
 
 struct nodo{
   nodo() :
@@ -50,5 +53,7 @@ struct nodo{
   nodo *next;
   nodo *previous;
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_NODO_H_9CD49D70_EC7D_11E2_8CFC_525400DA3F0D

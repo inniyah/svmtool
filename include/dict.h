@@ -21,10 +21,13 @@
 
 #include "list.h"
 #include "hash.h"
+
 #include <set>
 #include <string>
 
 #define TAMTXT 100
+
+namespace SVMTool {
 
 struct infoDict
 {
@@ -78,5 +81,7 @@ private:
 
   hash_t<dataDict*> d;
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_DICT_H_4C0B62C4_EC7E_11E2_8F03_525400DA3F0D

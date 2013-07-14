@@ -17,6 +17,7 @@
  */
 
 #include "tagger.h"
+
 #include "strategies.h"
 #include "hash.h"
 #include "list.h"
@@ -33,6 +34,8 @@
 #include <unistd.h>
 
 #include <cassert>
+
+namespace SVMTool {
 
 /***************************************************************/
 
@@ -889,4 +892,4 @@ void tagger::taggerShowVerbose(int num,int isEnd)
   else if (num%10==0) std::cerr << ".";
 }
 
-
+} // namespace SVMTool

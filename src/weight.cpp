@@ -17,15 +17,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "hash.h"
+
+#include "weight.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
 #include <sstream>
 #include <cmath>
-#include "hash.h"
-#include "weight.h"
 
+namespace SVMTool {
 
 /***********************************************************/
 
@@ -358,3 +361,4 @@ void weightRepository::wrWriteHash(hash_t<weight_node_t*> *tptr,FILE *f, char se
   } /* for */
 }
 
+} // namespace SVMTool

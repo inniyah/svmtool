@@ -19,6 +19,8 @@
 #ifndef SVMTOOL_LIST_H_E3D57794_EC7D_11E2_BDE7_525400DA3F0D
 #define SVMTOOL_LIST_H_E3D57794_EC7D_11E2_BDE7_525400DA3F0D
 
+namespace SVMTool {
+
 template <typename T>
 struct listNode
 {
@@ -274,8 +276,8 @@ public:
     return numObj;
   }
   
-  
-  
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_LIST_H_E3D57794_EC7D_11E2_BDE7_525400DA3F0D

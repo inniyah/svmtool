@@ -28,11 +28,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 using namespace std;
 
-extern int verbose;
+namespace SVMTool {
 
-/**************************************************/
+extern int verbose;
 
 infoDict* dictionary::getMFT(dataDict*  w)
 {
@@ -680,3 +681,4 @@ hash_t<infoDict*> *dictionary::dictFindUnkP(int *numPOS)
   return unkp;
 }
 
+} // namespace SVMTool

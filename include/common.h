@@ -19,9 +19,10 @@
 #ifndef SVMTOOL_COMMON_H_613DBDCC_EC7E_11E2_82C9_525400DA3F0D
 #define SVMTOOL_COMMON_H_613DBDCC_EC7E_11E2_82C9_525400DA3F0D
 
+#include "list.h"
+
 #include <time.h>
 #include <sys/times.h>
-#include "list.h"
 #include <string>
 #include <algorithm>
 #include <vector>
@@ -45,6 +46,8 @@ using namespace std;
 
 #define RM_MODEL_FILES 1001
 #define RM_TEMP_FILES  1002
+
+namespace SVMTool {
 
 struct nodo_feature_list
 {
@@ -82,5 +85,7 @@ void destroyFeatureList(simpleList<nodo_feature_list*> *);
 void createFeatureList(const std::string& name,simpleList<nodo_feature_list*> *featureList);
 void removeFiles(const std::string& path, int type,int numModel, int direction, int verbose);
 void Tokenize(const string& str, vector<string>& tokens, const string& delimiters);
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_COMMON_H_613DBDCC_EC7E_11E2_82C9_525400DA3F0D

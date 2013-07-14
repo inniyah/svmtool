@@ -16,12 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "svmtool.h"
+
 #include "hash.h"
 #include "list.h"
 #include "dict.h"
@@ -30,7 +26,12 @@
 #include "tagger.h"
 #include "regexp.h"
 
-/*****************************************************************/
+#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+namespace SVMTool {
 
 nodoResult::nodoResult()
 {
@@ -272,3 +273,4 @@ void apiTaggerDestroy()
 	t = NULL;
 }
 
+} // namespace SVMTool

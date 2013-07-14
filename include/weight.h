@@ -21,6 +21,8 @@
 
 #include "hash.h"
 
+namespace SVMTool {
+
 struct weight_node_t
 {
   weight_node_t() : pos(), data(0) {}
@@ -52,5 +54,7 @@ public:
   weightRepository();
   ~weightRepository();
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_WEIGHT_H_B333513E_EC7C_11E2_AB50_525400DA3F0D

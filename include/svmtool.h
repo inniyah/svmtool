@@ -19,6 +19,8 @@
 #ifndef SVMTOOL_H_7CC43D0A_EC7E_11E2_8F37_525400DA3F0D
 #define SVMTOOL_H_7CC43D0A_EC7E_11E2_8F37_525400DA3F0D
 
+namespace SVMTool {
+
 class nodoResult
 {
  private:
@@ -73,5 +75,7 @@ int apiTaggerInitialize ( int   iStrategy,
 			  float fWFUnk);
 
 void apiTaggerDestroy();
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_H_7CC43D0A_EC7E_11E2_8F37_525400DA3F0D

@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "stdio.h"
 #include "regexp.h"
+
+#include <stdio.h>
+
+namespace SVMTool {
 
 /*****************************************************************
 * Regular expressions
@@ -115,3 +118,5 @@ int erLookRegExp(const std::string& m)
 
 	return ret;
 }
+
+} // namespace SVMTool

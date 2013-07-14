@@ -24,6 +24,8 @@
 #include <sstream>
 #include <set>
 
+namespace SVMTool {
+
 class nodo;
 
 class reader
@@ -62,5 +64,7 @@ class reader
     bool is_good;
     std::string line_end(std::istringstream &iss);
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_READER_H_74FA637A_EC7D_11E2_BFDD_525400DA3F0D

@@ -26,6 +26,7 @@
 #include "regexp.h"
 #include "common.h"
 #include "marks.h"
+
 #include <sys/types.h>
 #include <cassert>
 #include <regex.h>
@@ -38,6 +39,8 @@
 
 #define MAX_SENTENCE_LENGTH 1000
 #define MAX_LINE_LENGTH 4096
+
+namespace SVMTool {
 
 /*****************************************************************
  * Feature Generation
@@ -993,3 +996,4 @@ int swindow::winExistUnkWord(int direction, dictionary *d)
   return 0;
 }
 
+} // namespace SVMTool

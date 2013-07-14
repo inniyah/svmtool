@@ -27,6 +27,8 @@
 #include "dict.h"
 #include "regexp.h"
 
+namespace SVMTool {
+
 struct models_t{
     weightRepository *wr,*wr2,*wrUnk,*wrUnk2;
     //hash_t *bias,*bias2,*biasUnk,*biasUnk2;
@@ -95,5 +97,7 @@ public:
   tagger(const std::string& model);
   ~tagger();
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_TAGGER_H_E63A3F5C_EC7C_11E2_9BCF_525400DA3F0D

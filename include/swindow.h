@@ -22,6 +22,7 @@
 #include "common.h"
 #include "dict.h"
 #include "reader.h"
+
 #include <iostream>
 #include <stack>
 #include <iosfwd>
@@ -39,6 +40,7 @@
 #define COUNTING_FROM_END   111
 #define COUNTING_FROM_BEGIN 222
 
+namespace SVMTool {
 
 struct weight_node_t;
 struct nodo;
@@ -125,5 +127,7 @@ class swindow
   int iniGeneric(dictionary* dic /*= 0*/);
   void deleteList();
 };
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_SWINDOW_H_04AFF90E_EC7D_11E2_944A_525400DA3F0D

@@ -23,14 +23,12 @@
 #include <regex.h>
 #include <string>
 
-/*****************************************************************
-* Regular expression
-*****************************************************************/
-
 #define CARD		100
 #define CARDPUNCT	101
 #define CARDSEPS	102
 #define CARDSUFFIX	103
+
+namespace SVMTool {
 
 extern regex_t  erCard,erCardPunct,erCardSeps,erCardSuffix;
 extern regex_t  erMultiWord,erContainNum,erStartCap,erStartLower,erStartNumber,
@@ -41,5 +39,7 @@ void erCompRegExp();
 void erFreeRegExp();
 int erLookRegExp2(void* er, const std::string& str);
 int erLookRegExp(const std::string& m);
+
+} // namespace SVMTool
 
 #endif // SVMTOOL_REGEXP_H_338B3EE0_EC7E_11E2_B248_525400DA3F0D
