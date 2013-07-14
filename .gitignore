@@ -3,8 +3,12 @@
 *.a
 *.S
 *~
+src/*~
 src/*.o
+src/*.orig
+src/bin/*~
 src/bin/*.o
+src/bin/*.orig
 example
 MYMETA.yml
 blib/*
