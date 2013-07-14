@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef TAGGER_H
-#define TAGGER_H
+#ifndef SVMTOOL_TAGGER_H_E63A3F5C_EC7C_11E2_9BCF_525400DA3F0D
+#define SVMTOOL_TAGGER_H_E63A3F5C_EC7C_11E2_9BCF_525400DA3F0D
 
 #include "common.h"
 #include "weight.h"
@@ -25,7 +25,7 @@
 #include "hash.h"
 #include "swindow.h"
 #include "dict.h"
-#include "er.h"
+#include "regexp.h"
 
 struct models_t{
     weightRepository *wr,*wr2,*wrUnk,*wrUnk2;
@@ -96,5 +96,4 @@ public:
   ~tagger();
 };
 
-
-#endif
+#endif // SVMTOOL_TAGGER_H_E63A3F5C_EC7C_11E2_9BCF_525400DA3F0D

@@ -16,7 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef STRAT_H
+#ifndef SVMTOOL_STRATEGIES_H_438FED3C_EC7D_11E2_AA1C_525400DA3F0D
+#define SVMTOOL_STRATEGIES_H_438FED3C_EC7D_11E2_AA1C_525400DA3F0D
 
 //Strategy 0 .- one-pass        (default)
 #define STRA_1P_DEFAULT 0 
@@ -39,5 +40,4 @@
 //Strategy 6 .- one-pass   [robust sentence-level likelihood]
 #define STRA_1P_ROBUST_SENTENCE_LEVEL 6 
 
-#define STRAT_H
-#endif
+#endif // SVMTOOL_STRATEGIES_H_438FED3C_EC7D_11E2_AA1C_525400DA3F0D

@@ -19,7 +19,7 @@
 #include "dict.h"
 
 #include "common.h"
-#include "er.h"
+#include "regexp.h"
 #include "hash.h"
 #include "list.h"
 #include "swindow.h"

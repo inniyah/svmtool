@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef READER_H
-#define READER_H
+#ifndef SVMTOOL_READER_H_74FA637A_EC7D_11E2_BFDD_525400DA3F0D
+#define SVMTOOL_READER_H_74FA637A_EC7D_11E2_BFDD_525400DA3F0D
 
 #include <iostream>
 #include <sstream>
@@ -63,4 +63,4 @@ class reader
     std::string line_end(std::istringstream &iss);
 };
 
-#endif
+#endif // SVMTOOL_READER_H_74FA637A_EC7D_11E2_BFDD_525400DA3F0D

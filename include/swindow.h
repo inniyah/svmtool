@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef SWINDOW_H
-#define SWINDOW_H
+#ifndef SVMTOOL_SWINDOW_H_04AFF90E_EC7D_11E2_944A_525400DA3F0D
+#define SVMTOOL_SWINDOW_H_04AFF90E_EC7D_11E2_944A_525400DA3F0D
 
 #include "common.h"
 #include "dict.h"
@@ -126,5 +126,4 @@ class swindow
   void deleteList();
 };
 
-
-#endif
+#endif // SVMTOOL_SWINDOW_H_04AFF90E_EC7D_11E2_944A_525400DA3F0D

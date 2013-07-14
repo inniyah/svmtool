@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef SIMPLELIST_H
-
+#ifndef SVMTOOL_LIST_H_E3D57794_EC7D_11E2_BDE7_525400DA3F0D
+#define SVMTOOL_LIST_H_E3D57794_EC7D_11E2_BDE7_525400DA3F0D
 
 template <typename T>
 struct listNode
@@ -278,5 +278,4 @@ public:
   
 };
 
-#define SIMPLELIST_H
-#endif
+#endif // SVMTOOL_LIST_H_E3D57794_EC7D_11E2_BDE7_525400DA3F0D

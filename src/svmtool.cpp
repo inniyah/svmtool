@@ -20,14 +20,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "api.h"
+
+#include "svmtool.h"
 #include "hash.h"
 #include "list.h"
 #include "dict.h"
 #include "weight.h"
 #include "swindow.h"
 #include "tagger.h"
-#include "er.h"
+#include "regexp.h"
 
 /*****************************************************************/
 

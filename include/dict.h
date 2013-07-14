@@ -16,7 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef DICT_H
+#ifndef SVMTOOL_DICT_H_4C0B62C4_EC7E_11E2_8F03_525400DA3F0D
+#define SVMTOOL_DICT_H_4C0B62C4_EC7E_11E2_8F03_525400DA3F0D
 
 #include "list.h"
 #include "hash.h"
@@ -78,5 +79,4 @@ private:
   hash_t<dataDict*> d;
 };
 
-#define DICT_H
-#endif
+#endif // SVMTOOL_DICT_H_4C0B62C4_EC7E_11E2_8F03_525400DA3F0D

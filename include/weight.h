@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef WEIGHT_H
-#define WEIGHT_H
+#ifndef SVMTOOL_WEIGHT_H_B333513E_EC7C_11E2_AB50_525400DA3F0D
+#define SVMTOOL_WEIGHT_H_B333513E_EC7C_11E2_AB50_525400DA3F0D
 
 #include "hash.h"
 
@@ -53,4 +53,4 @@ public:
   ~weightRepository();
 };
 
-#endif
+#endif // SVMTOOL_WEIGHT_H_B333513E_EC7C_11E2_AB50_525400DA3F0D

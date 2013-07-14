@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef API_H
-
+#ifndef SVMTOOL_H_7CC43D0A_EC7E_11E2_8F37_525400DA3F0D
+#define SVMTOOL_H_7CC43D0A_EC7E_11E2_8F37_525400DA3F0D
 
 class nodoResult
 {
@@ -74,5 +74,4 @@ int apiTaggerInitialize ( int   iStrategy,
 
 void apiTaggerDestroy();
 
-#define API_H
-#endif
+#endif // SVMTOOL_H_7CC43D0A_EC7E_11E2_8F37_525400DA3F0D

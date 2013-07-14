@@ -16,7 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef COMMON_H
+#ifndef SVMTOOL_COMMON_H_613DBDCC_EC7E_11E2_82C9_525400DA3F0D
+#define SVMTOOL_COMMON_H_613DBDCC_EC7E_11E2_82C9_525400DA3F0D
 
 #include <time.h>
 #include <sys/times.h>
@@ -82,6 +83,4 @@ void createFeatureList(const std::string& name,simpleList<nodo_feature_list*> *f
 void removeFiles(const std::string& path, int type,int numModel, int direction, int verbose);
 void Tokenize(const string& str, vector<string>& tokens, const string& delimiters);
 
-
-#define COMMON_H
-#endif
+#endif // SVMTOOL_COMMON_H_613DBDCC_EC7E_11E2_82C9_525400DA3F0D

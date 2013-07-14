@@ -17,7 +17,7 @@
  */
 
 #include "stdio.h"
-#include "er.h"
+#include "regexp.h"
 
 /*****************************************************************
 * Regular expressions

@@ -23,7 +23,7 @@
 #include "list.h"
 #include "dict.h"
 #include "weight.h"
-#include "er.h"
+#include "regexp.h"
 #include "common.h"
 #include "marks.h"
 #include <sys/types.h>

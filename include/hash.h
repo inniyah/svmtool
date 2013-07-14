@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef SVMTOOL_HASH_H
-#define SVMTOOL_HASH_H
+#ifndef SVMTOOL_HASH_H_0F335424_EC7E_11E2_B407_525400DA3F0D
+#define SVMTOOL_HASH_H_0F335424_EC7E_11E2_B407_525400DA3F0D
 
 #include <vector>
 #include <iostream>
@@ -223,4 +223,4 @@ void delete_entries(hash_t<T*>& h) {
  */
 template<typename T> void delete_entries(hash_t<T>&) { }
 
-#endif
+#endif // SVMTOOL_HASH_H_0F335424_EC7E_11E2_B407_525400DA3F0D

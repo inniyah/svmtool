@@ -16,7 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef ER_H
+#ifndef SVMTOOL_REGEXP_H_338B3EE0_EC7E_11E2_B248_525400DA3F0D
+#define SVMTOOL_REGEXP_H_338B3EE0_EC7E_11E2_B248_525400DA3F0D
 
 #include <sys/types.h>
 #include <regex.h>
@@ -41,5 +42,4 @@ void erFreeRegExp();
 int erLookRegExp2(void* er, const std::string& str);
 int erLookRegExp(const std::string& m);
 
-#define ER_H
-#endif
+#endif // SVMTOOL_REGEXP_H_338B3EE0_EC7E_11E2_B248_525400DA3F0D

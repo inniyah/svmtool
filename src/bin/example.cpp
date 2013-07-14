@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "api.h"
+#include <svmtool.h>
 
 int main(int argc, char *argv[])
 {

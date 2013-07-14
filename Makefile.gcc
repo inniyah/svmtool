@@ -63,7 +63,7 @@ $(LIBRARY).a: $(STATIC_OBJS)
 %.static.o: %.c
 	gcc -o $@ -c $+ $(STATIC_CFLAGS)
 
-S: $(SOURCES:.cpp=.S) src/bin/SVMTeval.S src/bin/SVMTlearn.S src/bin/SVMTagger.S
+S: $(SOURCES:.cpp=.S) src/bin/example.S
 
 %.S: %.cpp
 	g++ -Wall -O0 -o $@ -S $+ $(EXTRA_CFLAGS)
@@ -85,15 +85,8 @@ clean:
 DESTDIR=
 
 install: $(LIBRARY).a $(LIBRARY).so
-	mkdir -p "$(DESTDIR)/usr/lib/"
-	cp -a *.a "$(DESTDIR)/usr/lib/"
-	cp -a *.so* "$(DESTDIR)/usr/lib/"
-	mkdir -p "$(DESTDIR)/usr/include/"
-
-	find $(INCLUDE_DIR) -name "*.h" | \
-		while read f; do \
-			t=`echo "$$f" | sed -e 's|^$(INCLUDE_DIR)/|/usr/include/%PACKAGE%/|'` ; \
-			d=`dirname "$$t"`; \
-			mkdir -p "$(DESTDIR)/$$d" ; \
-			cp "$$f" "$(DESTDIR)/$$t"; \
-		done
+	mkdir -p --verbose "$(DESTDIR)/usr/lib/"
+	cp -av *.a "$(DESTDIR)/usr/lib/"
+	cp -av *.so* "$(DESTDIR)/usr/lib/"
+	mkdir -p --verbose "$(DESTDIR)/usr/include/"
+	cp -av include/api.h "$(DESTDIR)/usr/include/"

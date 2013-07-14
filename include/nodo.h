@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef NODO_H
-#define NODO_H
+#ifndef SVMTOOL_NODO_H_9CD49D70_EC7D_11E2_8CFC_525400DA3F0D
+#define SVMTOOL_NODO_H_9CD49D70_EC7D_11E2_8CFC_525400DA3F0D
 
 #include "weight.h"
 #include <stack>
@@ -51,4 +51,4 @@ struct nodo{
   nodo *previous;
 };
 
-#endif
+#endif // SVMTOOL_NODO_H_9CD49D70_EC7D_11E2_8CFC_525400DA3F0D

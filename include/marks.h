@@ -16,7 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MARKS_H
+#ifndef SVMTOOL_MARKS_H_C2F2769E_EC7D_11E2_889B_525400DA3F0D
+#define SVMTOOL_MARKS_H_C2F2769E_EC7D_11E2_889B_525400DA3F0D
 
 #define SLASTW "Swn" //Last Word
 #define WMARK  "w"   //Words
@@ -41,5 +42,4 @@
 #define CONTAIN_NUMBER_MARK "CN" //contains number
 #define MULTIWORD_MARK "MW" //contains underscores (multiword)
 
-#define MARKS_H
-#endif
+#endif // SVMTOOL_MARKS_H_C2F2769E_EC7D_11E2_889B_525400DA3F0D
