@@ -6,3 +6,6 @@
 src/*.o
 src/bin/*.o
 example
+MYMETA.yml
+blib/*
+pm_to_blib
