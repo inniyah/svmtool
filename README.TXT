@@ -47,6 +47,8 @@ SVMTlearn behaviour is easily adjusted through a configuration file. These are t
 	- Open classes (may be optionally provided)
 	- Backup lexicon (may be optionally provided)
 
+For executing it from the system after making a perl Makefile.pl and make, but without installing it in
+the system, type: perl -Mblib bin/SVMTlearn.pl
 
 ---------------------------------------------------------------------
 (2) SVMTagger
@@ -67,6 +69,8 @@ SVMTagger is very flexible, and adapts very well to the needs of the user. Thus 
 	- Backup lexicon (may be optionally provided)
 	- Lemmae lexicon (may be optionally provided)
 
+For executing it from the system after making a perl Makefile.pl and make, but without installing it in
+the system, type: perl -Mblib bin/SVMTagger.pl
 
 ---------------------------------------------------------------------
 (3) SVMTeval
@@ -83,6 +87,9 @@ grouped.
 		* 3 : grouping words according to their level of ambiguity
 		* 4 : grouping words according to their class of ambiguity
 		* 5 : from the part-of-speech point of view
+
+For executing it from the system after making a perl Makefile.pl and make, but without installing it in
+the system, type: perl -Mblib bin/SVMTeval.pl
 
 ---------------------------------------------------------------------
 
