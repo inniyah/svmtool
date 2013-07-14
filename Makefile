@@ -1,16 +1,13 @@
 LIBRARY=libsvmtool++
-PROGRAMS=SVMTeval SVMTlearn SVMTagger
+PROGRAMS=example
 
 all: $(LIBRARY).a $(LIBRARY).so $(PROGRAMS)
 
-SVMTeval: src/bin/SVMTeval.static.o $(LIBRARY).a $(LIBRARY).so
+example: src/bin/example.static.o $(LIBRARY).a $(LIBRARY).so
 	g++ $(LDFLAGS) $(EXTRA_LDFLAGS) $< -o $@ -L. -lsvmtool++ $(LIBS)
 
-SVMTlearn: src/bin/SVMTlearn.static.o $(LIBRARY).a $(LIBRARY).so
-	g++ $(LDFLAGS) $(EXTRA_LDFLAGS) $< -o $@ -L. -lsvmtool++ $(LIBS)
-
-SVMTagger: src/bin/SVMTagger.static.o $(LIBRARY).a $(LIBRARY).so
-	g++ $(LDFLAGS) $(EXTRA_LDFLAGS) $< -o $@ -L. -lsvmtool++ $(LIBS)
+test: example
+	LD_LIBRARY_PATH="`pwd`" ./example models/eng/WSJTP
 
 MAJOR=0
 MINOR=0

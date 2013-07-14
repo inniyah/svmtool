@@ -5,6 +5,4 @@
 *~
 src/*.o
 src/bin/*.o
-SVMTagger
-SVMTeval
-SVMTlearn
+example
