@@ -84,7 +84,7 @@ clean:
 	rm -fv *.so *.so* *.a src/*.o src/bin/*.o src/*.S src/bin/*.S *~
 
 bcpp:
-	for F in src/*.cpp src/bin/*.cpp include/*.h; do echo "$$F"; bcpp -fnc auxtools/bcpp.cfg -fi "$$F"; done
+	for F in src/*.cpp src/bin/*.cpp include/*.h; do echo "$$F"; bcpp -fi "$$F"; done
 
 DESTDIR=
 
