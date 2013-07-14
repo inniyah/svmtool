@@ -5,7 +5,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -21,60 +21,60 @@
 
 namespace SVMTool {
 
-class ResultNode
-{
- private:
-  int index;
-  char *wrd;
-  char *pos;
-  char *scores;
- public:
-  void  pushIndex(int);
-  void  pushPOS(char *);
-  void  pushWord(char *);
-  void  pushScores(char *);
-  int   getIndex();
-  char *getWord();
-  char *getPOS();
-  char *getScores();
+  class ResultNode {
+    private:
+      int index;
+      char *wrd;
+      char *pos;
+      char *scores;
 
-  ResultNode();
-  ~ResultNode();
-};
+    public:
+      void  pushIndex(int);
+      void  pushPOS(char *);
+      void  pushWord(char *);
+      void  pushScores(char *);
+      int   getIndex();
+      char *getWord();
+      char *getPOS();
+      char *getScores();
 
+      ResultNode();
+      ~ResultNode();
+  };
 
-class Result
-{
- private:
-  ResultNode *array;
-  int numItems;
- public:
-  Result(int);
-  ~Result();
-  char *getPOS(int);
-  char *getWord(int);
-  char *getScores(int);
-  int  pushWord(char *, int);
-  int  pushPOS(char *, int);
-  int  pushScores(char *, int);
-  void print();
-};
+  class Result {
+    private:
+      ResultNode *array;
+      int numItems;
 
+    public:
+      Result(int);
+      ~Result();
+      char *getPOS(int);
+      char *getWord(int);
+      char *getScores(int);
+      int  pushWord(char *, int);
+      int  pushPOS(char *, int);
+      int  pushScores(char *, int);
+      void print();
+  };
 
-int InsertSentence(const char *szSentence);
+  int InsertSentence(const char *szSentence);
 
-Result *TaggerRun(const char *szSentence, int iNumWords);
+  Result *TaggerRun(const char *szSentence, int iNumWords);
 
-int TaggerCreate( char *szModelName );
+  int TaggerCreate( char *szModelName );
 
-int TaggerInitialize ( int   iStrategy, 
-			  const char  *szSense,
-			  int   iWinLength,
-			  int   iWinIndex,
-			  float fWFKnown, 
-			  float fWFUnk);
+  int TaggerInitialize (
+    int   iStrategy,
+    const char  *szSense,
+    int   iWinLength,
+    int   iWinIndex,
+    float fWFKnown,
+    float fWFUnk
+  );
 
-void TaggerDestroy();
+  void TaggerDestroy();
 
 } // namespace SVMTool
 

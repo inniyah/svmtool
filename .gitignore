@@ -3,6 +3,7 @@
 *.a
 *.S
 *~
+include/*.orig
 src/*~
 src/*.o
 src/*.orig

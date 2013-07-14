@@ -6,7 +6,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -26,33 +26,38 @@
 
 namespace SVMTool {
 
-struct nodo{
-  nodo() :
+  struct nodo {
+
+    nodo() :
     ord(0),
-    weight(0),
-    weightOld(0),
-    next(NULL),
-    previous(NULL) {}
-  ~nodo() { 
-    while(!stackScores.empty()) {
-      delete stackScores.top();
-      stackScores.pop();
+      weight(0),
+      weightOld(0),
+      next(NULL),
+      previous(NULL) {}
+
+    ~nodo() {
+      while(!stackScores.empty()) {
+        delete stackScores.top();
+        stackScores.pop();
+      }
     }
-  
-  }
-  int ord; // word id
-  std::string wrd; // word (or constant like @CARD if cardinal)
-  std::string realWrd; // real word
-  std::string comment;
-  // to be filled by taggerSumWeight
-  std::string pos, posOld;
-  std::string strScores;
-  long double weight, weightOld;
-  std::stack<weight_node_t*> stackScores;
-  // neighbors in the sentence
-  nodo *next;
-  nodo *previous;
-};
+
+    // word id
+    int ord;
+    // word (or constant like @CARD if cardinal)
+    std::string wrd;
+    // real word
+    std::string realWrd;
+    std::string comment;
+    // to be filled by taggerSumWeight
+    std::string pos, posOld;
+    std::string strScores;
+    long double weight, weightOld;
+    std::stack<weight_node_t*> stackScores;
+    // neighbors in the sentence
+    nodo *next;
+    nodo *previous;
+  };
 
 } // namespace SVMTool
 
