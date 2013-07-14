@@ -33,14 +33,14 @@
 
 namespace SVMTool {
 
-nodoResult::nodoResult()
+ResultNode::ResultNode()
 {
   this->pos = NULL;
   this->wrd = NULL;
   this->scores = NULL;
 }
 
-nodoResult::~nodoResult()
+ResultNode::~ResultNode()
 {
   delete[] this->wrd;
   delete[] this->pos;
@@ -48,99 +48,99 @@ nodoResult::~nodoResult()
   index = 0;
 }
 
-void nodoResult::pushIndex(int iNum)
+void ResultNode::pushIndex(int iNum)
 {
   this->index = iNum;
 }
 
-void nodoResult::pushScores(char *text)
+void ResultNode::pushScores(char *text)
 {
   this->scores = new char[strlen(text)+1];
   strcpy(this->scores,text);
 }
 
-void nodoResult::pushPOS(char *text)
+void ResultNode::pushPOS(char *text)
 {
   this->pos = new char[strlen(text)+1];
   strcpy(this->pos,text);
 }
 
-void nodoResult::pushWord(char *text)
+void ResultNode::pushWord(char *text)
 {
   this->wrd = new char[strlen(text)+1];
   strcpy(this->wrd,text);
 }
 
-int nodoResult::getIndex()
+int ResultNode::getIndex()
 {
   return this->index;
 }
 
-char *nodoResult::getScores()
+char *ResultNode::getScores()
 {
   return this->scores;
 }
 
-char *nodoResult::getWord()
+char *ResultNode::getWord()
 {
   return this->wrd;
 }
 
-char *nodoResult::getPOS()
+char *ResultNode::getPOS()
 {
   return this->pos;
 }
 
 /*****************************************************************/
 
-apiResult::apiResult(int iNum)
+Result::Result(int iNum)
 {
   numItems = iNum;
-  array = new nodoResult[iNum];
+  array = new ResultNode[iNum];
 }
 
-apiResult::~apiResult()
+Result::~Result()
 {
   delete[] array;
 }
 
-int apiResult::pushScores(char *text, int iPos)
+int Result::pushScores(char *text, int iPos)
 {
   if (iPos >= this->numItems) return -1;
   array[iPos].pushScores(text);
   return 0;
 }
 
-int apiResult::pushPOS(char *text, int iPos)
+int Result::pushPOS(char *text, int iPos)
 {
   if (iPos >= this->numItems) return -1;
   array[iPos].pushPOS(text);
   return 0;
 }
 
-int apiResult::pushWord(char *text, int iPos)
+int Result::pushWord(char *text, int iPos)
 {
   if (iPos >= this->numItems) return -1;
   array[iPos].pushWord(text);
   return 0;
 }
 
-char *apiResult::getScores(int iPos)
+char *Result::getScores(int iPos)
 {
   return array[iPos].getScores();
 }
 
-char *apiResult::getPOS(int iPos)
+char *Result::getPOS(int iPos)
 {
   return array[iPos].getPOS();
 }
 
-char *apiResult::getWord(int iPos)
+char *Result::getWord(int iPos)
 {
   return array[iPos].getWord();
 }
 
-void apiResult::print()
+void Result::print()
 {
   for (int i=0; i < this->numItems; i++)
     {
@@ -152,7 +152,7 @@ void apiResult::print()
 tagger *t;
 int verbose = 0;
 
-int apiInsertSentence(const char *szSentence)
+int InsertSentence(const char *szSentence)
 {
   	char wrd[200];
 	FILE *f = fopen ("stdin.tmp","w");
@@ -179,11 +179,11 @@ int apiInsertSentence(const char *szSentence)
 	return i;
 }
 
-apiResult *apiTaggerRun(const char *szSentence, int iNumWords)
+Result *TaggerRun(const char *szSentence, int iNumWords)
 {
 	if ( t == NULL ) return NULL;
 	
-	int ret = apiInsertSentence (szSentence);
+	int ret = InsertSentence (szSentence);
 	
 	if ( ret == -1 ) return NULL;
 	
@@ -204,7 +204,7 @@ apiResult *apiTaggerRun(const char *szSentence, int iNumWords)
 	FILE *f = fopen("stdout.tmp","r");
 	
 	int index = 0;
-	apiResult *out = new apiResult(iNumWords);
+	Result *out = new Result(iNumWords);
 
 	while (!feof(f) && index < iNumWords)
 	{
@@ -233,7 +233,7 @@ apiResult *apiTaggerRun(const char *szSentence, int iNumWords)
 }
 
 
-int apiTaggerCreate( char *szModelName )
+int TaggerCreate( char *szModelName )
 {
 	if ( strcmp(szModelName,"")  == 0 ) return -1;	
 	
@@ -242,7 +242,7 @@ int apiTaggerCreate( char *szModelName )
 	return 0;
 }
 
-int apiTaggerInitialize ( int   iStrategy, 
+int TaggerInitialize ( int   iStrategy, 
 			  const char  *szSense,
 			  int   iWinLength,
 			  int   iWinIndex,
@@ -266,7 +266,7 @@ int apiTaggerInitialize ( int   iStrategy,
 	return 0;
 }
 
-void apiTaggerDestroy()
+void TaggerDestroy()
 {
 	erFreeRegExp();
 	if ( t != NULL ) delete t;

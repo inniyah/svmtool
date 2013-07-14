@@ -21,7 +21,7 @@
 
 namespace SVMTool {
 
-class nodoResult
+class ResultNode
 {
  private:
   int index;
@@ -38,19 +38,19 @@ class nodoResult
   char *getPOS();
   char *getScores();
 
-  nodoResult();
-  ~nodoResult();
+  ResultNode();
+  ~ResultNode();
 };
 
 
-class apiResult
+class Result
 {
  private:
-  nodoResult *array;
+  ResultNode *array;
   int numItems;
  public:
-  apiResult(int);
-  ~apiResult();
+  Result(int);
+  ~Result();
   char *getPOS(int);
   char *getWord(int);
   char *getScores(int);
@@ -61,20 +61,20 @@ class apiResult
 };
 
 
-int apiInsertSentence(const char *szSentence);
+int InsertSentence(const char *szSentence);
 
-apiResult *apiTaggerRun(const char *szSentence, int iNumWords);
+Result *TaggerRun(const char *szSentence, int iNumWords);
 
-int apiTaggerCreate( char *szModelName );
+int TaggerCreate( char *szModelName );
 
-int apiTaggerInitialize ( int   iStrategy, 
+int TaggerInitialize ( int   iStrategy, 
 			  const char  *szSense,
 			  int   iWinLength,
 			  int   iWinIndex,
 			  float fWFKnown, 
 			  float fWFUnk);
 
-void apiTaggerDestroy();
+void TaggerDestroy();
 
 } // namespace SVMTool
 
