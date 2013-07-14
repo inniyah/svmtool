@@ -1,40 +1,19 @@
 ***********************************************************************
-TOOL:  SVMTool++
+TOOL:  SVMTool
 AUTHOR(s): Jesus Gimenez, Lluis Marquez and Senen Moya
 CONTRIBUTIONS: Gael de Chalendar <Gael.de-Chalendar@cea.fr>
-DATE:   23/02/2007
-VERSION: 1.1.6
 DESCRIPTION: A general POS tagger generator based on Support Vector Machines.
 ***********************************************************************
 
-Contents
---------
 
-LGPL.txt   _ license terms.
-README.TXT _ this file.
-CMakeLists.txt   _ main cmake file to compile and link SVMTool
-     ./sample _ API sample.
-        * main.cc    _ Sample source
-        * main       _ Sample program
-     ./src    _ SVMTool sources.
-
-Compilation products
---------------------
-* libsvmtool.so _ The SVMTool library, used by the executables and usable from
-  you own programs
-* SVMTagger  _ POS-tagger
-* SVMTeval   _ evaluation component
-* SVMTlearn  _ learning component
-               
 Description
 -----------
 
-SVMT is a very simple and effective part-of-speech tagger based on Support Vector Machines. By means of a rigorous experimental evaluation, we conclude that the proposed SVM-based tagger is robust and flexible for feature modelling (including lexicalization), trains efficiently with almost no parameters to tune, and is able to tag thousands of words per second, which makes it really practical for real NLP applications. Regarding accuracy, the SVM-based tagger significantly outperforms the TnT tagger exactly under the same conditions, and achieves a very competitive accuracy of 97.17% for English on the WSJ corpus, which is comparable to the best taggers reported up to date. This prototype is implemented in C++. 
+SVMT is a very simple and effective part-of-speech tagger based on Support Vector Machines. By means of a rigorous experimental evaluation, we conclude that the proposed SVM-based tagger is robust and flexible for feature modelling (including lexicalization), trains efficiently with almost no parameters to tune, and is able to tag thousands of words per second, which makes it really practical for real NLP applications. Regarding accuracy, the SVM-based tagger significantly outperforms the TnT tagger exactly under the same conditions, and achieves a very competitive accuracy of 97.17% for English on the WSJ corpus, which is comparable to the best taggers reported up to date.
 
 The SVMlight software implementation of Vapnik's Support Vector Machine [Vapnik, 1995] by Thorsten Joachims has been used to train the models. For further information on it see:
 
     * T. Joachims, Making large-Scale SVM Learning Practical. Advances in Kernel Methods - Support Vector Learning, B. Schölkopf and C. Burges and A. Smola (ed.), MIT-Press, 1999.
-
 
 
 COMPONENTS:
@@ -46,19 +25,19 @@ The SVMTool consists of three main components:
     * SVMTagger
     * SVMTeval
 
-These are, namely the learner, tagger and evaluator.
+These are namely, the learner, the tagger and the evaluator.
 
 ---------------------------------------------------------------------
-(1) SVMTlearn 
+(1) SVMTlearn
 ---------------------------------------------------------------------
 
-Given a training set of examples (either annotated or unannotated), it is responsible for the training of a set of SVM classifiers. So as to do that, it makes use of SVM-light software package, an implementation of Vapnik's SVMs in C, developed by Thorsten Joachims.
+Given a training set of examples, it is responsible for the training of a set of SVM classifiers. So as to do that, it makes use of SVM-light software package, an implementation of Vapnik's SVMs in C, developed by Thorsten Joachims.
 
-Training data must be columned, i.e. a token per line corpus in a sentece by sentence fashion. The token is expected to be the first field of the line. The POS takes the second field in the output. The rest of the line is ignored.
+Training data must be columned, i.e. a token per line corpus in a sentece by sentence fashion. The token is expected to be the first field of the line. The POS takes the second field in the output. The rest of columns may contain additional information.
 
 SVMTlearn behaviour is easily adjusted through a configuration file. These are the currently available options:
 	- Sliding window (size and core position)
-	- Feature set (word features, POS features, ortographic features)
+	- Feature set (word features, POS features, ortographic features, 'multiple-column' features)
 	- Feature filtering (count cutoff and max mapping size)
 	- SVM model compression
 	- C parameter tunning
@@ -73,14 +52,9 @@ SVMTlearn behaviour is easily adjusted through a configuration file. These are t
 (2) SVMTagger
 ---------------------------------------------------------------------
 
-Given a text corpus (one token per line) and the path to a previously learned SVM model (including the automatically generated dictionary), it performs the POS tagging of a sequence of words. The tagging goes on-line based on a sliding window which gives a view of the feature context to be considered at every decision. Calculated part-of-speech tags feed directly forward next tagging decisions as context features.
+Given a text corpus (one token per line [+ additional columns, if any]) and the path to a previously learned SVM model (including the automatically generated dictionary), it performs the POS tagging of a sequence of words. The tagging goes on-line based on a sliding window which gives a view of the feature context to be considered at every decision. Calculated part-of-speech tags feed directly forward next tagging decisions as context features.
 
-The SVMtagger component works on standard input/output. It processes a token per line corpus in a sentence by sentence fashion. The token is expected to be the first field of the line. The predicted POS will take the second field in the output. The rest of the line remains unchanged. Lines beginning with '##' are just ignored by the tagger.
-
-If you integrate SVMTool in a larger application that does its own morphologic analysis, you can pass the possible tags computed by your tools, thus helping SVMTagger to handle unknown words (for example named entities or words with an unusual case). In this case, the input format will take a second element on each line: the parenthesized, comma-separated list of possible tags. For example:
-token1 (tag1,tag2)
-token2 (tag3,tag1,tag4)
-...
+The SVMtagger component works on standard input/output. It processes a token per line corpus in a sentece by sentence fashion. The token is expected to be the first field of the line. The predicted POS will take the second field in the output. The rest of the line remains unchanged. Lines beginning with '##' are just ignored by the tagger.
 
 SVMTagger is very flexible, and adapts very well to the needs of the user. Thus you may find the several options currently available:
 
@@ -88,9 +62,10 @@ SVMTagger is very flexible, and adapts very well to the needs of the user. Thus 
 	- Tagging direction (left-to-right, right-to-left, or both)
 	- One pass / Two passes
 	- SVM Model Compression
-        - Get all predicitons (not only the winner)
-        - Use of a softmax function to transform predictions into probabilities
+	- Get all predicitons (not only the winner)
+	- Use of a softmax function to transform predictions into probabilities
 	- Backup lexicon (may be optionally provided)
+	- Lemmae lexicon (may be optionally provided)
 
 
 ---------------------------------------------------------------------
@@ -103,13 +78,11 @@ Moreover, based on a given morphological dictionary (e.g. the automatically gene
 grouped.
 
 	- mode:
-		* 0 : full report
 		* 1 : brief report (overall accuracy) 
 		* 2 : comparing known vs unknown words
 		* 3 : grouping words according to their level of ambiguity
 		* 4 : grouping words according to their class of ambiguity
 		* 5 : from the part-of-speech point of view
-
 
 ---------------------------------------------------------------------
 
@@ -118,7 +91,7 @@ NOTES:
 ======
 - comments from nlp community members are very welcome.
 
-- Perl version is available at http://www.lsi.upc.edu/~SVMTool
+- Original Perl and C++ versions, as well as some models, are available at http://www.lsi.upc.edu/~SVMTool
 
 - If you're interested in getting oncoming updates of this freely available software please do not hesitate to e-mail us:
 	* Jesus Gimenez, at jgimenez@lsi.upc.edu
