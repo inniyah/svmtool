@@ -21,57 +21,38 @@
 
 namespace SVMTool {
 
-  class ResultNode {
-    private:
-      int index;
-      char *wrd;
-      char *pos;
-      char *scores;
-
-    public:
-      void  pushIndex(int);
-      void  pushPOS(char *);
-      void  pushWord(char *);
-      void  pushScores(char *);
-      int   getIndex();
-      char *getWord();
-      char *getPOS();
-      char *getScores();
-
-      ResultNode();
-      ~ResultNode();
-  };
+  class ResultNode;
 
   class Result {
     private:
-      ResultNode *array;
+      ResultNode * array;
       int numItems;
 
     public:
       Result(int);
       ~Result();
-      char *getPOS(int);
-      char *getWord(int);
-      char *getScores(int);
-      int  pushWord(char *, int);
-      int  pushPOS(char *, int);
-      int  pushScores(char *, int);
-      void print();
+      char * getPOS(int);
+      char * getWord(int);
+      char * getScores(int);
+      int    pushWord(char *, int);
+      int    pushPOS(char *, int);
+      int    pushScores(char *, int);
+      void   print();
   };
 
-  int InsertSentence(const char *szSentence);
+  int InsertSentence(const char * szSentence);
 
-  Result *TaggerRun(const char *szSentence, int iNumWords);
+  Result * TaggerRun(const char * szSentence, int iNumWords);
 
-  int TaggerCreate( char *szModelName );
+  int TaggerCreate( char * szModelName );
 
   int TaggerInitialize (
-    int   iStrategy,
-    const char  *szSense,
-    int   iWinLength,
-    int   iWinIndex,
-    float fWFKnown,
-    float fWFUnk
+    int          iStrategy,
+    const char * szSense,
+    int          iWinLength,
+    int          iWinIndex,
+    float        fWFKnown,
+    float        fWFUnk
   );
 
   void TaggerDestroy();
