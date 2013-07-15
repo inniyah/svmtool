@@ -24,20 +24,23 @@ namespace SVMTool {
   class ResultNode;
 
   class Result {
-    private:
-      ResultNode * array;
-      int numItems;
-
     public:
       Result(int);
       ~Result();
-      char * getPOS(int);
-      char * getWord(int);
-      char * getScores(int);
-      int    pushWord(char *, int);
-      int    pushPOS(char *, int);
-      int    pushScores(char *, int);
+
+      char * getWord(int iPos);
+      char * getPOS(int iPos);
+      char * getScores(int iPos);
+
+      int    pushWord(char * text, int iPos);
+      int    pushPOS(char * text, int iPos);
+      int    pushScores(char * text, int iPos);
+
       void   print();
+
+    private:
+      ResultNode * array;
+      int numItems;
   };
 
   int InsertSentence(const char * szSentence);
