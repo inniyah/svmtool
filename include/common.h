@@ -50,15 +50,9 @@ using namespace std;
 namespace SVMTool {
 
   struct nodo_feature_list {
-    nodo_feature_list() :
-    mark(),
-    l() {
-    }
-
-    // the type of the feature. see marks.h for different types
-    std::string mark;
-    // words concerned, eg. (-2, -1, 0)
-    simpleList<int*> l;
+    nodo_feature_list() : mark(), l() { }
+    std::string mark; // the type of the feature. see marks.h for different types
+    simpleList<int*> l; // words concerned, eg. (-2, -1, 0)
   };
 
   FILE *openFile(const std::string& name, const char mode[]);
@@ -66,22 +60,18 @@ namespace SVMTool {
 
   void showProcessDone(int num,int freq, int isEnd, const std::string& what);
   void showProcess(int num, int isEnd);
-  //void showTime(char *what, clock_t start,clock_t end, struct tms tbuff1,struct tms tbuff2);
+
   void showTime(const std::string& what, double real, double utime,double stime);
 
   int goToWord(FILE *f, int offset);
 
   int readString(FILE* f, string& out);
   int readTo(FILE* f, char endChar, char endLine, string& out);
-  //void saltarLinea(FILE *f);
-
-  void qsort(int a[], int lo, int hi);
 
   int ordenarStringPorParejas(const char* szIn, char* szOut, int depth, char* szInicial);
 
   void destroyFeatureList(simpleList<nodo_feature_list*> *);
   void createFeatureList(const std::string& name,simpleList<nodo_feature_list*> *featureList);
-  void removeFiles(const std::string& path, int type,int numModel, int direction, int verbose);
   void Tokenize(const string& str, vector<string>& tokens, const string& delimiters);
 
 } // namespace SVMTool

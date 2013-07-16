@@ -164,37 +164,6 @@ int readTo(FILE *f, char endChar, char endLine, std::string &out)
   return 1;  
 }
 
-/*******************************************************/
-
-void qsort(int a[], int lo, int hi) {
-      int h, l, p, t;
-
-      if (lo < hi) {
-         l = lo;
-         h = hi;
-         p = a[hi];
-
-         do {
-            while ((l < h) && (a[l] <= p))
-               l = l+1;
-            while ((h > l) && (a[h] >= p))
-               h = h-1;
-            if (l < h) {
-               t = a[l];
-               a[l] = a[h];
-               a[h] = t;
-            }
-         } while (l < h);
-
-         t = a[l];
-         a[l] = a[hi];
-         a[hi] = t;
-
-         qsort(a, lo, l-1);
-         qsort(a, l+1, hi);
-      } // if
-   }
-
 /**************************************************/
 
 void showTime(const std::string& what, double real, double utime, double stime)
@@ -288,16 +257,16 @@ int obtainMark(FILE *channel,std::string& mark)
 
 /**************************************************/
 
-int obtainAtrInt(FILE *channel,int *endAtr)
+static int obtainAtrInt(FILE *channel,int *endAtr)
 {
     int i=0;
     char c=' ',num[5]="";
 
     while ( (!feof(channel)) && (c!='(') && (c!=',') && (c!=')') )
     {
-	c=fgetc(channel);
-	if ((c!='(') && (c!=')')) num[i]=c;
-	i++;
+      c=fgetc(channel);
+      if ((c!='(') && (c!=')')) num[i]=c;
+      i++;
     }
     if (c==')') *endAtr=1;
     num[i]='\0';
@@ -327,7 +296,7 @@ void destroyFeatureList(simpleList<nodo_feature_list*> *fl)
 void createFeatureList(const std::string &name,simpleList<nodo_feature_list*> *featureList)
 {
    int *i,endAtr;
-//    char c;
+   //char c;
    int ret = 1;
    //char temp[100];
    nodo_feature_list *data;
@@ -335,8 +304,8 @@ void createFeatureList(const std::string &name,simpleList<nodo_feature_list*> *f
    FILE *f;
     if ((f = fopen(name.c_str(), "rt"))== NULL)
     {
-	fprintf(stderr, "Error opening file %s!!",name.c_str());
-	exit(0);
+      fprintf(stderr, "Error opening file %s!!",name.c_str());
+      exit(0);
     }
 
     //Insert feature Swn
@@ -368,62 +337,6 @@ void createFeatureList(const std::string &name,simpleList<nodo_feature_list*> *f
 }
 
 /**************************************************/
-
-void removeFiles(const std::string &path, int type,int numModel, int direction, int verbose)
-{
-  char szRemove[200];
-  switch (type)
-    {
-      case RM_TEMP_FILES: 
-	if (verbose==TRUE) fprintf(stderr,"\nErasing temporal files.");
-	/*
-	sprintf(remove,"rm -f %s.M%d*.SVM",path,numModel);
-	system(remove);
-	sprintf(remove,"rm -f %s*M%d*.POS",path,numModel);
-	system(remove);
-	sprintf(remove,"rm -f %s*M%d*.SAMPLES",path,numModel);
-	system(remove);
-	sprintf(remove,"rm -f %s*M%d*.MAP",path,numModel);
-	system(remove);
-	sprintf(remove,"rm -f %s*DICT.*",path);
-	system(remove);
-	*/
-	sprintf(szRemove,"%s.M%d*.SVM",path.c_str(),numModel);
-	remove(szRemove);
-	sprintf(szRemove,"%s*M%d*.POS",path.c_str(),numModel);
-	remove(szRemove);
-	sprintf(szRemove,"%s*M%d*.SAMPLES",path.c_str(),numModel);
-	remove(szRemove);
-	sprintf(szRemove,"%s*M%d*.MAP",path.c_str(),numModel);
-	remove(szRemove);
-	sprintf(szRemove,"%s*DICT.*",path.c_str());
-	remove(szRemove);
-	break;
-     case RM_MODEL_FILES:
-        if (direction==LEFT_TO_RIGHT || direction==LR_AND_RL)
-	  {
-	    if (verbose==TRUE) fprintf(stderr,"\nErasing old files for MODEL %d in LEFT TO RIGHT sense.",numModel);
-	    //sprintf(szRemove,"rm -f %s*M%d.LR.*",path,numModel);
-	    //system(szRemove);
-	    sprintf(szRemove,"%s*M%d.LR.*",path.c_str(),numModel);
-	    remove(szRemove);
-	  }
-        if (direction==RIGHT_TO_LEFT || direction==LR_AND_RL)
-	  {
-	    if (verbose==TRUE) 
-	      fprintf(stderr,"\nErasing old files for MODEL %d in RIGHT TO LEFT sense.",numModel);
-	    //sprintf(szRemove,"rm -f %s*M%d.RL.*",path,numModel);
-	    //system(szRemove);
-	    sprintf(szRemove,"%s*M%d.RL.*",path.c_str(),numModel);
-	    remove(szRemove);
-	  }
-	//sprintf(szRemove,"rm -f %s*A%d.*",path,numModel);
-	//system(szRemove);
-	sprintf(szRemove,"%s*A%d.*",path.c_str(),numModel);
-	remove(szRemove);
-        break;
-    }
-}
 
 void Tokenize(const string& str, vector<string>& tokens, const string& delimiters = " ")
 {
