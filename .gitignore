@@ -10,7 +10,9 @@ src/*.orig
 src/bin/*~
 src/bin/*.o
 src/bin/*.orig
+svmtool
 example
+cexample
 MYMETA.yml
 blib/*
 pm_to_blib
