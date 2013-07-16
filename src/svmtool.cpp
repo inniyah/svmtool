@@ -150,10 +150,9 @@ namespace SVMTool {
   }
   /*****************************************************************/
 
-  tagger *t;
   int verbose = 0;
 
-  int InsertSentence(const char *szSentence) {
+  int InsertSentence(tagger * t, const char * szSentence) {
     char wrd[200];
     FILE *f = fopen ("stdin.tmp","w");
     unsigned int i = 0;
@@ -176,10 +175,10 @@ namespace SVMTool {
     return i;
   }
 
-  Result *TaggerRun(const char *szSentence, int iNumWords) {
+  Result * RunTagger(tagger * t, const char * szSentence, int iNumWords) {
     if ( t == NULL ) return NULL;
 
-    int ret = InsertSentence (szSentence);
+    int ret = InsertSentence (t, szSentence);
 
     if ( ret == -1 ) return NULL;
 
@@ -225,19 +224,19 @@ namespace SVMTool {
     return out;
   }
 
-  int TaggerCreate( char *szModelName ) {
-    if ( strcmp(szModelName,"")  == 0 ) return -1;
-    t = new tagger(szModelName);
-    return 0;
+  tagger * CreateTagger(char * szModelName) {
+    if ( strcmp(szModelName,"") == 0 ) return NULL;
+    return new tagger(szModelName);
   }
 
-  int TaggerInitialize (
+  int InitializeTagger (
+    tagger     * t,
     int          iStrategy,
     const char * szSense,
     int          iWinLength,
     int          iWinIndex,
     float        fWFKnown,
-    float fWFUnk
+    float        fWFUnk
   ) {
     if ( t == NULL ) return -1;
     verbose = 0;
@@ -260,10 +259,9 @@ namespace SVMTool {
     return 0;
   }
 
-  void TaggerDestroy() {
+  void DestroyTagger(tagger * t) {
     erFreeRegExp();
     if ( t != NULL ) delete t;
-    t = NULL;
   }
 
 } // namespace SVMTool

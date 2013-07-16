@@ -22,6 +22,7 @@
 namespace SVMTool {
 
   class ResultNode;
+  class tagger;
 
   class Result {
     public:
@@ -43,13 +44,14 @@ namespace SVMTool {
       int numItems;
   };
 
-  int InsertSentence(const char * szSentence);
+  int InsertSentence(tagger * t, const char * szSentence);
 
-  Result * TaggerRun(const char * szSentence, int iNumWords);
+  Result * RunTagger(tagger * t, const char * szSentence, int iNumWords);
 
-  int TaggerCreate( char * szModelName );
+  tagger * CreateTagger(char * szModelName);
 
-  int TaggerInitialize (
+  int InitializeTagger (
+    tagger     * t,
     int          iStrategy,
     const char * szSense,
     int          iWinLength,
@@ -58,7 +60,7 @@ namespace SVMTool {
     float        fWFUnk
   );
 
-  void TaggerDestroy();
+  void DestroyTagger(tagger * t);
 
 } // namespace SVMTool
 

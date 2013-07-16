@@ -27,9 +27,13 @@ extern "C" {
     /* Nothing to see here */
   } SVMToolResult;
 
-  extern int SVMToolInsertSentence(const char * szSentence);
+  typedef struct {
+    /* Nothing to see here */
+  } SVMToolTagger;
 
-  extern SVMToolResult * SVMToolTaggerRun(const char * szSentence, int iNumWords);
+  extern int SVMToolInsertSentence(SVMToolTagger * pTagger, const char * szSentence);
+
+  extern SVMToolResult * SVMToolRunTagger(SVMToolTagger * pTagger, const char * szSentence, int iNumWords);
 
   extern int SVMToolResultPushWord(SVMToolResult * result, char * text, int iPos);
   extern char * SVMToolResultGetWord(SVMToolResult * result, int iPos);
@@ -44,18 +48,19 @@ extern "C" {
 
   extern void SVMToolResultDelete(SVMToolResult * result);
 
-  extern int SVMToolTaggerCreate( char * szModelName );
+  extern SVMToolTagger * SVMToolCreateTagger(char * szModelName);
 
-  extern int SVMToolTaggerInitialize (
-    int          iStrategy,
-    const char * szSense,
-    int          iWinLength,
-    int          iWinIndex,
-    float        fWFKnown,
-    float        fWFUnk
+  extern int SVMToolInitializeTagger (
+    SVMToolTagger * pTagger,
+    int             iStrategy,
+    const char    * szSense,
+    int             iWinLength,
+    int             iWinIndex,
+    float           fWFKnown,
+    float           fWFUnk
   );
 
-  extern void SVMToolTaggerDestroy();
+  extern void SVMToolDestroyTagger(SVMToolTagger * pTagger);
 
 #ifdef __cplusplus
 } // extern "C"

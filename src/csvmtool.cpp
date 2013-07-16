@@ -22,18 +22,21 @@
 
 extern "C" {
 
-  int SVMToolInsertSentence(const char * szSentence) {
-    return SVMTool::InsertSentence(szSentence);
+  int SVMToolInsertSentence(SVMToolTagger * pTagger, const char * szSentence) {
+    SVMTool::tagger * t = (SVMTool::tagger *)pTagger;
+    return SVMTool::InsertSentence(t, szSentence);
   }
 
-  SVMToolResult * SVMToolTaggerRun(const char * szSentence, int iNumWords) {
-    SVMTool::Result * res = SVMTool::TaggerRun(szSentence, iNumWords);
+  SVMToolResult * SVMToolRunTagger(SVMToolTagger * pTagger, const char * szSentence, int iNumWords) {
+    SVMTool::tagger * t = (SVMTool::tagger *)pTagger;
+    SVMTool::Result * res = SVMTool::RunTagger(t, szSentence, iNumWords);
     return (SVMToolResult *) res;
   }
 
-  int SVMToolTaggerCreate( char * szModelName ) {
-    return SVMTool::TaggerCreate(szModelName);
+  SVMToolTagger * SVMToolCreateTagger(char * szModelName) {
+    return (SVMToolTagger *)SVMTool::CreateTagger(szModelName);
   }
+
 
   int SVMToolResultPushWord(SVMToolResult * result, char * text, int iPos) {
     SVMTool::Result * res = (SVMTool::Result *) result;
@@ -76,19 +79,22 @@ extern "C" {
   }
 
 
-  int SVMToolTaggerInitialize (
-    int          iStrategy,
-    const char * szSense,
-    int          iWinLength,
-    int          iWinIndex,
-    float        fWFKnown,
-    float        fWFUnk
+  int SVMToolInitializeTagger (
+    SVMToolTagger * pTagger,
+    int             iStrategy,
+    const char    * szSense,
+    int             iWinLength,
+    int             iWinIndex,
+    float           fWFKnown,
+    float           fWFUnk
   ) {
-    return SVMTool::TaggerInitialize (iStrategy, szSense, iWinLength, iWinIndex, fWFKnown, fWFUnk);
+    SVMTool::tagger * t = (SVMTool::tagger *)pTagger;
+    return SVMTool::InitializeTagger (t, iStrategy, szSense, iWinLength, iWinIndex, fWFKnown, fWFUnk);
   }
 
-  void SVMToolTaggerDestroy() {
-    SVMTool::TaggerDestroy();
+  void SVMToolDestroyTagger(SVMToolTagger * pTagger) {
+    SVMTool::tagger * t = (SVMTool::tagger *)pTagger;
+    SVMTool::DestroyTagger(t);
   }
 
 }

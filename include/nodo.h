@@ -29,7 +29,7 @@ namespace SVMTool {
   struct nodo {
 
     nodo() :
-    ord(0),
+      ord(0),
       weight(0),
       weightOld(0),
       next(NULL),
@@ -42,18 +42,17 @@ namespace SVMTool {
       }
     }
 
-    // word id
-    int ord;
-    // word (or constant like @CARD if cardinal)
-    std::string wrd;
-    // real word
-    std::string realWrd;
+    int ord; // word id
+    std::string wrd; // word (or constant like @CARD if cardinal)
+    std::string realWrd; // real word
     std::string comment;
+
     // to be filled by taggerSumWeight
     std::string pos, posOld;
     std::string strScores;
     long double weight, weightOld;
     std::stack<weight_node_t*> stackScores;
+
     // neighbors in the sentence
     nodo *next;
     nodo *previous;
