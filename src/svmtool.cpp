@@ -33,6 +33,8 @@
 
 namespace SVMTool {
 
+  extern int verbose;
+
   class ResultNode {
     private:
       int index;
@@ -149,8 +151,6 @@ namespace SVMTool {
     }
   }
   /*****************************************************************/
-
-  int verbose = 0;
 
   int InsertSentence(tagger * t, const char * szSentence) {
     char wrd[200];

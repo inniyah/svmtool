@@ -28,6 +28,8 @@ using namespace std;
 
 namespace SVMTool {
 
+int verbose = 0;
+
 /**************************************************/
 
 /*
