@@ -60,7 +60,7 @@ sub check_arguments
 
     my $f = shift;
 
-    return (($f eq $WMARK) or ($f eq $PMARK) or ($f eq $KMARK) or ($f eq $MMARK) or ($f eq $COLMARK));
+    return (($f eq $WMARK) || ($f eq $PMARK) || ($f eq $KMARK) || ($f eq $MMARK) || ($f eq $COLMARK));
 }
 
 sub push_COLUMN

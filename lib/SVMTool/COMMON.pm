@@ -447,7 +447,7 @@ sub create_folders{
         if ($word ne $COMMON::SMARK) {
            push(@sentence, sprintf("%d", $rn).$COMMON::in_valseparator.$line);
         }        
-        if (end_of_sentence($item[0]) or ($word eq $COMMON::SMARK)) {
+        if (end_of_sentence($item[0]) || ($word eq $COMMON::SMARK)) {
 	       print $FOLDED join("\n", @sentence);
            @sentence = ();
            $rn = rand ($nfolders);

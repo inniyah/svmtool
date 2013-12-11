@@ -42,7 +42,7 @@ sub read_sentence_stdin
                push(@INPUT_LR, $input);
             }
             #$stop = ($entry eq $COMMON::SMARK);
-            $stop = COMMON::end_of_sentence($line[0]) or ($entry eq $COMMON::SMARK);
+            $stop = COMMON::end_of_sentence($line[0]) || ($entry eq $COMMON::SMARK);
 	     }
          else {
             push(@STDIN_LR, $entry);
@@ -79,7 +79,7 @@ sub read_sentence_file
             my $input = new ENTRY($line[0], $line[1], 0, \@line);
             push(@INPUT_LR, $input);
          }
-         $stop = COMMON::end_of_sentence($line[0]) or ($entry eq $COMMON::SMARK);
+         $stop = COMMON::end_of_sentence($line[0]) || ($entry eq $COMMON::SMARK);
       }
       else { $stop = 2; }
    }

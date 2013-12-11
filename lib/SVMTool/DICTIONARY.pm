@@ -287,7 +287,7 @@ sub unknown_word
     my $rdict = shift;
     my $word = shift;
 
-    return ((!(exists($rdict->{"dict"}->{$word}))) or ($rdict->{"dict"}->{$word}->[1] == 0));
+    return ((!(exists($rdict->{"dict"}->{$word}))) || ($rdict->{"dict"}->{$word}->[1] == 0));
 }
 
 sub get_nwords

@@ -357,8 +357,8 @@ sub read_config_file
               elsif ($opt eq "Eratio") { $CONFIG{Eratio} = $args[0]; }
               elsif ($opt eq "Kfilter") { $CONFIG{Kfilter} = $args[0]; }
               elsif ($opt eq "Ufilter") { $CONFIG{Ufilter} = $args[0]; }
-              elsif (($opt eq "REMOVE_FILES") or ($opt eq "RM")) { $CONFIG{rmfiles} = $args[0]; }
-              elsif (($opt eq "REMAKE_FOLDERS") or ($opt eq "RF")) { $CONFIG{remakeFLDS} = $args[0]; }
+              elsif (($opt eq "REMOVE_FILES") || ($opt eq "RM")) { $CONFIG{rmfiles} = $args[0]; }
+              elsif (($opt eq "REMAKE_FOLDERS") || ($opt eq "RF")) { $CONFIG{remakeFLDS} = $args[0]; }
               elsif ($opt eq "AP") {
                  if (scalar(@args) > 0) { $CONFIG{AP} = \@args; }
               }
@@ -462,7 +462,7 @@ sub randomize_sentences{
         my @item = split($COMMON::in_valseparator, $line);
         my $word = $item[0];
         push(@sentence_list, $line);
-        if (COMMON::end_of_sentence($word) or ($word eq $COMMON::SMARK)) {
+        if (COMMON::end_of_sentence($word) || ($word eq $COMMON::SMARK)) {
            my $nwords = scalar(@sentence_list);
            my $sentence = join("\n", @sentence_list)."\n";
            if ($word eq $COMMON::SMARK) { $nwords--; }
@@ -569,7 +569,7 @@ sub generate_dictionary
       chomp($line);
       $line = COMMON::trim($line);
       if (($line ne "") and ($line ne $COMMON::SMARK)) {
-         if (($i < $start) or ($i > $end)) {
+         if (($i < $start) || ($i > $end)) {
             my @entry = split($COMMON::in_valseparator, $line);
             if (scalar(@entry) > 0) { #line is not empty
                if (scalar(@entry) == 1) {
@@ -1086,7 +1086,7 @@ sub any_unknown
     my $unknown = 0;
     while (($i < $rwin->get_len) and (!$eos) and (!$unknown)) {
        my $w = $rwin->get_word($i);
-       if (COMMON::end_of_sentence($w) or ($w eq $COMMON::emptyword)) { $eos = 1; }
+       if (COMMON::end_of_sentence($w) || ($w eq $COMMON::emptyword)) { $eos = 1; }
        else { $unknown = $rdict->unknown_word($w); }
        $i++;
     }
@@ -1176,7 +1176,7 @@ sub get_sentence_info
          chomp($line);
          $line = COMMON::trim($line); 
          @entry = split($COMMON::in_valseparator, $line);
-         if (COMMON::end_of_sentence($entry[0]) or ($entry[0] eq $COMMON::SMARK)) { $stop = 1; }
+         if (COMMON::end_of_sentence($entry[0]) || ($entry[0] eq $COMMON::SMARK)) { $stop = 1; }
       }
       # ----------------------------------------------
       if ($stop) { $lastw = $entry[0]; }
@@ -1208,7 +1208,7 @@ sub get_sentence_info_list
       my $SIZE = scalar(@{$LIST});
       while (($i < $SIZE) and (!$stop)) {
          @entry = split($COMMON::in_valseparator, COMMON::trim($LIST->[$i]));
-         if (COMMON::end_of_sentence($entry[0]) or ($entry[0] eq $COMMON::SMARK)) { $stop = 1; }
+         if (COMMON::end_of_sentence($entry[0]) || ($entry[0] eq $COMMON::SMARK)) { $stop = 1; }
          $i++;
       }
       if ($stop) { $lastw = $entry[0]; }
@@ -1239,7 +1239,7 @@ sub get_sentence_info_list_entry
       my $w;
       while (($i < $SIZE) and (!$stop)) {
          $w = $LIST->[$i]->get_word;
-         if (COMMON::end_of_sentence($w) or ($w eq $COMMON::SMARK)) { $stop = 1; }
+         if (COMMON::end_of_sentence($w) || ($w eq $COMMON::SMARK)) { $stop = 1; }
          $i++;
       }
       if ($stop) { $lastw = $w; }
@@ -1342,7 +1342,7 @@ sub do_attribs_kn
          #is the core item active?
          if ($rwindow->active()) {
             #is the core word ambiguous?
-            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) or (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
+            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) || (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
                #window preparation
                #$rwindow->print_stdout();
                my $rattribw = $rwindow->prepare($direction); 
@@ -1361,7 +1361,7 @@ sub do_attribs_kn
       while ($i > 0) { #process last words     
          $rwindow->lshift(1);
          if ($rwindow->active()) {
-            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) or (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
+            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) || (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
                my $rattribw = $rwindow->prepare($direction); 
                my $rattribs = ATTGEN::generate_features($rattribw, $rdict, $sinfo, $mode, $fs);
                SVM::write_sample($rwindow->get_core_word().$COMMON::attvalseparator.$rwindow->get_core_pos(), $rattribs, $SMPLSET);
@@ -1490,7 +1490,7 @@ sub do_attribs_kn_unk
          #is the core item active?
          if ($rwindow->active()) {
             #is the core word ambiguous?
-            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) or (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
+            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) || (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
                #window preparation
                #$rwindow->print_stdout();
                my $rattribw = $rwindow->prepare($direction); 
@@ -1509,7 +1509,7 @@ sub do_attribs_kn_unk
       while ($i > 0) { #process last words     
          $rwindow->lshift(1);
          if ($rwindow->active()) {
-            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) or (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
+            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) || (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
                my $rattribw = $rwindow->prepare($direction); 
                my $rattribs = ATTGEN::generate_features($rattribw, $rdict, $sinfo, $mode, $fs);
                SVM::write_sample($rwindow->get_core_word().$COMMON::attvalseparator.$rwindow->get_core_pos(), $rattribs, $SMPLSET);
@@ -1680,7 +1680,7 @@ sub do_attribs_unk
       while ($i > 0) { #process last words     
          $rwindow->lshift(1);
          if ($rwindow->active()) {
-            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) or (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
+            if ((($mode == $COMMON::mode3) and (!(ambiguous_word_window($rwindow, $rdict, $mode)))) || (($mode != $COMMON::mode3) and (ambiguous_word_window($rwindow, $rdict, $mode)))) {
                my $rattribw = $rwindow->prepare($direction); 
                my $rattribs = ATTGEN::generate_features($rattribw, $rdict, $sinfo, $mode, $fs);
                SVM::write_sample($rwindow->get_core_word().$COMMON::attvalseparator.$rwindow->get_core_pos(), $rattribs, $SMPLSET);
@@ -2256,10 +2256,10 @@ sub SVMT_load_models
    my $fsu = shift;
 
    my %M;
-   if (($direction eq $COMMON::lrmode) or ($direction eq $COMMON::lrlmode) or ($direction eq $COMMON::glrlmode)) { #LEFT-TO-RIGHT or both
+   if (($direction eq $COMMON::lrmode) || ($direction eq $COMMON::lrlmode) || ($direction eq $COMMON::glrlmode)) { #LEFT-TO-RIGHT or both
       $M{LR} = load_models($model, $epsilon, $omega, $verbose, $COMMON::lrmode, $mode, $rambp, $runkp, $fsk, $fsu);
    }
-   if (($direction eq $COMMON::rlmode) or ($direction eq $COMMON::lrlmode) or ($direction eq $COMMON::glrlmode)) { #LEFT-TO-RIGHT or both
+   if (($direction eq $COMMON::rlmode) || ($direction eq $COMMON::lrlmode) || ($direction eq $COMMON::glrlmode)) { #LEFT-TO-RIGHT or both
       $M{RL} = load_models($model, $epsilon, $omega, $verbose, $COMMON::rlmode, $mode, $rambp, $runkp, $fsk, $fsu);
    }
    $M{direction} = $direction;
@@ -2914,7 +2914,7 @@ sub compute_scores_old {
        }
     }
 
-    if (($nbeams > 0) or ($bratio != 0)) { path_beam_cutoff($path->[$i+1], $nbeams, $bratio); }
+    if (($nbeams > 0) || ($bratio != 0)) { path_beam_cutoff($path->[$i+1], $nbeams, $bratio); }
     
     return ($Ftime, $Ctime);
 }
@@ -3006,7 +3006,7 @@ sub compute_scores {
        }
     }
 
-    if (($nbeams > 0) or ($bratio != 0)) { path_beam_cutoff($path->[$i+1], $nbeams, $bratio); }
+    if (($nbeams > 0) || ($bratio != 0)) { path_beam_cutoff($path->[$i+1], $nbeams, $bratio); }
     
     return ($Ftime, $Ctime);
 }
@@ -3062,7 +3062,7 @@ sub do_viterbi_sentence
        my $rwindow = build_window($input, $i, $M->{WS}, $M->{dict});
        my $word = $rwindow->get_core_word();
 
-       if (($M->{dict}->unknown_word($word)) or ($M->{dict}->ambiguous_word($word))) {
+       if (($M->{dict}->unknown_word($word)) || ($M->{dict}->ambiguous_word($word))) {
           # word is either unknown or known_ambiguous
           my ($SFtime, $SCtime) = compute_scores($rwindow, $M->{dict}, $sinfo, $VM, \@PATH, $i, $direction, $M->{rAP}, $M->{rUP}, $M->{nbeams}, $M->{bratio}, $M->{softmax}, $verbose);
           $Ftime += $SFtime; $Ctime += $SCtime;
@@ -3160,7 +3160,7 @@ sub do_viterbi_tagging
        my $word = $input_LR->[$iter]->get_word;
        if ($word ne "") { # don't process emtpy lines
           push(@SENTENCE, $word);
-          if ((COMMON::end_of_sentence($word)) or ($iter == $SIZE - 1)) {
+          if ((COMMON::end_of_sentence($word)) || ($iter == $SIZE - 1)) {
 	     if (!(COMMON::end_of_sentence($word))) { push(@SENTENCE, "."); }
              my ($out, $auxGscore, $SFtime, $SCtime) = do_viterbi_sentence($M, $direction, \@SENTENCE, $VM, $verbose);
              $Ftime += $SFtime; $Ctime += $SCtime; $Gscore += $auxGscore;
@@ -3502,7 +3502,7 @@ sub do_SVMT_file
      my $iter = 0;
      while ($iter < scalar(@{$input})) {
         my @line = split($COMMON::in_valseparator, ${$input}[$iter]);
-        if ((scalar(@line) == 0) or ($line[0] eq $COMMON::IGNORE)) {
+        if ((scalar(@line) == 0) || ($line[0] eq $COMMON::IGNORE)) {
 	       print $OUTPUT $input->[$iter]."\n";
         }
         else {
@@ -3702,7 +3702,7 @@ sub SVMT_tag
    $M->{bratio} = $bratio;
 
    if (scalar(@{$INPUT_LR}) > 0) { # list isn't empty
-      if (($strategy == $COMMON::st0) or ($strategy == $COMMON::st3) or ($strategy == $COMMON::st4)) {
+      if (($strategy == $COMMON::st0) || ($strategy == $COMMON::st3) || ($strategy == $COMMON::st4)) {
          #one-pass default
          ($out, $Ftime, $Ctime) = do_tagging_LRL_1P($M, $verbose, $direction, $INPUT_LR, $M->{P1}, 0, $SVMTAGGER::Mdefault);
       }
@@ -3712,7 +3712,7 @@ sub SVMT_tag
       elsif ($strategy == $COMMON::st2) { #one-pass [unknown words are special]
          ($out, $Ftime, $Ctime) = do_tagging_LRL_1P($M, $verbose, $direction, $INPUT_LR, $M->{P1}, $M->{P2}, $SVMTAGGER::Mspecial);
       }
-      elsif (($strategy == $COMMON::st5) or ($strategy == $COMMON::st6)) {
+      elsif (($strategy == $COMMON::st5) || ($strategy == $COMMON::st6)) {
          #one-pass sentence-level likelihood VITERBI [ambiguous right]
          ($out, $Ftime, $Ctime) = do_tagging_LRL_1P($M, $verbose, $direction, $INPUT_LR, $M->{P1}, 0, $SVMTAGGER::Mviterbi);
       }
@@ -3888,7 +3888,7 @@ sub merge_models
     # -------------------------------------------------------------------------------------------
     # ----------------------- WRITING MERGED MODELS ---------------------------------------------
 
-    if (($which == 0) or ($which == 2)) {
+    if (($which == 0) || ($which == 2)) {
        # -------------------------- MAPPING -------------------------------------------------------- 
        if ($verbose > $COMMON::verbose1) { print "READING MAPPING FOR KNOWN WORDS...<$smplmap>\n"; }
        my $rmap = MAPPING::read_mapping($smplmap);
@@ -3907,7 +3907,7 @@ sub merge_models
           system "rm -f $model.$modext.$dirext.$COMMON::Wext";
        }
     }
-    if (($which == 1) or ($which == 2)) {
+    if (($which == 1) || ($which == 2)) {
        # -------------------------- MAPPING -------------------------------------------------------- 
        if ($verbose > $COMMON::verbose1) { print "READING MAPPING FOR UNKNOWN WORDS...<$unksmplmap>\n"; }
        my $runkmap = MAPPING::read_mapping($unksmplmap); 
@@ -3986,10 +3986,10 @@ sub build_SVMT
     my $unksmplset = $model.".".$COMMON::unkext.".".$modext.".".$dirext.".".$COMMON::smplext;  #SAMPLE SET
     my $unksmplmap = $unksmplset.".".$COMMON::mapext;                                             #SAMPLE MAPPING
 
-    if (($which == 0) or ($which == 2)) {
+    if (($which == 0) || ($which == 2)) {
        SVMTAGGER::learn_known($model, $trainset, $smplset, $smplmap, $rdict, $mode, $modext, $direction, $dirext, $config, $remakeFK, $report, $verbose);
     }
-    if (($which == 1) or ($which == 2)) {
+    if (($which == 1) || ($which == 2)) {
        SVMTAGGER::learn_unknown($model, $trainset, $unksmplset, $unksmplmap, $rdict, $mode, $modext, $direction, $dirext, $config, $remakeFU, $report, $verbose);
     }
     SVMTAGGER::merge_models($model, $modext, $dirext, $smplmap, $unksmplmap, $config, $COMMON::MRGEXT, $which, $report, $verbose);
@@ -4049,13 +4049,13 @@ sub adjust_C
     #BUILIDING COOPERATIVE MODELS [working together] ONLY IF NOT EXISTED
     if ($mode == $COMMON::mode1) {
        if ($verbose) { COMMON::report($report, "[INIT] BUILDING COOPERATIVE MODELS [M1 -> M2]...\n"); }
-       if ((!(-e "$model.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT")) or (!(-e "$model.$COMMON::unkext.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if they didn't existed
+       if ((!(-e "$model.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT")) || (!(-e "$model.$COMMON::unkext.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if they didn't existed
           SVMTAGGER::build_SVMT($model, $trainset, $rdict, $COMMON::mode2, $direction, $config, 2, 1, 1, $report, $verbose);
        }
     }
     elsif ($mode == $COMMON::mode2) {
        if ($verbose) { COMMON::report($report, "[INIT] BUILDING COOPERATIVE MODELS [M2 -> M1]...\n"); }
-       if ((!(-e "$model.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT")) or (!(-e "$model.$COMMON::unkext.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT"))) {
+       if ((!(-e "$model.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT")) || (!(-e "$model.$COMMON::unkext.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT"))) {
           SVMTAGGER::build_SVMT($model, $trainset, $rdict, $COMMON::mode1, $direction, $config, 2, 1, 1, $report, $verbose);
        }
     }
@@ -4215,13 +4215,13 @@ sub adjust_C_CV
     my $modext = SVMTAGGER::find_mext($mode);
     if ($mode == $COMMON::mode1) {
        if ($verbose) { COMMON::report($report, "[INIT] BUILDING COOPERATIVE MODELS [M1 -> M2]...\n"); }
-       if ((!(-e "$model.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT")) or (!(-e "$model.$COMMON::unkext.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if they didn't existed
+       if ((!(-e "$model.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT")) || (!(-e "$model.$COMMON::unkext.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if they didn't existed
           SVMTAGGER::build_SVMT($model, $trainset, $rdict, $COMMON::mode2, $direction, $config, 2, 1, 1, $report, $verbose);
        }
     }
     elsif ($mode == $COMMON::mode2) {
        if ($verbose) { COMMON::report($report, "[INIT] BUILDING COOPERATIVE MODELS [M2 -> M1]...\n"); }
-       if ((!(-e "$model.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT")) or (!(-e "$model.$COMMON::unkext.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if not existed
+       if ((!(-e "$model.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT")) || (!(-e "$model.$COMMON::unkext.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if not existed
           SVMTAGGER::build_SVMT($model, $trainset, $rdict, $COMMON::mode1, $direction, $config, 2, 1, 1, $report, $verbose);
        }
     }
@@ -4410,12 +4410,12 @@ sub do_CV
     my $model = $config->{model};
 
     if ($mode == $COMMON::mode1) { #COOPERATIVE MODELS M1 and M2 -> build counterpart
-       if ((!(-e "$model.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT")) or (!(-e "$model.$COMMON::unkext.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if they didn't existed
+       if ((!(-e "$model.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT")) || (!(-e "$model.$COMMON::unkext.$COMMON::M2EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if they didn't existed
           SVMTAGGER::build_SVMT($model, $trainset, $rdict, $COMMON::mode2, $direction, $config, 2, 1, 1, $report, $verbose);
        }
     }
     elsif ($mode == $COMMON::mode2) {
-       if ((!(-e "$model.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT")) or (!(-e "$model.$COMMON::unkext.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if not existed
+       if ((!(-e "$model.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT")) || (!(-e "$model.$COMMON::unkext.$COMMON::M1EXT.$dirext.$COMMON::MRGEXT"))) { #build cooperative models [working together] only if not existed
           SVMTAGGER::build_SVMT($model, $trainset, $rdict, $COMMON::mode1, $direction, $config, 2, 1, 1, $report, $verbose);
        }
     }
@@ -4431,7 +4431,7 @@ sub do_CV
 
     my $folded = $config->{model}.".".$COMMON::FOLDEXT;
 
-    if (($remakeFLDS) or (!(-e $folded))) {  #CREATING FOLDERS
+    if (($remakeFLDS) || (!(-e $folded))) {  #CREATING FOLDERS
        COMMON::create_folders($trainset, $folded, $nfolders, $report, $verbose);
     }
 
@@ -4597,10 +4597,10 @@ sub SVMT_learn
     if (($TTYPE eq "T") and ($NFOLDERS > 1)) { $TTYPE = "CVT"; }
     if ($NFOLDERS == 0) { $NFOLDERS = $SVMTAGGER::NFOLDERS; }
     
-    if ($doCK or $doCU) { #C PARAMETER TUNING
+    if ($doCK || $doCU) { #C PARAMETER TUNING
        my $oldrm = $config->{rmfiles}; $config->{rmfiles} = 0; #remove disabled [to avoid remaking features!]
 
-       if (($TTYPE eq "T") or ($TTYPE eq "")) { #ON VALIDATION SET
+       if (($TTYPE eq "T") || ($TTYPE eq "")) { #ON VALIDATION SET
 	      if ($config->{valset} ne "") {
 	         if ($doCK) {
                 ($Ck, $remakeFK) = SVMTAGGER::adjust_C($model, $trainset, $rdict, $mode, $direction, $config, $CKTopt, $config->{valset}, 0, $report, $verbose); #TUNE KNOWN WORDS

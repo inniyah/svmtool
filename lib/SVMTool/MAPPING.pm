@@ -150,7 +150,7 @@ sub write_mapping
    my $i = 1;
    my $freq = -1;
    foreach my $k (sort keys %{$rM}) {
-      if (($freq == -1) or ($rM->{$k} < $freq)) { $freq = $rM->{$k}; }
+      if (($freq == -1) || ($rM->{$k} < $freq)) { $freq = $rM->{$k}; }
       print $MAPF $i." ".$k." ".$rM->{$k}."\n";
       $i++;
    }
