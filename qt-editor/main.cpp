@@ -1,5 +1,11 @@
 #include <QtGui>
 
+#include <svmtool.h>
+#include <cstdio>
+#include <cstdlib>
+
+#define SVMTOOL_MODEL_FILE "../models/eng/WSJTP"
+
 class mySyntaxHighLighter: public QSyntaxHighlighter
 {
 	public:
@@ -12,6 +18,7 @@ class mySyntaxHighLighter: public QSyntaxHighlighter
 		};
 
 		mySyntaxHighLighter(QTextDocument *document);
+		virtual ~mySyntaxHighLighter();
 
 		void setFormatFor(Construct construct,
 			const QTextCharFormat &format);
@@ -32,10 +39,12 @@ class mySyntaxHighLighter: public QSyntaxHighlighter
 
 	private:
 		QTextCharFormat m_formats[LastConstruct + 1];
+		SVMTool::tagger * m_tagger;
+
 };
 
 mySyntaxHighLighter::mySyntaxHighLighter(QTextDocument *document)
-: QSyntaxHighlighter(document) {
+: QSyntaxHighlighter(document), m_tagger(NULL) {
 	QTextCharFormat entityFormat;
 	entityFormat.setForeground(QColor(0, 128, 0));
 	entityFormat.setFontWeight(QFont::Bold);
@@ -50,8 +59,15 @@ mySyntaxHighLighter::mySyntaxHighLighter(QTextDocument *document)
 	commentFormat.setForeground(QColor(128, 10, 74));
 	commentFormat.setFontItalic(true);
 	setFormatFor(Comment, commentFormat);
+
+	m_tagger = SVMTool::CreateTagger(SVMTOOL_MODEL_FILE);
+	SVMTool::InitializeTagger(m_tagger, 0, "LR", 7, 3, 0, 0);
 }
 
+mySyntaxHighLighter::~mySyntaxHighLighter() {
+	SVMTool::DestroyTagger(m_tagger);
+	m_tagger = NULL;
+}
 
 void mySyntaxHighLighter::setFormatFor(Construct construct, const QTextCharFormat &format) {
 	m_formats[construct] = format;
@@ -64,6 +80,10 @@ void mySyntaxHighLighter::highlightBlock(const QString &text) {
 	int len = text.length();
 	int start = 0;
 	int pos = 0;
+
+	SVMTool::Result *ret = SVMTool::RunTagger(m_tagger, "Hello world ! It is a sample program .",9);
+	//ret->print();
+	delete ret;
 
 	while (pos < len) {
 		switch (state) {
